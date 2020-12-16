@@ -8,7 +8,7 @@ namespace LaunchDarkly.JsonStream
     /// </summary>
     /// <remarks>
     /// <para>
-    /// On platforms that provide the <c>System.Text.Json</c> API (.NET Core 3.0+, .NET 5.0+), this
+    /// On platforms that provide the <c>System.Text.Json</c> API (.NET Core 3.1+, .NET 5.0+), this
     /// works as a wrapper for <c>System.Text.Json.Utf8JsonReader</c>, providing a more convenient API
     /// for common JSON parsing operations. On platforms that do not have <c>System.Text.Json</c>, it
     /// falls back to a portable implementation that is not as fast as <c>Utf8JsonReader</c> but still

@@ -10,6 +10,15 @@
     <BuildFrameworks Condition="'$(BUILDFRAMEWORKS)' == ''">netstandard2.0;netcoreapp3.1;net5.0;net452</BuildFrameworks>
     <TargetFrameworks>$(BUILDFRAMEWORKS)</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
+    <AssemblyName>LaunchDarkly.JsonStream</AssemblyName>
+    <OutputType>Library</OutputType>
+    <PackageId>LaunchDarkly.JsonStream</PackageId>
+    <Description>LaunchDarkly streaming JSON encoder/decoder</Description>
+    <Copyright>Copyright 2020 LaunchDarkly</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
