@@ -65,6 +65,8 @@ jobs:
 
   benchmark-netcore:
     parameters:
+      docker-image:
+        type: string
       build-target-frameworks:
         type: string
         default: ""
