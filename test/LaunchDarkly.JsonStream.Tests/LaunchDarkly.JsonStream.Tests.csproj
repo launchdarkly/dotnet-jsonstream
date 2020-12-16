@@ -8,8 +8,6 @@
     -->
     <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.1;netcoreapp3.1;net5.0;net452</TestFrameworks>
     <TargetFrameworks>$(TESTFRAMEWORKS)</TargetFrameworks>
-
-    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net5.0;net452</TargetFrameworks>
     <RootNamespace>LaunchDarkly.JsonStream</RootNamespace>
   </PropertyGroup>
 
