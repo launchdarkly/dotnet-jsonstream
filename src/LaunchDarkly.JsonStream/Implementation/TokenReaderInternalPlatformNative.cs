@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP3_0 || NET5_0
+﻿#if NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0
 
 using System;
 using System.Text;

@@ -1,4 +1,4 @@
-﻿#if !NETCOREAPP3_0 && !NET5_0
+﻿#if !NETCOREAPP3_0 && !NETCOREAPP3_1 && !NET5_0
 
 // This implementation of low-level TokenReader methods is used on platforms that do not have the
 // System.Text.Json API.
