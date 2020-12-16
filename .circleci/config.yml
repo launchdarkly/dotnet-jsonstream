@@ -9,29 +9,23 @@ workflows:
     jobs:
       - test-netcore:
           name: .NET Core 2.1
-          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
           test-target-framework: netcoreapp2.1
       - test-netcore:
           name: .NET Core 3.1
-          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
           test-target-framework: netcoreapp3.1
       - test-netcore:
           name: .NET 5.0
-          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
           test-target-framework: net5.0
       - test-windows-netframework:
           name: .NET Framework 4.5.2 (Windows)
       - benchmark-netcore:
           name: .NET Core 2.1 benchmarks
-          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
           test-target-framework: net5.0
       - benchmark-netcore:
           name: .NET Core 3.1 benchmarks
-          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
           test-target-framework: net5.0
       - benchmark-netcore:
           name: .NET 5.0 benchmarks
-          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
           test-target-framework: net5.0
       - benchmark-windows-netframework:
           name: .NET Framework 4.5.2 benchmarks
@@ -39,12 +33,10 @@ workflows:
 jobs:
   test-netcore:
     parameters:
-      docker-image:
-        type: string
       test-target-framework:
         type: string
     docker:
-      - image: <<parameters.docker-image>>
+      - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
     steps:
@@ -58,12 +50,10 @@ jobs:
 
   benchmark-netcore:
     parameters:
-      docker-image:
-        type: string
       test-target-framework:
         type: string
     docker:
-      - image: <<parameters.docker-image>>
+      - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
     steps:
