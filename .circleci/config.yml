@@ -16,7 +16,7 @@ workflows:
       - test-netcore:
           name: .NET Core 3.1
           docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
-          build-target-frameworks: netcoreapp2.1
+          build-target-frameworks: netcoreapp3.1
           test-target-framework: netcoreapp3.1
           uses-native-implementation: true
       - test-netcore:
@@ -29,11 +29,13 @@ workflows:
       - benchmark-netcore:
           name: .NET Core 2.1 benchmarks
           docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
-          test-target-framework: net5.0
+          build-target-frameworks: netstandard2.0
+          test-target-framework: netcoreapp2.1
       - benchmark-netcore:
           name: .NET Core 3.1 benchmarks
           docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
-          test-target-framework: net5.0
+          build-target-frameworks: netcoreapp3.1
+          test-target-framework: netcoreapp3.1
       - benchmark-netcore:
           name: .NET 5.0 benchmarks
           docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
@@ -98,6 +100,7 @@ jobs:
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
       BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      TESTFRAMEWORKS: <<parameters.test-target-framework>>
     steps:
       - checkout
       - run:
