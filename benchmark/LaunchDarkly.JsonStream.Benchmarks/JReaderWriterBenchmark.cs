@@ -75,7 +75,7 @@ namespace LaunchDarkly.JsonStream.Benchmarks
 
         private TestStruct ReadStruct(ref JReader r)
         {
-            var obj = r.Object();
+            var obj = r.ObjectOrNull();
             if (!obj.IsDefined)
             {
                 return null;

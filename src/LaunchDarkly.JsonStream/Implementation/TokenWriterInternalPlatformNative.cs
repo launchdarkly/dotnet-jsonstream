@@ -41,6 +41,7 @@ namespace LaunchDarkly.JsonStream.Implementation
             else
             {
                 _nativeWriter.WriteNull(_propertyName);
+                _propertyName = null;
             }
         }
 
@@ -53,6 +54,7 @@ namespace LaunchDarkly.JsonStream.Implementation
             else
             {
                 _nativeWriter.WriteBoolean(_propertyName, value);
+                _propertyName = null;
             }
         }
 
@@ -65,6 +67,7 @@ namespace LaunchDarkly.JsonStream.Implementation
             else
             {
                 _nativeWriter.WriteNumber(_propertyName, value);
+                _propertyName = null;
             }
         }
 
@@ -77,6 +80,7 @@ namespace LaunchDarkly.JsonStream.Implementation
             else
             {
                 _nativeWriter.WriteNumber(_propertyName, value);
+                _propertyName = null;
             }
         }
 
@@ -95,6 +99,7 @@ namespace LaunchDarkly.JsonStream.Implementation
                 else
                 {
                     _nativeWriter.WriteString(_propertyName, value);
+                    _propertyName = null;
                 }
             }
         }
@@ -108,6 +113,7 @@ namespace LaunchDarkly.JsonStream.Implementation
             else
             {
                 _nativeWriter.WriteStartArray(_propertyName);
+                _propertyName = null;
             }
         }
 
@@ -130,6 +136,7 @@ namespace LaunchDarkly.JsonStream.Implementation
             else
             {
                 _nativeWriter.WriteStartObject(_propertyName);
+                _propertyName = null;
             }
         }
 
