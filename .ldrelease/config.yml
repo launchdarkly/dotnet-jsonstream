@@ -1,0 +1,10 @@
+publications:
+  - url: https://nuget.org/packages/LaunchDarkly.JsonStream
+    description: NuGet
+
+circleci:
+  windows:
+    context: org-global
+
+template:
+  name: dotnet-windows

@@ -1,0 +1,101 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.4.0
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-netcore:
+          name: .NET Core 2.1
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
+          test-target-framework: netcoreapp2.1
+      - test-netcore:
+          name: .NET Core 3.1
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
+          test-target-framework: netcoreapp3.1
+      - test-netcore:
+          name: .NET 5.0
+          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+          test-target-framework: net5.0
+      - test-windows-netframework:
+          name: .NET Framework 4.5.2 (Windows)
+      - benchmark-netcore:
+          name: .NET Core 2.1 benchmarks
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
+          test-target-framework: net5.0
+      - benchmark-netcore:
+          name: .NET Core 3.1 benchmarks
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
+          test-target-framework: net5.0
+      - benchmark-netcore:
+          name: .NET 5.0 benchmarks
+          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+          test-target-framework: net5.0
+      - benchmark-windows-netframework:
+          name: .NET Framework 4.5.2 benchmarks
+
+  test-netcore:
+    parameters:
+      docker-image:
+        type: string
+      test-target-framework:
+        type: string
+    docker:
+      - image: <<parameters.docker-image>>
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore test/LaunchDarkly.JsonStream.Tests
+      - run:
+          name: run tests
+          command: dotnet test test/LaunchDarkly.JsonStream.Tests/LaunchDarkly.JsonStream.Tests.csproj -f <<parameters.test-target-framework>>
+
+  benchmark-netcore:
+    parameters:
+      docker-image:
+        type: string
+      test-target-framework:
+        type: string
+    docker:
+      - image: <<parameters.docker-image>>
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
+      - run:
+          name: run benchmarks
+          command: dotnet run benchmarks/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj -f <<parameters.test-target-framework>>
+
+  test-windows-netframework:
+    executor:
+      name: win/vs2019
+      shell: powershell.exe
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore test/LaunchDarkly.JsonStream.Tests
+      - run:
+          name: run tests
+          command: dotnet test test/LaunchDarkly.CommonSdk.Tests/LaunchDarkly.CommonSdk.Tests.csproj -f net452
+
+  benchmark-windows-netframework:
+    executor:
+      name: win/vs2019
+      shell: powershell.exe
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
+      - run:
+          name: run benchmarks
+          command: dotnet run benchmarks/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj -f net452
