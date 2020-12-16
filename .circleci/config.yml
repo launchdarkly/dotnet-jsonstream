@@ -96,7 +96,7 @@ jobs:
       test-target-framework:
         type: string
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+      - image: <<parameters.docker-image>>
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
       BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
