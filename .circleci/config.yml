@@ -59,6 +59,9 @@ workflows:
       - benchmark-windows:
           name: .NET Framework 4.6.1 benchmarks (Windows)
           test-target-framework: net5.0
+          # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
+          # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
+          # with .NET Framework 4.5.x.
 
 jobs:
   test-linux:
@@ -154,9 +157,6 @@ jobs:
           command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
       - run:
           name: run benchmarks
-          command: dotnet run -c Release -f net461 --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
-          # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
-          # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
-          # with .NET Framework 4.5.x.
+          command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
       - store_artifacts:
           path: BenchmarkDotNet.Artifacts/results
