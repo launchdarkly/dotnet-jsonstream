@@ -9,9 +9,11 @@ workflows:
     jobs:
       - test-netcore:
           name: .NET Core 2.1
+          build-target-frameworks: netstandard2.0
           test-target-framework: netcoreapp2.1
       - test-netcore:
           name: .NET Core 3.1
+          build-target-frameworks: netcoreapp2.1
           test-target-framework: netcoreapp3.1
       - test-netcore:
           name: .NET 5.0
@@ -33,12 +35,17 @@ workflows:
 jobs:
   test-netcore:
     parameters:
+      build-target-frameworks:
+        type: string
+        default: ""
       test-target-framework:
         type: string
     docker:
       - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
+      BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      TESTFRAMEWORKS: <<parameters.test-target-framework>>
     steps:
       - checkout
       - run:
