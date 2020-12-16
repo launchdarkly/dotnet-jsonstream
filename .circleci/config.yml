@@ -129,6 +129,9 @@ jobs:
           command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
       - run:
           name: run benchmarks
-          command: dotnet run -c Release -f net452 --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
+          command: dotnet run -c Release -f net461 --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
+          # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
+          # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
+          # with .NET Framework 4.5.x.
       - store_artifacts:
           path: BenchmarkDotNet.Artifacts/results
