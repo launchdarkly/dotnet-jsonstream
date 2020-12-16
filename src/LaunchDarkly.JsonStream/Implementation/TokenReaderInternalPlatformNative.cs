@@ -20,6 +20,8 @@ namespace LaunchDarkly.JsonStream.Implementation
 			_alreadyRead = false;
 		}
 
+		public static bool IsPlatformNativeImplementation => true;
+
 		public Exception TranslateException(Exception e)
         {
 			switch (e)

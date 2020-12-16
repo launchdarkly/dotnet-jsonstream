@@ -26,6 +26,8 @@ namespace LaunchDarkly.JsonStream.Implementation
 			_unreadToken = null;
 		}
 
+		public static bool IsPlatformNativeImplementation => false;
+
 		// Don't need to translate exceptions in this implementation because they're all thrown by us
 		public Exception TranslateException(Exception e) => e;
 

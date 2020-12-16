@@ -12,15 +12,18 @@ workflows:
           docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
           build-target-frameworks: netstandard2.0
           test-target-framework: netcoreapp2.1
+          uses-native-implementation: false
       - test-netcore:
           name: .NET Core 3.1
           docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
           build-target-frameworks: netcoreapp2.1
           test-target-framework: netcoreapp3.1
+          uses-native-implementation: true
       - test-netcore:
           name: .NET 5.0
           docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
           test-target-framework: net5.0
+          uses-native-implementation: true
       - test-windows-netframework:
           name: .NET Framework 4.5.2 (Windows)
       - benchmark-netcore:
@@ -48,12 +51,15 @@ jobs:
         default: ""
       test-target-framework:
         type: string
+      uses-native-implementation:
+        type: boolean
     docker:
       - image: <<parameters.docker-image>>
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
       BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
       TESTFRAMEWORKS: <<parameters.test-target-framework>>
+      SHOULD_USE_SYSTEM_TEXT_JSON: <<parameters.uses-native-implementation>>
     steps:
       - checkout
       - run:
@@ -62,6 +68,21 @@ jobs:
       - run:
           name: run tests
           command: dotnet test test/LaunchDarkly.JsonStream.Tests/LaunchDarkly.JsonStream.Tests.csproj -f <<parameters.test-target-framework>>
+
+  test-windows-netframework:
+    executor:
+      name: win/default
+      shell: powershell.exe
+    environment:
+      SHOULD_USE_SYSTEM_TEXT_JSON: false
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore test/LaunchDarkly.JsonStream.Tests
+      - run:
+          name: run tests
+          command: dotnet test test/LaunchDarkly.JsonStream.Tests/LaunchDarkly.JsonStream.Tests.csproj -f net452
 
   benchmark-netcore:
     parameters:
@@ -90,19 +111,6 @@ jobs:
           command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
       - store_artifacts:
           path: BenchmarkDotNet.Artifacts/results
-
-  test-windows-netframework:
-    executor:
-      name: win/default
-      shell: powershell.exe
-    steps:
-      - checkout
-      - run:
-          name: restore packages
-          command: dotnet restore test/LaunchDarkly.JsonStream.Tests
-      - run:
-          name: run tests
-          command: dotnet test test/LaunchDarkly.JsonStream.Tests/LaunchDarkly.JsonStream.Tests.csproj -f net452
 
   benchmark-windows-netframework:
     executor:

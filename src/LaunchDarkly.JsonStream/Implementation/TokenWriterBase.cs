@@ -1,11 +1,10 @@
-﻿using System;
-
+﻿
 // The implementations of partial methods in this class are conditionally compiled from
 // either TokenWriterInternalDefault.cs or TokenWriterInternalPlatformNative.cs.
 
 namespace LaunchDarkly.JsonStream.Implementation
 {
-    public partial class TokenWriterBase
+    internal partial class TokenWriterBase
     {
         partial void Null();
         partial void Bool(bool value);

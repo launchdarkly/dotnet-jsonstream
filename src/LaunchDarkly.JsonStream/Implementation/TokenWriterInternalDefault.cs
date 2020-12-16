@@ -8,7 +8,7 @@ using System.Text;
 
 namespace LaunchDarkly.JsonStream.Implementation
 {
-    public partial class TokenWriter
+    internal partial class TokenWriter
     {
         private readonly TextWriter _w;
         private readonly char[] _tempChars = new char[30];

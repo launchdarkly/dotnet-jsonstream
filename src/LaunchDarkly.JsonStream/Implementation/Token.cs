@@ -1,7 +1,7 @@
 ﻿
 namespace LaunchDarkly.JsonStream.Implementation
 {
-    public struct Token
+    internal struct Token
     {
         /// <summary>
         /// Describes the type of the JSON value.
