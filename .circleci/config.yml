@@ -36,6 +36,7 @@ workflows:
       - benchmark-windows-netframework:
           name: .NET Framework 4.5.2 benchmarks
 
+jobs:
   test-netcore:
     parameters:
       docker-image:
@@ -76,7 +77,7 @@ workflows:
 
   test-windows-netframework:
     executor:
-      name: win/vs2019
+      name: win/default
       shell: powershell.exe
     steps:
       - checkout
@@ -89,7 +90,7 @@ workflows:
 
   benchmark-windows-netframework:
     executor:
-      name: win/vs2019
+      name: win/default
       shell: powershell.exe
     steps:
       - checkout
