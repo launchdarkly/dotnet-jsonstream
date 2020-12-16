@@ -73,7 +73,7 @@ jobs:
           command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
       - run:
           name: run benchmarks
-          command: dotnet run benchmarks/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj -f <<parameters.test-target-framework>>
+          command: dotnet run benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj -f <<parameters.test-target-framework>>
 
   test-windows-netframework:
     executor:
@@ -99,4 +99,4 @@ jobs:
           command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
       - run:
           name: run benchmarks
-          command: dotnet run benchmarks/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj -f net452
+          command: dotnet run benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj -f net452
