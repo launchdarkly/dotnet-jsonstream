@@ -9,25 +9,31 @@ workflows:
     jobs:
       - test-netcore:
           name: .NET Core 2.1
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
           build-target-frameworks: netstandard2.0
           test-target-framework: netcoreapp2.1
       - test-netcore:
           name: .NET Core 3.1
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
           build-target-frameworks: netcoreapp2.1
           test-target-framework: netcoreapp3.1
       - test-netcore:
           name: .NET 5.0
+          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
           test-target-framework: net5.0
       - test-windows-netframework:
           name: .NET Framework 4.5.2 (Windows)
       - benchmark-netcore:
           name: .NET Core 2.1 benchmarks
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
           test-target-framework: net5.0
       - benchmark-netcore:
           name: .NET Core 3.1 benchmarks
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
           test-target-framework: net5.0
       - benchmark-netcore:
           name: .NET 5.0 benchmarks
+          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
           test-target-framework: net5.0
       - benchmark-windows-netframework:
           name: .NET Framework 4.5.2 benchmarks
@@ -35,13 +41,15 @@ workflows:
 jobs:
   test-netcore:
     parameters:
+      docker-image:
+        type: string
       build-target-frameworks:
         type: string
         default: ""
       test-target-framework:
         type: string
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+      - image: <<parameters.docker-image>>
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
       BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
@@ -78,6 +86,8 @@ jobs:
       - run:
           name: run benchmarks
           command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
+      - store_artifacts:
+          path: BenchmarkDotNet.Artifacts/results
 
   test-windows-netframework:
     executor:
@@ -107,3 +117,5 @@ jobs:
       - run:
           name: run benchmarks
           command: dotnet run -c Release -f net452 --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
+      - store_artifacts:
+          path: BenchmarkDotNet.Artifacts/results
