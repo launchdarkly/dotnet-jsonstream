@@ -12,7 +12,7 @@ workflows:
           docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
           build-target-frameworks: netstandard2.0
           test-target-framework: netcoreapp2.1
-          uses-native-implementation: false
+          uses-native-implementation: true
       - test-linux:
           name: .NET Core 3.1 (Linux)
           docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
@@ -36,6 +36,10 @@ workflows:
           name: .NET Framework 4.5.2 (Windows)
           test-target-framework: net452
           uses-native-implementation: false
+      - test-windows:
+          name: .NET Framework 4.6.1 (Windows)
+          test-target-framework: net461
+          uses-native-implementation: true
       - benchmark-linux:
           name: .NET Core 2.1 benchmarks (Linux)
           docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
