@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -37,7 +38,13 @@ namespace LaunchDarkly.JsonStream
             var expected = "\"" + PlatformBehavior.GetExpectedStringEncoding(stringValue) + "\"";
 
             Assert.Equal(expected, writer.GetString());
-            Assert.Equal(Encoding.UTF8.GetBytes(expected), writer.GetUTF8Bytes());
+
+            var bytes = writer.GetUTF8Bytes();
+            Assert.Equal(Encoding.UTF8.GetBytes(expected), bytes);
+
+            var stream = writer.GetUTF8Stream();
+            var streamReader = new StreamReader(stream, Encoding.UTF8);
+            Assert.Equal(expected, streamReader.ReadToEnd());
         }
 
         public static IEnumerable<object[]> AllParams()

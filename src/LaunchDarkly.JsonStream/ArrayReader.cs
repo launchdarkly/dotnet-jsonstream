@@ -66,16 +66,8 @@ namespace LaunchDarkly.JsonStream
             {
                 return false;
             }
-            if (_afterFirst && reader._awaitingReadValue)
-            {
-                reader.SkipValue();
-            }
-            var hasNext = reader._tr.ArrayNext(!_afterFirst);
+            var hasNext = reader.ArrayNext(!_afterFirst);
             _afterFirst = true;
-            if (hasNext)
-            {
-                reader._awaitingReadValue = true;
-            }
             return hasNext;
         }
     }

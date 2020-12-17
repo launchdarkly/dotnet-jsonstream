@@ -6,7 +6,7 @@ namespace LaunchDarkly.JsonStream
     {
         public static bool WriterMustEncodeAsHex(char ch)
         {
-#if NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0
+#if USE_SYSTEM_TEXT_JSON
             return ch < 32 || ch == '"' || ch > 127;
 #else
             return false;

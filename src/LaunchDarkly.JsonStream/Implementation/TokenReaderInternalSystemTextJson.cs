@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0
+﻿#if USE_SYSTEM_TEXT_JSON
 
 using System;
 using System.Text;
@@ -6,8 +6,10 @@ using System.Text.Json;
 
 namespace LaunchDarkly.JsonStream.Implementation
 {
-    internal ref partial struct TokenReader
-    {
+#pragma warning disable CS0282 // There is no defined ordering between fields in multiple declarations of partial struct (that's OK)
+	internal ref partial struct TokenReader
+#pragma warning restore CS0282
+	{
 		private readonly byte[] _input;
 		private Utf8JsonReader _nativeReader;
 		private bool _alreadyRead;
@@ -20,7 +22,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 			_alreadyRead = false;
 		}
 
-		public static bool IsPlatformNativeImplementation => true;
+		public static bool IsSystemTextJsonImplementation => true;
 
 		public Exception TranslateException(Exception e)
         {
@@ -43,7 +45,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 				return null;
             }
 			string inputStr = Encoding.UTF8.GetString(_input);
-			string[] lines = inputStr.Replace("\r\n", "\n").Replace("\r", "\n").Split("\n");
+			string[] lines = inputStr.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 			if (line.Value >= lines.Length)
             {
 				return null;
@@ -89,14 +91,14 @@ namespace LaunchDarkly.JsonStream.Implementation
 				case JsonTokenType.Number:
 					return Token.Number(_nativeReader.GetDouble());
 				case JsonTokenType.String:
-					return Token.String(StringToken.FromString(_nativeReader.GetString()));
+					return Token.String(_nativeReader.GetString());
 				case JsonTokenType.StartArray:
 					return Token.Array();
 				case JsonTokenType.StartObject:
 					return Token.Object();
 				default:
 					throw MakeSyntaxException(string.Format("unexpected JSON token \"{0}\"",
-						Encoding.UTF8.GetString(_nativeReader.ValueSpan)));
+						Encoding.UTF8.GetString(_nativeReader.ValueSpan.ToArray())));
             }
 		}
 
@@ -114,7 +116,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 			return true;
 		}
 
-		private StringToken? ObjectNextInternal(bool first)
+		private PropertyNameToken ObjectNextInternal(bool first)
 		{
 			if (!_nativeReader.Read())
             {
@@ -123,11 +125,32 @@ namespace LaunchDarkly.JsonStream.Implementation
 			switch (_nativeReader.TokenType)
 			{
 				case JsonTokenType.EndObject:
-					return null;
+					return new PropertyNameToken();
 				case JsonTokenType.PropertyName:
-					// It's common for property names to contain only printable ASCII characters. In that
-					// case, we can avoid a string allocation by returning a view on the internal data.
-					return StringToken.FromString(_nativeReader.GetString());
+					// It's common for property names to contain only unescaped ASCII characters. In that
+					// case, we can avoid a string allocation by returning a view on the internal data
+					// (assuming that data is contiguous in memory, which it is if HasValueSequence is
+					// false).
+					if (!_nativeReader.HasValueSequence)
+                    {
+						var span = _nativeReader.ValueSpan;
+						var len = span.Length;
+						bool isASCII = true;
+						for (var i = 0; i < len; i++)
+                        {
+							var ch = span[i];
+							if (ch < 32 || ch > 127 || ch == '\\')
+                            {
+								isASCII = false;
+								break;
+                            }
+                        }
+						if (isASCII)
+                        {
+							return new PropertyNameToken(span);
+                        }
+                    }
+					return new PropertyNameToken(_nativeReader.GetString());
 				default:
 					throw MakeSyntaxException(string.Format("unexpected JSON token \"{0}\"",
 						_nativeReader.ValueSpan.ToString()));

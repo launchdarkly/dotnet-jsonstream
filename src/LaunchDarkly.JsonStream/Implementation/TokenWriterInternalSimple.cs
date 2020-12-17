@@ -1,4 +1,4 @@
-﻿#if !NETCOREAPP3_0 && !NETCOREAPP3_1 && !NET5_0
+﻿#if !USE_SYSTEM_TEXT_JSON
 
 // This implementation of TokenWriter is used on platforms that do not have the
 // System.Text.Json API.
@@ -24,6 +24,9 @@ namespace LaunchDarkly.JsonStream.Implementation
         public byte[] GetUTF8Bytes() =>
             Encoding.UTF8.GetBytes(_w.ToString());
 
+        public Stream GetUTF8Stream() =>
+            new MemoryStream(GetUTF8Bytes());
+        
         public void Null()
         {
             _w.Write("null");

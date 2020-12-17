@@ -27,6 +27,28 @@ namespace LaunchDarkly.JsonStream
         }
 
         [Fact]
+        public void CanUseNameIsInsteadOfGettingNameAsString()
+        {
+            var r = JReader.FromString(@"{""a"":1, ""b"":2}");
+            int a = 0, b = 0;
+
+            for (var obj = r.Object(); obj.Next(ref r);)
+            {
+                if (obj.NameIs("a"))
+                {
+                    a = r.Int();
+                }
+                else if (obj.NameIs("b"))
+                {
+                    b = r.Int();
+                }
+            }
+
+            Assert.Equal(1, a);
+            Assert.Equal(2, b);
+        }
+
+        [Fact]
         public void RecursivelySkipsUnusedValue()
         {
             var r = JReader.FromString(@"{""a"":1, ""ignore"":[false,false,false], ""b"":2}");

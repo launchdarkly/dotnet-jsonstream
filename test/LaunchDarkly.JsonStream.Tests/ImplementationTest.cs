@@ -15,11 +15,11 @@ namespace LaunchDarkly.JsonStream
             {
                 if (value == "true")
                 {
-                    Assert.True(Implementation.Properties.IsPlatformNativeImplementation);
+                    Assert.True(Implementation.Properties.IsSystemTextJsonImplementation);
                 }
                 else if (value == "false")
                 {
-                    Assert.False(Implementation.Properties.IsPlatformNativeImplementation);
+                    Assert.False(Implementation.Properties.IsSystemTextJsonImplementation);
                 }
                 else
                 {

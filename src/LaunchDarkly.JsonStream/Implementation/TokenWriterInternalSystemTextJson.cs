@@ -1,8 +1,8 @@
-﻿#if NETCOREAPP3_0 || NETCOREAPP3_1 || NET5_0
+﻿#if USE_SYSTEM_TEXT_JSON
 
 // This implementation of TokenWriter is used on platforms that have the System.Text.Json API.
 
-using System.Buffers;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 
@@ -10,26 +10,51 @@ namespace LaunchDarkly.JsonStream.Implementation
 {
     internal partial class TokenWriter
     {
-        private readonly ArrayBufferWriter<byte> _buffer;
+        private readonly MemoryStream _buffer;
         private readonly Utf8JsonWriter _nativeWriter;
         private string _propertyName;
 
         public TokenWriter(int initialCapacity)
         {
-            _buffer = new ArrayBufferWriter<byte>(initialCapacity);
+            _buffer = new MemoryStream(initialCapacity);
             _nativeWriter = new Utf8JsonWriter(_buffer);
+        }
+
+        public TokenWriter(Utf8JsonWriter nativeWriter)
+        {
+            _buffer = null;
+            _nativeWriter = nativeWriter;
         }
 
         public string GetString()
         {
+            if (_buffer is null)
+            {
+                return null;
+            }
             _nativeWriter.Flush();
-            return Encoding.UTF8.GetString(_buffer.WrittenSpan);
+            return Encoding.UTF8.GetString(_buffer.ToArray());
         }
 
         public byte[] GetUTF8Bytes()
         {
+            if (_buffer is null)
+            {
+                return null;
+            }
             _nativeWriter.Flush();
-            return _buffer.WrittenSpan.ToArray();
+            return _buffer.ToArray();
+        }
+
+        public Stream GetUTF8Stream()
+        {
+            if (_buffer is null)
+            {
+                return null;
+            }
+            _nativeWriter.Flush();
+            _buffer.Position = 0;
+            return _buffer;
         }
 
         public void Null()

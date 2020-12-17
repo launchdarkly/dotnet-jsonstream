@@ -2,13 +2,13 @@
 using System.Text;
 
 // The implementations of some methods in this class are conditionally compiled from
-// either TokenReaderInternalDefault.cs or TokenReaderInternalPlatformNative.cs.
+// either TokenReaderInternalSimple.cs or TokenReaderInternalSystemTextJson.cs.
 
 namespace LaunchDarkly.JsonStream.Implementation
 {
-#pragma warning disable CS0282 // There is no defined ordering between fields in multiple declarations of partial struct
+#pragma warning disable CS0282 // There is no defined ordering between fields in multiple declarations of partial struct (that's OK)
     internal ref partial struct TokenReader
-#pragma warning restore CS0282 // There is no defined ordering between fields in multiple declarations of partial struct
+#pragma warning restore CS0282
     {
 		private Token? _unreadToken;
 
@@ -49,7 +49,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 		public double Number() =>
 			Consume(ValueType.Number).NumberValue;
 		
-		public StringToken String() =>
+		public string String() =>
 			Consume(ValueType.String).StringValue;
 
 		public void StartArray() =>
@@ -61,7 +61,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 		public void StartObject() =>
 			Consume(ValueType.Object);
 
-		public StringToken? ObjectNext(bool first) =>
+		public PropertyNameToken ObjectNext(bool first) =>
 			ObjectNextInternal(first);
 
 		public Token Any() =>
@@ -110,6 +110,6 @@ namespace LaunchDarkly.JsonStream.Implementation
 		// private int LastPosInternal { get; }
 		// private Token? ParseTokenInternal();
 		// private bool ArrayNextInternal(bool first);
-		// private StringToken? ObjectNextInternal(bool first);
+		// private PropertyNameToken ObjectNextInternal(bool first);
 	}
 }

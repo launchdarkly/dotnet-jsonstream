@@ -1,4 +1,5 @@
-﻿
+﻿using LaunchDarkly.JsonStream.Implementation;
+
 namespace LaunchDarkly.JsonStream
 {
     /// <summary>
@@ -17,9 +18,9 @@ namespace LaunchDarkly.JsonStream
     /// </para>
     /// <code>
     ///     var values = new Dictionary&lt;string, string&gt;()
-    ///     for (var obj = r.ObjectOrNull(); obj.Next();)
+    ///     for (var obj = reader.ObjectOrNull(); obj.Next(ref reader);)
     ///     {
-    ///         values[obj.Name.ToString()] = r.String()
+    ///         values[obj.Name.ToString()] = reader.String()
     ///     }
     /// </code>
     /// <para>
@@ -28,15 +29,15 @@ namespace LaunchDarkly.JsonStream
     /// </para>
     /// <code>
     ///     int aValue, bValue;
-    ///     for (var obj = r.ObjectOrNull(); obj.Next();)
+    ///     for (var obj = reader.ObjectOrNull(); obj.Next(ref reader);)
     ///     {
     ///         if (obj.Name == "a")
     ///         {
-    ///             a = r.Int();
+    ///             a = reader.Int();
     ///         }
     ///         else if (obj.Name == "b")
     ///         {
-    ///             b = r.Int();
+    ///             b = reader.Int();
     ///         }
     ///     }
     /// </code>
@@ -56,7 +57,7 @@ namespace LaunchDarkly.JsonStream
         private readonly string[] _requiredProperties;
         private readonly bool[] _foundProperties;
         private bool _afterFirst;
-        private StringToken _name;
+        private PropertyNameToken _name;
 
         internal ObjectReader(bool defined, string[] requiredProperties)
         {
@@ -65,7 +66,7 @@ namespace LaunchDarkly.JsonStream
             _foundProperties = !defined || requiredProperties is null ?
                 null : new bool[requiredProperties.Length];
             _afterFirst = false;
-            _name = StringToken.Empty;
+            _name = new PropertyNameToken();
         }
 
         /// <summary>
@@ -81,13 +82,16 @@ namespace LaunchDarkly.JsonStream
         /// The name of the current object property.
         /// </summary>
         /// <remarks>
-        /// This value is initialized by calling <see cref="Next"/>. It returns the name as a
+        /// <para>
+        /// This value is initialized by calling <see cref="Next"/>.
+        /// </para>
+        /// It returns the name as a
         /// <see cref="StringToken"/> rather than a <c>string</c> for efficiency, since this can often
         /// avoid the overhead of allocating strings that applications normally will not need to retain.
         /// If there is no current property (that is, if <c>Next</c> returned false or was never called)
         /// then it returns <see cref="StringToken.Empty"/>.
         /// </remarks>
-        public StringToken Name => _name;
+        public string Name => _name.ToString();
 
         /// <summary>
         /// Adds a requirement that the specified JSON property name(s) must appear in the JSON object at
@@ -100,7 +104,7 @@ namespace LaunchDarkly.JsonStream
         /// </para>
         /// <code>
         ///     var requiredProps = new string[] { "key", "name" };
-        ///     for (var obj = reader.Object().WithRequiredProperties(requiredProps); obj.Next();)
+        ///     for (var obj = reader.Object().WithRequiredProperties(requiredProps); obj.Next(ref reader);)
         ///     {
         //         switch (obj.Name) { ... }
         //      }
@@ -141,21 +145,15 @@ namespace LaunchDarkly.JsonStream
             {
                 return false;
             }
-            if (_afterFirst && reader._awaitingReadValue)
-            {
-                reader.SkipValue();
-            }
-            var nextName = reader._tr.ObjectNext(!_afterFirst);
+            _name = reader.ObjectNext(!_afterFirst);
             _afterFirst = true;
-            if (nextName.HasValue)
+            if (_name.IsDefined)
             {
-                _name = nextName.Value;
-                reader._awaitingReadValue = true;
                 if (_requiredProperties != null)
                 {
                     for (int i = 0; i < _requiredProperties.Length; i++)
                     {
-                        if (_name == _requiredProperties[i])
+                        if (_name.Equals(_requiredProperties[i]))
                         {
                             _foundProperties[i] = true;
                             break;
@@ -164,7 +162,6 @@ namespace LaunchDarkly.JsonStream
                 }
                 return true;
             }
-            _name = StringToken.Empty;
             if (_requiredProperties != null)
             {
                 for (int i = 0; i < _requiredProperties.Length; i++)
@@ -172,11 +169,16 @@ namespace LaunchDarkly.JsonStream
                     if (!_foundProperties[i])
                     {
                         throw new RequiredPropertyException(_requiredProperties[i],
-                            reader._tr.LastPos);
+                            reader.LastPos);
                     }
                 }
             }
             return false;
+        }
+
+        public bool NameIs(string expectedName)
+        {
+            return _name.Equals(expectedName);
         }
     }
 }

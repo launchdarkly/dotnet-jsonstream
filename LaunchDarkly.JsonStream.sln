@@ -5,7 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaunchDarkly.JsonStream", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaunchDarkly.JsonStream.Benchmarks", "benchmark\LaunchDarkly.JsonStream.Benchmarks\LaunchDarkly.JsonStream.Benchmarks.csproj", "{C8FC8781-3E8C-4B37-B272-7FFD1C2B723B}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "LaunchDarkly.JsonStream.Tests", "test\LaunchDarkly.JsonStream.Tests\LaunchDarkly.JsonStream.Tests.csproj", "{022DAAED-305E-430A-BE0D-3400EF60AF87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaunchDarkly.JsonStream.Tests", "test\LaunchDarkly.JsonStream.Tests\LaunchDarkly.JsonStream.Tests.csproj", "{022DAAED-305E-430A-BE0D-3400EF60AF87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FCBB04DF-093B-467E-B8E7-3D6F81FEAF93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

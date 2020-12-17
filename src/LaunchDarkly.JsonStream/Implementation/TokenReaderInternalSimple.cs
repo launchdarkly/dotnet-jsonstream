@@ -1,4 +1,4 @@
-﻿#if !NETCOREAPP3_0 && !NETCOREAPP3_1 && !NET5_0
+﻿#if !USE_SYSTEM_TEXT_JSON
 
 // This implementation of low-level TokenReader methods is used on platforms that do not have the
 // System.Text.Json API.
@@ -8,7 +8,9 @@ using System.Text;
 
 namespace LaunchDarkly.JsonStream.Implementation
 {
+#pragma warning disable CS0282 // There is no defined ordering between fields in multiple declarations of partial struct (that's OK)
     internal ref partial struct TokenReader
+#pragma warning restore CS0282
     {
 		private readonly char[] _buf;
 		private readonly int _length;
@@ -26,7 +28,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 			_unreadToken = null;
 		}
 
-		public static bool IsPlatformNativeImplementation => false;
+		public static bool IsSystemTextJsonImplementation => false;
 
 		// Don't need to translate exceptions in this implementation because they're all thrown by us
 		public Exception TranslateException(Exception e) => e;
@@ -45,15 +47,15 @@ namespace LaunchDarkly.JsonStream.Implementation
 			{
 				for (; _pos < _length && char.IsLetter(_buf[_pos]); _pos++) { }
 				var st = StringToken.FromChars(_buf, _lastPos, _pos - _lastPos);
-				if (st == "null")
+				if (st.Equals("null"))
 				{
 					return Token.Null();
 				}
-				if (st == "true")
+				if (st.Equals("true"))
 				{
 					return Token.Bool(true);
 				}
-				if (st == "false")
+				if (st.Equals("false"))
 				{
 					return Token.Bool(false);
 				}
@@ -66,7 +68,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 			else if (ch == '"')
 			{
 				var st = ReadString();
-				return Token.String(st);
+				return Token.String(st.ToString());
 			}
 			else if (ch == '[')
 			{
@@ -101,12 +103,12 @@ namespace LaunchDarkly.JsonStream.Implementation
 			return true;
 		}
 
-		private StringToken? ObjectNextInternal(bool first)
+		private PropertyNameToken ObjectNextInternal(bool first)
 		{
 			var ch = SkipWhitespaceAndRequireChar();
 			if (ch == '}')
 			{
-				return null;
+				return new PropertyNameToken();
 			}
 			if (!first)
 			{
@@ -128,7 +130,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 			{
 				throw MakeSyntaxException("expected colon");
 			}
-			return st;
+			return new PropertyNameToken(st);
 		}
 
 		private char? SkipWhitespaceAndMaybeReadChar()

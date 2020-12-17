@@ -58,9 +58,9 @@ namespace LaunchDarkly.JsonStream
         public double NumberValue { get; }
 
         /// <summary>
-        /// The value if the JSON value is a string, or an empty <see cref="StringToken"/> otherwise.
+        /// The value if the JSON value is a string, or null otherwise.
         /// </summary>
-        public StringToken StringValue { get; }
+        public string StringValue { get; }
 
         /// <summary>
         /// An <see cref="ArrayReader"/> that can be used to iterate through the array elements if the JSON
@@ -75,7 +75,7 @@ namespace LaunchDarkly.JsonStream
         public ObjectReader ObjectValue { get; }
 
         private AnyValue(ValueType valueType, bool boolVal, double numberVal,
-            StringToken stringVal, ArrayReader arrayVal, ObjectReader objectVal)
+            string stringVal, ArrayReader arrayVal, ObjectReader objectVal)
         {
             Type = valueType;
             BoolValue = boolVal;
@@ -90,7 +90,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         /// <returns>an <c>AnyValue</c></returns>
         public static AnyValue Null() =>
-            new AnyValue(ValueType.Null, false, 0, StringToken.Empty,
+            new AnyValue(ValueType.Null, false, 0, null,
                 new ArrayReader(), new ObjectReader());
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         /// <returns>an <c>AnyValue</c></returns>
         public static AnyValue Bool(bool value) =>
-            new AnyValue(ValueType.Bool, value, 0, StringToken.Empty,
+            new AnyValue(ValueType.Bool, value, 0, null,
                 new ArrayReader(), new ObjectReader());
 
         /// <summary>
@@ -106,14 +106,14 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         /// <returns>an <c>AnyValue</c></returns>
         public static AnyValue Number(double value) =>
-            new AnyValue(ValueType.Number, false, value, StringToken.Empty,
+            new AnyValue(ValueType.Number, false, value, null,
                 new ArrayReader(), new ObjectReader());
 
         /// <summary>
         /// Initializes a string value.
         /// </summary>
         /// <returns>an <c>AnyValue</c></returns>
-        public static AnyValue String(StringToken value) =>
+        public static AnyValue String(string value) =>
             new AnyValue(ValueType.String, false, 0, value,
                 new ArrayReader(), new ObjectReader());
 
@@ -122,7 +122,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         /// <returns>an <c>AnyValue</c></returns>
         public static AnyValue Array(ArrayReader value) =>
-            new AnyValue(ValueType.Array, false, 0, StringToken.Empty,
+            new AnyValue(ValueType.Array, false, 0, null,
                 value, new ObjectReader());
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         /// <returns>an <c>AnyValue</c></returns>
         public static AnyValue Object(ObjectReader value) =>
-            new AnyValue(ValueType.Object, false, 0, StringToken.Empty,
+            new AnyValue(ValueType.Object, false, 0, null,
                 new ArrayReader(), value);
     }
 }

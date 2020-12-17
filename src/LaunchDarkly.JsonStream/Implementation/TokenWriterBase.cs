@@ -1,6 +1,6 @@
 ﻿
 // The implementations of partial methods in this class are conditionally compiled from
-// either TokenWriterInternalDefault.cs or TokenWriterInternalPlatformNative.cs.
+// either TokenWriterInternalSimple.cs or TokenWriterInternalSystemTextJson.cs.
 
 namespace LaunchDarkly.JsonStream.Implementation
 {

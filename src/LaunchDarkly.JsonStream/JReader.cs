@@ -55,9 +55,9 @@ namespace LaunchDarkly.JsonStream
     /// </remarks>
     public ref struct JReader
     {
-        // These internal properties are accessed by ArrayReader & ObjectReader
-        internal TokenReader _tr;
-        internal bool _awaitingReadValue;
+        private readonly IReaderDelegate _delegate;
+        private TokenReader _tr;
+        private bool _awaitingReadValue;
 
         /// <summary>
         /// Creates a <see cref="JReader"/> that processes JSON data from a stirng.
@@ -69,16 +69,26 @@ namespace LaunchDarkly.JsonStream
             return new JReader(new TokenReader(input));
         }
 
-        private JReader(TokenReader tokenReader)
+        internal JReader(TokenReader tokenReader)
         {
             _tr = tokenReader;
             _awaitingReadValue = false;
+            _delegate = null;
         }
+
+        internal JReader(IReaderDelegate d)
+        {
+            _tr = new TokenReader();
+            _awaitingReadValue = false;
+            _delegate = d;
+        }
+
+        internal int LastPos => _tr.LastPos;
 
         /// <summary>
         /// True if all of the input has been consumed (not counting whitespace).
         /// </summary>
-        public bool EOF => _tr.EOF;
+        public bool EOF => _delegate == null ? _tr.EOF : _delegate.EOF;
 
         /// <summary>
         /// Attempts to read a null value.
@@ -88,6 +98,11 @@ namespace LaunchDarkly.JsonStream
         public void Null()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                _delegate.Null();
+                return;
+            }
             if (!_tr.Null())
             {
                 var pos = _tr.LastPos;
@@ -105,7 +120,7 @@ namespace LaunchDarkly.JsonStream
         public bool Bool()
         {
             _awaitingReadValue = false;
-            return _tr.Bool();
+            return _delegate == null ? _tr.Bool() : _delegate.Bool();
         }
 
         /// <summary>
@@ -117,7 +132,8 @@ namespace LaunchDarkly.JsonStream
         public bool? BoolOrNull()
         {
             _awaitingReadValue = false;
-            return _tr.Null() ? null : (bool?)_tr.Bool();
+            return _delegate == null ?
+                (_tr.Null() ? null : (bool?)_tr.Bool()) : _delegate.BoolOrNull();
         }
 
         /// <summary>
@@ -129,7 +145,7 @@ namespace LaunchDarkly.JsonStream
         public int Int()
         {
             _awaitingReadValue = false;
-            return (int)_tr.Number();
+            return _delegate == null ? (int)_tr.Number() : (int)_delegate.Number();
         }
 
         /// <summary>
@@ -141,6 +157,11 @@ namespace LaunchDarkly.JsonStream
         public int? IntOrNull()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                var n = _delegate.NumberOrNull();
+                return n.HasValue ? (int)n.Value : (int?)null;
+            }
             return _tr.Null() ? null : (int?)_tr.Number();
         }
 
@@ -153,7 +174,7 @@ namespace LaunchDarkly.JsonStream
         public long Long()
         {
             _awaitingReadValue = false;
-            return (long)_tr.Number();
+            return _delegate == null ? (long)_tr.Number() : (long)_delegate.Number();
         }
 
         /// <summary>
@@ -165,6 +186,11 @@ namespace LaunchDarkly.JsonStream
         public long? LongOrNull()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                var n = _delegate.NumberOrNull();
+                return n.HasValue ? (long)n.Value : (long?)null;
+            }
             return _tr.Null() ? null : (long?)_tr.Number();
         }
 
@@ -177,7 +203,7 @@ namespace LaunchDarkly.JsonStream
         public double Double()
         {
             _awaitingReadValue = false;
-            return _tr.Number();
+            return _delegate == null ? _tr.Number() : _delegate.Number();
         }
 
         /// <summary>
@@ -189,6 +215,10 @@ namespace LaunchDarkly.JsonStream
         public double? DoubleOrNull()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                return _delegate.NumberOrNull();
+            }
             return _tr.Null() ? null : (double?)_tr.Number();
         }
 
@@ -201,7 +231,7 @@ namespace LaunchDarkly.JsonStream
         public string String()
         {
             _awaitingReadValue = false;
-            return _tr.String().ToString();
+            return _delegate == null ? _tr.String() : _delegate.String();
         }
 
         /// <summary>
@@ -213,31 +243,11 @@ namespace LaunchDarkly.JsonStream
         public string StringOrNull()
         {
             _awaitingReadValue = false;
-            return _tr.Null() ? null : _tr.String().ToString();
-        }
-
-        /// <summary>
-        /// Attempts to read a non-null string value as a <see cref="StringToken"/>.
-        /// </summary>
-        /// <returns>the string value</returns>
-        /// <exception cref="TypeException">if the next token is not a string</exception>
-        /// <exception cref="SyntaxException">if there is a JSON parsing error</exception>
-        public StringToken StringToken()
-        {
-            _awaitingReadValue = false;
-            return _tr.String();
-        }
-
-        /// <summary>
-        /// Attempts to read either a string value as a <see cref="StringToken"/> or a null.
-        /// </summary>
-        /// <returns>a <see cref="StringToken"/> or null</returns>
-        /// <exception cref="TypeException">if the next token is neither a string nor a null</exception>
-        /// <exception cref="SyntaxException">if there is a JSON parsing error</exception>
-        public StringToken? StringTokenOrNull()
-        {
-            _awaitingReadValue = false;
-            return _tr.Null() ? null : (StringToken?)_tr.String();
+            if (_delegate != null)
+            {
+                return _delegate.StringOrNull();
+            }
+            return _tr.Null() ? null : _tr.String();
         }
 
         /// <summary>
@@ -259,6 +269,10 @@ namespace LaunchDarkly.JsonStream
         public ArrayReader Array()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                return _delegate.Array();
+            }
             _tr.StartArray();
             return new ArrayReader(true);
         }
@@ -284,6 +298,10 @@ namespace LaunchDarkly.JsonStream
         public ArrayReader ArrayOrNull()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                return _delegate.ArrayOrNull();
+            }
             if (_tr.Null())
             {
                 return new ArrayReader(false);
@@ -311,6 +329,10 @@ namespace LaunchDarkly.JsonStream
         public ObjectReader Object()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                return _delegate.Object();
+            }
             _tr.StartObject();
             return new ObjectReader(true, null);
         }
@@ -336,6 +358,10 @@ namespace LaunchDarkly.JsonStream
         public ObjectReader ObjectOrNull()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                return _delegate.ObjectOrNull();
+            }
             if (_tr.Null())
             {
                 return new ObjectReader(false, null);
@@ -365,6 +391,10 @@ namespace LaunchDarkly.JsonStream
         public AnyValue Any()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                return _delegate.Any();
+            }
             var token = _tr.Any();
             switch (token.Type)
             {
@@ -394,6 +424,11 @@ namespace LaunchDarkly.JsonStream
         public void SkipValue()
         {
             _awaitingReadValue = false;
+            if (_delegate != null)
+            {
+                _delegate.SkipValue();
+                return;
+            }
             var av = Any();
             switch (av.Type)
             {
@@ -429,6 +464,31 @@ namespace LaunchDarkly.JsonStream
         public Exception TranslateException(Exception e)
         {
             return _tr.TranslateException(e);
+        }
+
+        internal bool ArrayNext(bool first)
+        {
+            if (!first && _awaitingReadValue)
+            {
+                SkipValue();
+            }
+            if (_delegate == null ? _tr.ArrayNext(first) : _delegate.ArrayNext(first))
+            {
+                _awaitingReadValue = true;
+                return true;
+            }
+            return false;
+        }
+
+        internal PropertyNameToken ObjectNext(bool first)
+        {
+            if (!first && _awaitingReadValue)
+            {
+                SkipValue();
+            }
+            var ret = _delegate == null ? _tr.ObjectNext(first) : _delegate.ObjectNext(first);
+            _awaitingReadValue = ret.IsDefined;
+            return ret;
         }
     }
 }

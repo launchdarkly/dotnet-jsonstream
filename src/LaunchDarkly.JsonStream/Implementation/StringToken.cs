@@ -1,14 +1,15 @@
 ﻿using System;
 
-namespace LaunchDarkly.JsonStream
+namespace LaunchDarkly.JsonStream.Implementation
 {
     /// <summary>
-    /// Used by <see cref="JReader"/> to return a string value without allocating a string.
+    /// Used by <see cref="JReader"/> to return a string value in situations where it may or may
+    /// not be desirable to allocate a <c>string</c> instance.
     /// </summary>
     /// <remarks>
     /// <para>
     /// <c>StringToken</c> represents a JSON string that was parsed from the input data by
-    /// <see cref="JReader"/>. Under most circumstances, the <c>StringToken</c> will simply be a
+    /// <see cref="JReader"/>. Under some circumstances, the <c>StringToken</c> will simply be a
     /// view into the original data, rather than a copy; it can be compared to other strings
     /// without causing any allocations. In other cases, <c>JReader</c> will need to allocate a
     /// string, but it will wrap the string in a <c>StringToken</c> so it looks the same to your
@@ -40,16 +41,11 @@ namespace LaunchDarkly.JsonStream
     /// efficient than allocating a stirng value.
     /// </para>
     /// </remarks>
-    public struct StringToken : IEquatable<StringToken>, IEquatable<string>
+    internal ref struct StringToken
     {
         private readonly string _str;
         private readonly char[] _array;
         private readonly int _offset, _length;
-
-        /// <summary>
-        /// A <c>StringToken</c> representing an empty string.
-        /// </summary>
-        public static readonly StringToken Empty = new StringToken(null, null, 0, 0);
 
         /// <summary>
         /// Creates a <c>StringToken</c> that wraps an existing string.
@@ -81,7 +77,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         public int Length => _length;
 
-#if NET5_0 || NETSTANDARD2_1
+#if USE_SYSTEM_TEXT_JSON
         /// <summary>
         /// Converts the <c>StringToken</c> to a <c>ReadOnlySpan</c>.
         /// </summary>
@@ -91,27 +87,6 @@ namespace LaunchDarkly.JsonStream
             _str.AsSpan();
 #endif
 
-#pragma warning disable CS1591  // don't need XML comments for these standard methods
-        public static bool operator ==(StringToken st, string s) => st.Equals(s);
-
-        public static bool operator ==(StringToken st, StringToken st1) => st.Equals(st1);
-
-        public static bool operator !=(StringToken st, string s) => !st.Equals(s);
-
-        public static bool operator !=(StringToken st, StringToken st1) => !st.Equals(st1);
-
-        public static implicit operator StringToken(string s) => StringToken.FromString(s);
-#pragma warning restore CS1591
-
-        /// <summary>
-        /// Compares this value to an object that can be either a <c>string</c> or a <c>StringToken</c>.
-        /// </summary>
-        /// <param name="obj">the value to compare</param>
-        /// <returns>true if the values are logically equal</returns>
-        public override bool Equals(object obj) =>
-            (obj is string s && Equals(s)) ||
-            (obj is StringToken st && Equals(st));
-        
         /// <summary>
         /// Compares this value to another <c>StringToken</c>.
         /// </summary>
@@ -231,7 +206,7 @@ namespace LaunchDarkly.JsonStream
             {
                 return long.Parse(_str);
             }
-#if NET5_0 || NETSTANDARD2_1
+#if NET5_0 || NETCOREAPP3_1
             return long.Parse(AsSpan());
 #else
             var minus = false;
@@ -264,7 +239,7 @@ namespace LaunchDarkly.JsonStream
         /// Attempts to parse the string token as a number.
         /// </summary>
         /// <remarks>
-        /// In .NET Core 2.1+ and .NET 5.0+, this is implemented efficiently with
+        /// In .NET Core 3.1+ and .NET 5.0+, this is implemented efficiently with
         /// <c>double.Parse(ReadOnlySpan&lt;char&gt;)</c>. Otherwise it requires converting
         /// the <c>StringToken</c> to a <c>string</c> internally.
         /// </remarks>
@@ -276,7 +251,7 @@ namespace LaunchDarkly.JsonStream
             {
                 return double.Parse(_str);
             }
-#if NET5_0 || NETSTANDARD2_1
+#if NET5_0 || NETCOREAPP3_1
             return double.Parse(AsSpan());
 #else
             return double.Parse(ToString());

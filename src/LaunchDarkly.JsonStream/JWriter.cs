@@ -1,4 +1,5 @@
-﻿using LaunchDarkly.JsonStream.Implementation;
+﻿using System.IO;
+using LaunchDarkly.JsonStream.Implementation;
 
 namespace LaunchDarkly.JsonStream
 {
@@ -43,11 +44,27 @@ namespace LaunchDarkly.JsonStream
         /// <param name="initialCapacity">the number of characters to preallocate</param>
         /// <returns>a new <see cref="JWriter"/></returns>
         public static JWriter NewWithInitialCapacity(int initialCapacity) =>
-            new JWriter(initialCapacity);
+            new JWriter(new TokenWriter(initialCapacity));
 
-        private JWriter(int initialCapacity)
+#if USE_SYSTEM_TEXT_JSON
+        /// <summary>
+        /// Constructs a new instance that writes to an existing <c>Utf8JsonWriter</c>.
+        /// </summary>
+        /// <remarks>
+        /// This method only exists on platforms where <c>System.Text.Json</c> is available.
+        /// It allows <c>JWriter</c> to be used within a custom serializer for that API.
+        /// </remarks>
+        /// <param name="writer">a <see cref="System.Text.Json.Utf8JsonWriter"/></param>
+        /// <returns>a new <see cref="JWriter"/></returns>
+        public static JWriter NewWithUtf8JsonWriter(System.Text.Json.Utf8JsonWriter writer)
         {
-            _tw = new TokenWriter(initialCapacity);
+            return new JWriter(new TokenWriter(writer));
+        }
+#endif
+
+        private JWriter(TokenWriter tokenWriter)
+        {
+            _tw = tokenWriter;
         }
 
         /// <summary>
@@ -71,6 +88,17 @@ namespace LaunchDarkly.JsonStream
         /// <returns>a UTF8-encoded byte array</returns>
         public byte[] GetUTF8Bytes() =>
             _tw.GetUTF8Bytes();
+
+        /// <summary>
+        /// Returns the output JSON data as a <see cref="Stream"/> of UTF8-encoded bytes.
+        /// </summary>
+        /// <remarks>
+        /// This is defined separately from <see cref="GetUTF8Bytes"/> for situations in which it is
+        /// preferable to read from the existing buffered data rather than copying it to a new array.
+        /// </remarks>
+        /// <returns>a UTF8-encoded byte array</returns>
+        public Stream GetUTF8Stream() =>
+            _tw.GetUTF8Stream();
 
         /// <inheritdoc/>
         public void Null()

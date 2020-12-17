@@ -11,13 +11,11 @@ namespace LaunchDarkly.JsonStream.Implementation
         /// as its underlying implementation.
         /// </summary>
         /// <remarks>
-        /// This should be the case if your target framework is .NET Core 3.x or .NET 5.x.
-        /// The <c>System.Text.Json</c> implementation is faster than the default. The
-        /// library is <i>not</i> able to use <c>System.Text.Json</c> on other platforms
-        /// even if it is installed separately as a NuGet package; it has to select the
-        /// implementation when the library is built.
+        /// This should be the case for all target frameworks except .NET Framework 4.5.x,
+        /// where <c>System.Text.Json</c> is not available; in that case, <c>LaunchDarkly.JsonStream</c>
+        /// uses a less efficient implementation of its own.
         /// </remarks>
-        public static bool IsPlatformNativeImplementation =>
-            TokenReader.IsPlatformNativeImplementation;
+        public static bool IsSystemTextJsonImplementation =>
+            TokenReader.IsSystemTextJsonImplementation;
     }
 }

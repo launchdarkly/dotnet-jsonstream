@@ -7,7 +7,7 @@
       SDKs which do not consider "net5.0" to be a valid target framework that can be
       referenced in a project file.
     -->
-    <BuildFrameworks Condition="'$(BUILDFRAMEWORKS)' == ''">netstandard2.0;netcoreapp3.1;net5.0;net452</BuildFrameworks>
+    <BuildFrameworks Condition="'$(BUILDFRAMEWORKS)' == ''">netstandard2.0;netcoreapp3.1;net5.0;net452;net461</BuildFrameworks>
     <TargetFrameworks>$(BUILDFRAMEWORKS)</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <AssemblyName>LaunchDarkly.JsonStream</AssemblyName>
@@ -19,6 +19,18 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- System.Text.Json is built into the standard library in .NET Core 3.x and .NET 5.0.
+       It is available as a NuGet package in .NET Standard 2.0 and .NET Framework 4.6.1.
+       It is not available in .NET Framework 4.5.2. -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' or '$(TargetFramework)' == 'net461'">
+    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' != 'net452'">
+    <!-- USE_SYSTEM_TEXT_JSON is what we look for in conditionally-compiled code -->
+    <DefineConstants>$(DefineConstants);USE_SYSTEM_TEXT_JSON</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
