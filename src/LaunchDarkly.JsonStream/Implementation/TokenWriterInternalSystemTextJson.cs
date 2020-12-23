@@ -87,9 +87,13 @@ namespace LaunchDarkly.JsonStream.Implementation
         }
 
 #if NETCOREAPP3_1 || NET5_0
-        // This method can only 
         public ReadOnlyMemory<byte> GetUtf8ReadOnlyMemory()
         {
+            if (_buffer is null)
+            {
+                return null;
+            }
+            _nativeWriter.Flush();
             return _buffer.WrittenMemory;
         }
 #endif
