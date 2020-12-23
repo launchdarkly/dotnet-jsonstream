@@ -25,7 +25,11 @@ namespace LaunchDarkly.JsonStream.Implementation
             _buf = new MemoryStream(initialCapacity);
         }
 
-        public string GetString() => new StreamReader(_buf).ReadToEnd();
+        public string GetString()
+        {
+            _buf.Seek(0, SeekOrigin.Begin);
+            return new StreamReader(_buf).ReadToEnd();
+        }
 
         public byte[] GetUtf8Bytes() => _buf.ToArray();
 
