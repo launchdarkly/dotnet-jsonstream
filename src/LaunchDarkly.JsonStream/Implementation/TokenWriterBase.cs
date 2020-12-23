@@ -23,6 +23,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 
         // TokenWriter(int initialCapacity);
         // string GetString();
-        // byte[] GetUTF8Bytes();
+        // byte[] GetUtf8Bytes();
+        // Stream GetUtf8Stream();
     }
 }

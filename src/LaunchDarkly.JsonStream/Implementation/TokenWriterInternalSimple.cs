@@ -3,6 +3,7 @@
 // This implementation of TokenWriter is used on platforms that do not have the
 // System.Text.Json API.
 
+using System;
 using System.IO;
 using System.Text;
 
@@ -10,38 +11,46 @@ namespace LaunchDarkly.JsonStream.Implementation
 {
     internal partial class TokenWriter
     {
-        private readonly TextWriter _w;
+        private static readonly byte[] _nullBytes = Encoding.UTF8.GetBytes("null");
+        private static readonly byte[] _trueBytes = Encoding.UTF8.GetBytes("true");
+        private static readonly byte[] _falseBytes = Encoding.UTF8.GetBytes("false");
+        private static readonly byte[] _emptyStringBytes = Encoding.UTF8.GetBytes("\"\"");
+
+        private readonly MemoryStream _buf;
+        private readonly byte[] _tempBytes = new byte[30];
         private readonly char[] _tempChars = new char[30];
 
         public TokenWriter(int initialCapacity)
         {
-            _w = new StringWriter(new StringBuilder(initialCapacity));
+            _buf = new MemoryStream(initialCapacity);
         }
 
-        public string GetString() =>
-            _w.ToString();
+        public string GetString() => new StreamReader(_buf).ReadToEnd();
 
-        public byte[] GetUTF8Bytes() =>
-            Encoding.UTF8.GetBytes(_w.ToString());
+        public byte[] GetUtf8Bytes() => _buf.ToArray();
 
-        public Stream GetUTF8Stream() =>
-            new MemoryStream(GetUTF8Bytes());
+        public Stream GetUtf8Stream()
+        {
+            _buf.Seek(0, SeekOrigin.Begin);
+            return _buf;
+        }
         
         public void Null()
         {
-            _w.Write("null");
+            _buf.Write(_nullBytes, 0, _nullBytes.Length);
         }
 
         public void Bool(bool value)
         {
-            _w.Write(value ? "true" : "false");
+            var bytes = value ? _trueBytes : _falseBytes;
+            _buf.Write(bytes, 0, bytes.Length);
         }
 
         public void Long(long value)
         {
             if (value >= 0 && value < 10)
             {
-                _w.Write((char)('0' + value));
+                _buf.WriteByte((byte)('0' + value));
                 return;
             }
             // Avoid allocating a string, as the built-in int formatter would do
@@ -50,28 +59,29 @@ namespace LaunchDarkly.JsonStream.Implementation
             {
                 value = -value;
             }
-            var pos = _tempChars.Length;
+            var pos = _tempBytes.Length;
             while (value != 0)
             {
                 var digit = value % 10;
                 value /= 10;
-                _tempChars[--pos] = (char)(digit + '0');
+                _tempBytes[--pos] = (byte)(digit + '0');
             }
             if (minus)
             {
-                _tempChars[--pos] = '-';
+                _tempBytes[--pos] = (byte)'-';
             }
-            _w.Write(_tempChars, pos, _tempChars.Length - pos);
+            _buf.Write(_tempBytes, pos, _tempBytes.Length - pos);
         }
 
         public void Double(double value)
         {
             if (value == 0)
             {
-                _w.Write('0');
+                _buf.WriteByte((byte)('0' + value));
                 return;
             }
-            _w.Write(value);
+            var bytes = BitConverter.GetBytes(value);
+            _buf.Write(bytes, 0, bytes.Length);
         }
 
         public void String(string value)
@@ -83,102 +93,110 @@ namespace LaunchDarkly.JsonStream.Implementation
             }
             if (value.Length == 0)
             {
-                _w.Write("\"\"");
+                _buf.Write(_emptyStringBytes, 0, _emptyStringBytes.Length);
                 return;
             }
-            _w.Write('"');
-            var startPos = 0;
+            _buf.WriteByte((byte)'"');
+            var encoding = Encoding.UTF8;
             for (var i = 0; i < value.Length; i++)
             {
                 var ch = value[i];
                 if (ch < 32 || ch == '"' || ch == '\\')
                 {
-                    if (i > startPos)
-                    {
-                        _w.Write(value.Substring(startPos, i - startPos)); // TODO
-                    }
                     WriteEscapedChar(ch);
-                    startPos = i + 1;
+                }
+                else
+                {
+                    if (ch < 128)
+                    {
+                        _buf.WriteByte((byte)ch);
+                    }
+                    else
+                    {
+                        _tempChars[0] = ch;
+                        var nBytes = encoding.GetBytes(_tempChars, 0, 1, _tempBytes, 0);
+                        _buf.Write(_tempBytes, 0, nBytes);
+                    }
                 }
             }
-            if (startPos < value.Length)
-            {
-                _w.Write(value.Substring(startPos, value.Length - startPos)); // TODO
-            }
-            _w.Write('"');
+            _buf.WriteByte((byte)'"');
         }
 
         private void WriteEscapedChar(char ch)
         {
+            _buf.WriteByte((byte)'\\');
             switch (ch)
             {
                 case '\b':
-                    _w.Write("\\b");
+                    _buf.WriteByte((byte)'b');
                     break;
                 case '\f':
-                    _w.Write("\\f");
+                    _buf.WriteByte((byte)'f');
                     break;
                 case '\n':
-                    _w.Write("\\r");
+                    _buf.WriteByte((byte)'n');
                     break;
                 case '\r':
-                    _w.Write("\\r");
+                    _buf.WriteByte((byte)'r');
                     break;
                 case '\t':
-                    _w.Write("\\t");
+                    _buf.WriteByte((byte)'t');
                     break;
                 case '"':
-                    _w.Write("\\\"");
+                    _buf.WriteByte((byte)'"');
                     break;
                 case '\\':
-                    _w.Write("\\\\");
+                    _buf.WriteByte((byte)'\\');
                     break;
                 default:
-                    _w.Write("\\u00");
-                    _w.Write(HexChar(ch >> 4));
-                    _w.Write(HexChar(ch & 0xf));
+                    _tempBytes[0] = (byte)'u';
+                    _tempBytes[1] = (byte)'0';
+                    _tempBytes[2] = (byte)'0';
+                    _tempBytes[3] = HexChar(ch >> 4);
+                    _tempBytes[4] = HexChar(ch & 0xf);
+                    _buf.Write(_tempBytes, 0, 5);
                     break;
             }
         }
 
-        private char HexChar(int n)
+        private static byte HexChar(int n)
         {
-            return n > 9 ? (char)('A' - 10 + n) : (char)('0' + n);
+            return n > 9 ? (byte)('A' - 10 + n) : (byte)('0' + n);
         }
 
         public void StartArray()
         {
-            _w.Write('[');
+            _buf.WriteByte((byte)'[');
         }
 
         public void NextArrayItem()
         {
-            _w.Write(',');
+            _buf.WriteByte((byte)',');
         }
 
         public void EndArray()
         {
-            _w.Write(']');
+            _buf.WriteByte((byte)']');
         }
 
         public void StartObject()
         {
-            _w.Write('{');
+            _buf.WriteByte((byte)'{');
         }
 
         public void NextObjectItem(string name, bool first)
         {
             if (!first)
             {
-                _w.Write(',');
+                _buf.WriteByte((byte)',');
             }
             String(name);
-            _w.Write(':');
+            _buf.WriteByte((byte)':');
         }
 
         public void EndObject()
         {
-            _w.Write('}');
+            _buf.WriteByte((byte)'}');
         }
     }
 }

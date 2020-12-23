@@ -23,10 +23,10 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
 
         [Benchmark]
-        public void ReadStruct()
+        public void ReadStructs()
         {
-            var r = JReader.FromString(StructJson);
-            var ts = ReadStruct(ref r);
+            var r = JReader.FromString(ListOfStructsJson);
+            var structs = ReadStructs(ref r);
         }
 
         [Benchmark]
@@ -46,10 +46,10 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
 
         [Benchmark]
-        public void WriteStruct()
+        public void WriteStructs()
         {
             var w = JWriter.New();
-            WriteTestStruct(w, Struct);
+            WriteStructs(w, ListOfStructs);
             var s = w.GetString();
         }
 
@@ -73,6 +73,16 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             return ret;
         }
 
+        private List<TestStruct> ReadStructs(ref JReader r)
+        {
+            var ret = new List<TestStruct>();
+            for (var arr = r.Array(); arr.Next(ref r);)
+            {
+                ret.Add(ReadStruct(ref r));
+            }
+            return ret;
+        }
+
         private TestStruct ReadStruct(ref JReader r)
         {
             var obj = r.ObjectOrNull();
@@ -83,22 +93,20 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             var ret = new TestStruct();
             while (obj.Next(ref r))
             {
-                var name = obj.Name;
-                if (name == "str")
+                switch (obj.Name)
                 {
-                    ret.Str = r.String();
-                }
-                else if (name == "nums")
-                {
-                    ret.Nums = ReadInts(ref r);
-                }
-                else if (name == "bool")
-                {
-                    ret.Bool = r.Bool();
-                }
-                else if (name == "nested")
-                {
-                    ret.Nested = ReadStruct(ref r);
+                    case var n when n == "str":
+                        ret.Str = r.String();
+                        break;
+                    case var n when n == "nums":
+                        ret.Nums = ReadInts(ref r);
+                        break;
+                    case var n when n == "bool":
+                        ret.Bool = r.Bool();
+                        break;
+                    case var n when n == "nested":
+                        ret.Nested = ReadStruct(ref r);
+                        break;
                 }
             }
             return ret;
@@ -122,6 +130,17 @@ namespace LaunchDarkly.JsonStream.Benchmarks
                 for (var i = 0; i < ints.Count; i++)
                 {
                     w.Int(ints[i]);
+                }
+            }
+        }
+
+        private void WriteStructs(IValueWriter w, List<TestStruct> structs)
+        {
+            using (var arr = w.Array())
+            {
+                for (var i = 0; i < structs.Count; i++)
+                {
+                    WriteTestStruct(w, structs[i]);
                 }
             }
         }

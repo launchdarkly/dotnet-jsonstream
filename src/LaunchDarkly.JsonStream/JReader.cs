@@ -487,7 +487,7 @@ namespace LaunchDarkly.JsonStream
                 SkipValue();
             }
             var ret = _delegate == null ? _tr.ObjectNext(first) : _delegate.ObjectNext(first);
-            _awaitingReadValue = ret.IsDefined;
+            _awaitingReadValue = !ret.Empty;
             return ret;
         }
     }

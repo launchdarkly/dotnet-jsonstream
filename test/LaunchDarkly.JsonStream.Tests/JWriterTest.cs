@@ -29,7 +29,7 @@ namespace LaunchDarkly.JsonStream
         }
 
         [Fact]
-        public void GetStringOrUTF8Bytes()
+        public void GetStringOrUtf8Bytes()
         {
             var stringValue = "enchanté 😀";
             var writer = JWriter.New();
@@ -39,13 +39,28 @@ namespace LaunchDarkly.JsonStream
 
             Assert.Equal(expected, writer.GetString());
 
-            var bytes = writer.GetUTF8Bytes();
+            var bytes = writer.GetUtf8Bytes();
             Assert.Equal(Encoding.UTF8.GetBytes(expected), bytes);
 
-            var stream = writer.GetUTF8Stream();
+            var stream = writer.GetUtf8Stream();
             var streamReader = new StreamReader(stream, Encoding.UTF8);
             Assert.Equal(expected, streamReader.ReadToEnd());
         }
+
+#if NETCOREAPP3_1 || NET5_0
+        [Fact]
+        public void GetUtf8ReadOnlyMemory()
+        {
+            var stringValue = "enchanté 😀";
+            var writer = JWriter.New();
+            writer.String(stringValue);
+
+            var expected = "\"" + PlatformBehavior.GetExpectedStringEncoding(stringValue) + "\"";
+
+            var memory = writer.GetUTF8ReadOnlyMemory();
+            Assert.Equal(Encoding.UTF8.GetBytes(expected), memory.ToArray());
+        }
+#endif
 
         public static IEnumerable<object[]> AllParams()
         {

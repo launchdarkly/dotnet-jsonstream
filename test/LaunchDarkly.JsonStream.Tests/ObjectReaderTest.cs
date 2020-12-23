@@ -12,13 +12,14 @@ namespace LaunchDarkly.JsonStream
 
             for (var obj = r.Object(); obj.Next(ref r);)
             {
-                if (obj.Name == "a")
+                switch (obj.Name)
                 {
-                    a = r.Int();
-                }
-                else if (obj.Name == "b")
-                {
-                    b = r.Int();
+                    case var n when n == "a":
+                        a = r.Int();
+                        break;
+                    case var n when n == "b":
+                        b = r.Int();
+                        break;
                 }
             }
 
@@ -34,13 +35,14 @@ namespace LaunchDarkly.JsonStream
 
             for (var obj = r.Object(); obj.Next(ref r);)
             {
-                if (obj.NameIs("a"))
+                switch (obj.Name)
                 {
-                    a = r.Int();
-                }
-                else if (obj.NameIs("b"))
-                {
-                    b = r.Int();
+                    case var n when n == "a":
+                        a = r.Int();
+                        break;
+                    case var n when n == "b":
+                        b = r.Int();
+                        break;
                 }
             }
 

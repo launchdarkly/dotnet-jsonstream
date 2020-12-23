@@ -21,9 +21,9 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
 
         [Benchmark]
-        public void ReadStruct()
+        public void ReadStructs()
         {
-            var ts = JsonConvert.DeserializeObject<TestStruct>(StructJson);
+            var ts = JsonConvert.DeserializeObject<TestStruct>(ListOfStructsJson);
         }
 
         [Benchmark]
@@ -39,9 +39,9 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
 
         [Benchmark]
-        public void WriteStruct()
+        public void WriteStructs()
         {
-            var s = JsonConvert.SerializeObject(Struct);
+            var s = JsonConvert.SerializeObject(ListOfStructs);
         }
     }
 }

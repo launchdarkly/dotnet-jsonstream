@@ -16,10 +16,10 @@ namespace LaunchDarkly.JsonStream
         }
 
         [Fact]
-        public void SerializeObjectToUTF8Bytes()
+        public void SerializeObjectToUtf8Bytes()
         {
             Assert.Equal(Encoding.UTF8.GetBytes(ExpectedJson),
-                JsonStreamConvert.SerializeObjectToUTF8Bytes(ExpectedInstance));
+                JsonStreamConvert.SerializeObjectToUtf8Bytes(ExpectedInstance));
         }
 
         [Fact]

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using LaunchDarkly.JsonStream.Implementation;
 
 namespace LaunchDarkly.JsonStream
@@ -86,19 +87,35 @@ namespace LaunchDarkly.JsonStream
         /// possible to implement this method more efficiently than <c>Encoding.UTF8.GetBytes(GetString())</c>.
         /// </remarks>
         /// <returns>a UTF8-encoded byte array</returns>
-        public byte[] GetUTF8Bytes() =>
-            _tw.GetUTF8Bytes();
+        public byte[] GetUtf8Bytes() =>
+            _tw.GetUtf8Bytes();
 
         /// <summary>
         /// Returns the output JSON data as a <see cref="Stream"/> of UTF8-encoded bytes.
         /// </summary>
         /// <remarks>
-        /// This is defined separately from <see cref="GetUTF8Bytes"/> for situations in which it is
+        /// This is defined separately from <see cref="GetUtf8Bytes"/> for situations in which it is
         /// preferable to read from the existing buffered data rather than copying it to a new array.
+        /// However, on .NET Core 3.x and .NET 5.x, this method does perform a copy so it is better to use
+        /// <see cref="GetUTF8ReadOnlyMemory"/>.
         /// </remarks>
         /// <returns>a UTF8-encoded byte array</returns>
-        public Stream GetUTF8Stream() =>
-            _tw.GetUTF8Stream();
+        public Stream GetUtf8Stream() =>
+            _tw.GetUtf8Stream();
+
+#if NETCOREAPP3_1 || NET5_0
+        /// <summary>
+        /// Returns the output JSON data as a <c>ReadOnlyMemory</c> of UTF8-encoded bytes.
+        /// </summary>
+        /// <remarks>
+        /// On .NET Core 3.x and .NET 5.x, this method is the most efficient way to access the output data,
+        /// since it does not do any copying. You can construct an HTTP request body or do other I/O directly
+        /// from <c>ReadOnlyMemory</c>. This method is not available on other platforms.
+        /// </remarks>
+        /// <returns></returns>
+        public ReadOnlyMemory<byte> GetUTF8ReadOnlyMemory() =>
+            _tw.GetUtf8ReadOnlyMemory();
+#endif
 
         /// <inheritdoc/>
         public void Null()

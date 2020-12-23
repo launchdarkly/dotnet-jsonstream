@@ -1,149 +1,151 @@
-﻿using System;
+﻿#if !NET452
+
+using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Text.Json;
 using System.IO;
 using BenchmarkDotNet.Attributes;
-using Newtonsoft.Json;
 
 using static LaunchDarkly.JsonStream.Benchmarks.BenchmarkData;
 
 namespace LaunchDarkly.JsonStream.Benchmarks
 {
     [MemoryDiagnoser]
-    public class JsonNetStreamingComparativeBenchmark
+    public class SystemTextJsonStreamingComparativeBenchmark
     {
         [Benchmark]
         public void ReadBools()
         {
-            var jr = new JsonTextReader(new StringReader(ListOfBoolsJson));
-            var bools = ReadBools(jr);
+            var jr = new Utf8JsonReader(Encoding.UTF8.GetBytes(ListOfBoolsJson));
+            var bools = ReadBools(ref jr);
         }
 
         [Benchmark]
         public void ReadInts()
         {
-            var jr = new JsonTextReader(new StringReader(ListOfIntsJson));
-            var ints = ReadInts(jr);
+            var jr = new Utf8JsonReader(Encoding.UTF8.GetBytes(ListOfIntsJson));
+            var ints = ReadInts(ref jr);
         }
 
         [Benchmark]
         public void ReadStructs()
         {
-            var jr = new JsonTextReader(new StringReader(ListOfStructsJson));
-            var ts = ReadStructs(jr);
+            var jr = new Utf8JsonReader(Encoding.UTF8.GetBytes(ListOfStructsJson));
+            var ts = ReadStructs(ref jr);
         }
 
         [Benchmark]
         public void WriteBools()
         {
-            var sw = new StringWriter();
-            var jw = new JsonTextWriter(sw);
+            var buf = new MemoryStream();
+            var jw = new Utf8JsonWriter(buf);
             WriteBools(jw, ListOfBools);
-            var s = sw.ToString();
+            var s = new StreamReader(buf).ReadToEnd();
         }
 
         [Benchmark]
         public void WriteInts()
         {
-            var sw = new StringWriter();
-            var jw = new JsonTextWriter(sw);
+            var buf = new MemoryStream();
+            var jw = new Utf8JsonWriter(buf);
             WriteInts(jw, ListOfInts);
-            var s = sw.ToString();
+            var s = new StreamReader(buf).ReadToEnd();
         }
 
         [Benchmark]
         public void WriteStructs()
         {
-            var sw = new StringWriter();
-            var jw = new JsonTextWriter(sw);
+            var buf = new MemoryStream();
+            var jw = new Utf8JsonWriter(buf);
             WriteStructs(jw, ListOfStructs);
-            var s = sw.ToString();
+            var s = new StreamReader(buf).ReadToEnd();
         }
 
-        private List<bool> ReadBools(JsonReader jr)
+        private List<bool> ReadBools(ref Utf8JsonReader jr)
         {
             var ret = new List<bool>();
             jr.Read();
-            if (jr.TokenType != JsonToken.StartArray)
+            if (jr.TokenType != JsonTokenType.StartArray)
             {
                 throw new Exception();
             }
             while (true)
             {
                 jr.Read();
-                if (jr.TokenType == JsonToken.EndArray)
+                if (jr.TokenType == JsonTokenType.EndArray)
                 {
                     jr.Skip();
                     break;
                 }
-                ret.Add(jr.ReadAsBoolean().Value);
+                ret.Add(jr.GetBoolean());
             }
             return ret;
         }
 
-        private List<int> ReadInts(JsonReader jr)
+        private List<int> ReadInts(ref Utf8JsonReader jr)
         {
             var ret = new List<int>();
             jr.Read();
-            if (jr.TokenType != JsonToken.StartArray)
+            if (jr.TokenType != JsonTokenType.StartArray)
             {
                 throw new Exception();
             }
             while (true)
             {
                 jr.Read();
-                if (jr.TokenType == JsonToken.EndArray)
+                if (jr.TokenType == JsonTokenType.EndArray)
                 {
                     jr.Skip();
                     break;
                 }
-                ret.Add(jr.ReadAsInt32().Value);
+                ret.Add((int)jr.GetDouble());
             }
             return ret;
         }
 
-        private List<TestStruct> ReadStructs(JsonReader jr)
+        private List<TestStruct> ReadStructs(ref Utf8JsonReader jr)
         {
             var ret = new List<TestStruct>();
             jr.Read();
-            if (jr.TokenType != JsonToken.StartArray)
+            if (jr.TokenType != JsonTokenType.StartArray)
             {
                 throw new Exception();
             }
             while (true)
             {
                 jr.Read();
-                if (jr.TokenType == JsonToken.EndArray)
+                if (jr.TokenType == JsonTokenType.EndArray)
                 {
                     jr.Skip();
                     break;
                 }
-                ret.Add(ReadTestStruct(jr));
+                ret.Add(ReadTestStruct(ref jr));
             }
             return ret;
         }
 
-
-        private void WriteBools(JsonWriter jw, List<bool> bools)
+        private void WriteBools(Utf8JsonWriter jw, List<bool> bools)
         {
             jw.WriteStartArray();
             for (var i = 0; i < bools.Count; i++)
             {
-                jw.WriteValue(bools[i]);
+                jw.WriteBooleanValue(bools[i]);
             }
             jw.WriteEndArray();
         }
 
-        private void WriteInts(JsonWriter jw, List<int> ints)
+        private void WriteInts(Utf8JsonWriter jw, List<int> ints)
         {
             jw.WriteStartArray();
             for (var i = 0; i < ints.Count; i++)
             {
-                jw.WriteValue(ints[i]);
+                jw.WriteNumberValue(ints[i]);
             }
             jw.WriteEndArray();
         }
 
-        private void WriteStructs(JsonWriter jw, List<TestStruct> structs)
+        private void WriteStructs(Utf8JsonWriter jw, List<TestStruct> structs)
         {
             jw.WriteStartArray();
             for (var i = 0; i < structs.Count; i++)
@@ -153,14 +155,15 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             jw.WriteEndArray();
         }
 
-        private TestStruct ReadTestStruct(JsonReader jr)
+        private TestStruct ReadTestStruct(ref Utf8JsonReader jr)
         {
-            if (jr.TokenType == JsonToken.Null)
+            jr.Read();
+            if (jr.TokenType == JsonTokenType.Null)
             {
                 jr.Skip();
                 return null;
             }
-            if (jr.TokenType != JsonToken.StartObject)
+            if (jr.TokenType != JsonTokenType.StartObject)
             {
                 throw new Exception();
             }
@@ -170,29 +173,28 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             while (true)
             {
                 jr.Read();
-                if (jr.TokenType == JsonToken.EndObject)
+                if (jr.TokenType == JsonTokenType.EndObject)
                 {
                     jr.Skip();
                     break;
                 }
-                if (jr.TokenType != JsonToken.PropertyName)
+                if (jr.TokenType != JsonTokenType.PropertyName)
                 {
                     throw new Exception();
                 }
-                switch (jr.Value.ToString())
+                switch (jr.GetString())
                 {
                     case "str":
-                        ret.Str = jr.ReadAsString();
+                        ret.Str = jr.GetString();
                         break;
                     case "nums":
-                        ret.Nums = ReadInts(jr);
+                        ret.Nums = ReadInts(ref jr);
                         break;
                     case "bool":
-                        ret.Bool = jr.ReadAsBoolean().Value;
+                        ret.Bool = jr.GetBoolean();
                         break;
                     case "nested":
-                        jr.Read();
-                        ret.Nested = ReadTestStruct(jr);
+                        ret.Nested = ReadTestStruct(ref jr);
                         break;
                     default:
                         jr.Skip();
@@ -203,22 +205,20 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             return ret;
         }
 
-        private void WriteTestStruct(JsonWriter jw, TestStruct ts)
+        private void WriteTestStruct(Utf8JsonWriter jw, TestStruct ts)
         {
             jw.WriteStartObject();
 
-            jw.WritePropertyName("Str");
-            jw.WriteValue(ts.Str);
+            jw.WriteString("str", ts.Str);
 
-            jw.WritePropertyName("Nums");
+            jw.WritePropertyName("nums");
             WriteInts(jw, ts.Nums);
 
-            jw.WritePropertyName("Bool");
-            jw.WriteValue(ts.Bool);
+            jw.WriteBoolean("bool", ts.Bool);
 
             if (ts.Nested != null)
             {
-                jw.WritePropertyName("Nested");
+                jw.WritePropertyName("nested");
                 WriteTestStruct(jw, ts.Nested);
             }
 
@@ -226,3 +226,5 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
     }
 }
+
+#endif

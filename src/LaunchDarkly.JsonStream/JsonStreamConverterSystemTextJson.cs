@@ -149,7 +149,7 @@ namespace LaunchDarkly.JsonStream
                 {
                     var property = _parentContext.ObjectEnumerator.Current;
                     _current = property.Value;
-                    return new PropertyNameToken(property);
+                    return new PropertyNameToken(property.Name);
                 }
                 _parentContext = _parentContextStack.Pop();
                 return new PropertyNameToken();

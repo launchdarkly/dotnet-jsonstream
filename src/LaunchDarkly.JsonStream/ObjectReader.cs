@@ -31,25 +31,38 @@ namespace LaunchDarkly.JsonStream
     ///     int aValue, bValue;
     ///     for (var obj = reader.ObjectOrNull(); obj.Next(ref reader);)
     ///     {
-    ///         if (obj.Name == "a")
+    ///         switch (obj.Name)
     ///         {
-    ///             a = reader.Int();
-    ///         }
-    ///         else if (obj.Name == "b")
-    ///         {
-    ///             b = reader.Int();
+    ///             case var n when n == "a":
+    ///                 a = reader.Int();
+    ///                 break;
+    ///             case var n when n == "b":
+    ///                 b = reader.Int();
+    ///                 break;
     ///         }
     ///     }
     /// </code>
     /// <para>
-    /// Note that it is not possible to do <c>switch (obj.Name)</c> because the type of
-    /// <see cref="Name"/> is <see cref="StringToken"/>, which, like <c>ReadOnlySpan&lt;char&gt;</c>,
-    /// cannot be compared to string constants in a <c>switch</c> (for further discussion, see
-    /// <a href="https://github.com/dotnet/csharplang/issues/1881">this issue</a>). This is a
-    /// performance optimization to avoid allocating strings; a series of simple <c>if</c>
-    /// comparisons will often be more efficient for this purpose. However, you can also use
-    /// <c>switch (obj.Name.ToString())</c> if you do not mind allocating a string.
+    /// Note that this <c>switch</c> block uses <c>when</c> clauses rather than simple
+    /// <c>case "a":</c>, etc., because <c>obj.Name</c> is not a <c>string</c>. For details, see
+    /// <see cref="PropertyNameToken"/>. You could also do the following, which is simpler but may
+    /// cause more heap allocations:
     /// </para>
+    /// <code>
+    ///     int aValue, bValue;
+    ///     for (var obj = reader.ObjectOrNull(); obj.Next(ref reader);)
+    ///     {
+    ///         switch (obj.Name.ToString())
+    ///         {
+    ///             case "a":
+    ///                 a = reader.Int();
+    ///                 break;
+    ///             case "b":
+    ///                 b = reader.Int();
+    ///                 break;
+    ///         }
+    ///     }
+    /// </code>
     /// </remarks>
     public ref struct ObjectReader
     {
@@ -85,13 +98,12 @@ namespace LaunchDarkly.JsonStream
         /// <para>
         /// This value is initialized by calling <see cref="Next"/>.
         /// </para>
-        /// It returns the name as a
-        /// <see cref="StringToken"/> rather than a <c>string</c> for efficiency, since this can often
-        /// avoid the overhead of allocating strings that applications normally will not need to retain.
-        /// If there is no current property (that is, if <c>Next</c> returned false or was never called)
-        /// then it returns <see cref="StringToken.Empty"/>.
+        /// <para>
+        /// The type of this property is not <c>string</c>, but it can be compared to strings. See
+        /// <see cref="PropertyNameToken"/> for details.
+        /// </para>
         /// </remarks>
-        public string Name => _name.ToString();
+        public PropertyNameToken Name => _name;
 
         /// <summary>
         /// Adds a requirement that the specified JSON property name(s) must appear in the JSON object at
@@ -132,10 +144,11 @@ namespace LaunchDarkly.JsonStream
         /// or if the object was empty or null.
         /// </para>
         /// <para>
-        /// If <c>Next</c> returns <see langword="true"/>, you can then use <see cref="JReader"/> methods
-        /// such as <see cref="JReader.Bool"/> to read the element value. If you do not care about the
-        /// value, simply calling <c>Next</c> again without calling a <c>JReader</c> method will discard
-        /// the value.
+        /// If <c>Next</c> returns <see langword="true"/>, you can then use <see cref="Name"/> or
+        /// <see cref="NameIs(string)"/> to check the name of the property, and use <see cref="JReader"/>
+        /// methods such as <see cref="JReader.Bool"/> to read the element value. If you do not care about
+        /// the value, simply calling <c>Next</c> again without calling a <c>JReader</c> method will
+        /// discard the value.
         /// </para>
         /// </remarks>
         /// <returns><see langword="true"/> if there is a next object property</returns>
@@ -147,7 +160,7 @@ namespace LaunchDarkly.JsonStream
             }
             _name = reader.ObjectNext(!_afterFirst);
             _afterFirst = true;
-            if (_name.IsDefined)
+            if (!_name.Empty)
             {
                 if (_requiredProperties != null)
                 {
@@ -174,11 +187,6 @@ namespace LaunchDarkly.JsonStream
                 }
             }
             return false;
-        }
-
-        public bool NameIs(string expectedName)
-        {
-            return _name.Equals(expectedName);
         }
     }
 }

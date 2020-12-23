@@ -3,44 +3,9 @@
 namespace LaunchDarkly.JsonStream.Implementation
 {
     /// <summary>
-    /// Used by <see cref="JReader"/> to return a string value in situations where it may or may
+    /// Used internally by the parser to hold a string value in situations where it may or may
     /// not be desirable to allocate a <c>string</c> instance.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// <c>StringToken</c> represents a JSON string that was parsed from the input data by
-    /// <see cref="JReader"/>. Under some circumstances, the <c>StringToken</c> will simply be a
-    /// view into the original data, rather than a copy; it can be compared to other strings
-    /// without causing any allocations. In other cases, <c>JReader</c> will need to allocate a
-    /// string, but it will wrap the string in a <c>StringToken</c> so it looks the same to your
-    /// code.
-    /// </para>
-    /// <para>
-    /// This is basically equivalent to the <c>System.ReadOnlySpan</c> type that was introduced
-    /// in .NET Core 2.1 and .NET 5.0, but can be used by LaunchDarkly libraries that support
-    /// earler target frameworks.
-    /// </para>
-    /// <para>
-    /// Although there are implicit operators that make <c>StringToken</c> transparently
-    /// interoperable with <c>string</c> in most cases, there is one limitation: you cannot do a
-    /// <c>switch</c> statement on a <c>StringToken</c>. Instead, you must either switch on its
-    /// <c>ToString()</c> value, or else use a series of simple comparisons:
-    /// </para>
-    /// <code>
-    ///     if (myStringToken == "a")
-    ///     {
-    ///         ...
-    ///     }
-    ///     else if (myStringToken == "b")
-    ///     {
-    ///         ...
-    ///     }
-    /// </code>
-    /// <para>
-    /// In most cases, unless the list of possible values is long, the latter will still be more
-    /// efficient than allocating a stirng value.
-    /// </para>
-    /// </remarks>
     internal ref struct StringToken
     {
         private readonly string _str;
