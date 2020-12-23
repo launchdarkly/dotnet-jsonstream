@@ -62,7 +62,7 @@ workflows:
           test-target-framework: net5.0
       - benchmark-windows:
           name: .NET Framework 4.6.1 benchmarks (Windows)
-          test-target-framework: net5.0
+          test-target-framework: net461
           # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
           # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
           # with .NET Framework 4.5.x.

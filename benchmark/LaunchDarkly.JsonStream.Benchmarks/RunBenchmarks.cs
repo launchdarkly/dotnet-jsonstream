@@ -9,6 +9,9 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             BenchmarkRunner.Run<JReaderWriterBenchmark>();
             BenchmarkRunner.Run<JsonNetReflectionComparativeBenchmark>();
             BenchmarkRunner.Run<JsonNetStreamingComparativeBenchmark>();
+#if !NET452
+            BenchmarkRunner.Run<SystemTextJsonStreamingComparativeBenchmark>();
+#endif
         }
     }
 }
