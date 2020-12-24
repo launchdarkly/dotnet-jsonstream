@@ -17,8 +17,8 @@ namespace LaunchDarkly.JsonStream.Implementation
         private static readonly byte[] _emptyStringBytes = Encoding.UTF8.GetBytes("\"\"");
 
         private readonly MemoryStream _buf;
-        private readonly byte[] _tempBytes = new byte[30];
-        private readonly char[] _tempChars = new char[30];
+        private readonly byte[] _tempBytes = new byte[40];
+        private readonly char[] _tempChars = new char[2];
 
         public TokenWriter(int initialCapacity)
         {
@@ -81,11 +81,35 @@ namespace LaunchDarkly.JsonStream.Implementation
         {
             if (value == 0)
             {
-                _buf.WriteByte((byte)('0' + value));
+                _buf.WriteByte((byte)'0');
                 return;
             }
-            var bytes = BitConverter.GetBytes(value);
-            _buf.Write(bytes, 0, bytes.Length);
+            long valueInt = (long)value;
+            if ((double)valueInt == value)
+            {
+                Long(valueInt);
+                return;
+            }
+            // Unfortunately double.ToString() will allocate an array, but there's no
+            // method available in .NET Framework 4.5.x that encodes a floating-point number
+            // into an existing character array.
+            var valueStr = value.ToString();
+            if (valueStr.Length <= _tempBytes.Length)
+            {
+                for (var i = 0; i < valueStr.Length; i++)
+                {
+                    _tempBytes[i] = (byte)valueStr[i]; // these are guaranteed to be ASCI chars
+                }
+                _buf.Write(_tempBytes, 0, valueStr.Length);
+            }
+            else
+            {
+                for (var i = 0; i < valueStr.Length; i++)
+                {
+                    _tempBytes[0] = (byte)valueStr[i];
+                    _buf.Write(_tempBytes, 0, 1);
+                }
+            }
         }
 
         public void String(string value)
@@ -117,8 +141,17 @@ namespace LaunchDarkly.JsonStream.Implementation
                     }
                     else
                     {
+                        // C# stores strings as UTF-16. Each code point may use either 1 char value or 2.
                         _tempChars[0] = ch;
-                        var nBytes = encoding.GetBytes(_tempChars, 0, 1, _tempBytes, 0);
+                        var numUtf16Chars = 1;
+                        if (ch >= 0xd800 && ch <= 0xdbff)
+                        {
+                            // This range indicates that it's the first of 2 chars for a single code point
+                            i++;
+                            _tempChars[1] = value[i];
+                            numUtf16Chars++;
+                        }
+                        var nBytes = encoding.GetBytes(_tempChars, 0, numUtf16Chars, _tempBytes, 0);
                         _buf.Write(_tempBytes, 0, nBytes);
                     }
                 }
