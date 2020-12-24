@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Collections.Generic;
+using BenchmarkDotNet.Attributes;
 using Newtonsoft.Json;
 
 using static LaunchDarkly.JsonStream.Benchmarks.BenchmarkData;
@@ -11,19 +12,19 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         [Benchmark]
         public void ReadBools()
         {
-            var bools = JsonConvert.DeserializeObject<bool[]>(ListOfBoolsJson);
+            var bools = JsonConvert.DeserializeObject<List<bool>>(ListOfBoolsJson);
         }
 
         [Benchmark]
         public void ReadInts()
         {
-            var ints = JsonConvert.DeserializeObject<int[]>(ListOfIntsJson);
+            var ints = JsonConvert.DeserializeObject<List<int>>(ListOfIntsJson);
         }
 
         [Benchmark]
         public void ReadStructs()
         {
-            var ts = JsonConvert.DeserializeObject<TestStruct>(ListOfStructsJson);
+            var ts = JsonConvert.DeserializeObject<List<TestStruct>>(ListOfStructsJson);
         }
 
         [Benchmark]

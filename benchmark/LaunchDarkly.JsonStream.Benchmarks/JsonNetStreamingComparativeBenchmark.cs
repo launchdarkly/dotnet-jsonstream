@@ -114,7 +114,6 @@ namespace LaunchDarkly.JsonStream.Benchmarks
                 jr.Read();
                 if (jr.TokenType == JsonToken.EndArray)
                 {
-                    jr.Skip();
                     break;
                 }
                 ret.Add(ReadTestStruct(jr));
