@@ -19,7 +19,9 @@ namespace LaunchDarkly.JsonStream.Implementation
 
 		public TokenReader(string input) : this(input.ToCharArray()) { }
 
-		public TokenReader(char[] input)
+		public TokenReader(byte[] input) : this(Encoding.UTF8.GetChars(input)) { }
+
+		private TokenReader(char[] input)
 		{
 			_buf = input;
 			_length = input.Length;

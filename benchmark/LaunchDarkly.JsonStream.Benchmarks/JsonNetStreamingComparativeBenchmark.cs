@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using BenchmarkDotNet.Attributes;
 using Newtonsoft.Json;
 
@@ -15,21 +16,42 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         public void ReadBools()
         {
             var jr = new JsonTextReader(new StringReader(ListOfBoolsJson));
-            var bools = ReadBools(jr);
+            var values = ReadBools(jr);
         }
 
         [Benchmark]
         public void ReadInts()
         {
             var jr = new JsonTextReader(new StringReader(ListOfIntsJson));
-            var ints = ReadInts(jr);
+            var values = ReadInts(jr);
         }
 
         [Benchmark]
         public void ReadStructs()
         {
             var jr = new JsonTextReader(new StringReader(ListOfStructsJson));
-            var ts = ReadStructs(jr);
+            var values = ReadStructs(jr);
+        }
+
+        [Benchmark]
+        public void ReadBoolsUtf8()
+        {
+            var jr = new JsonTextReader(new StreamReader(new MemoryStream(ListOfBoolsJsonUtf8), Encoding.UTF8));
+            var values = ReadBools(jr);
+        }
+
+        [Benchmark]
+        public void ReadIntsUtf8()
+        {
+            var jr = new JsonTextReader(new StreamReader(new MemoryStream(ListOfIntsJsonUtf8), Encoding.UTF8));
+            var values = ReadInts(jr);
+        }
+
+        [Benchmark]
+        public void ReadStructsUtf8()
+        {
+            var jr = new JsonTextReader(new StreamReader(new MemoryStream(ListOfStructsJsonUtf8), Encoding.UTF8));
+            var values = ReadStructs(jr);
         }
 
         [Benchmark]
@@ -57,6 +79,33 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             var jw = new JsonTextWriter(sw);
             WriteStructs(jw, ListOfStructs);
             var s = sw.ToString();
+        }
+
+        [Benchmark]
+        public void WriteBoolsUtf8()
+        {
+            var ms = new MemoryStream();
+            var jw = new JsonTextWriter(new StreamWriter(ms, Encoding.UTF8));
+            WriteBools(jw, ListOfBools);
+            var b = ms.ToArray();
+        }
+
+        [Benchmark]
+        public void WriteIntsUtf8()
+        {
+            var ms = new MemoryStream();
+            var jw = new JsonTextWriter(new StreamWriter(ms, Encoding.UTF8));
+            WriteInts(jw, ListOfInts);
+            var b = ms.ToArray();
+        }
+
+        [Benchmark]
+        public void WriteStructsUtf8()
+        {
+            var ms = new MemoryStream();
+            var jw = new JsonTextWriter(new StreamWriter(ms, Encoding.UTF8));
+            WriteStructs(jw, ListOfStructs);
+            var b = ms.ToArray();
         }
 
         private List<bool> ReadBools(JsonReader jr)

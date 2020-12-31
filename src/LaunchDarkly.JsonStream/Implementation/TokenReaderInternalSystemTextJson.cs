@@ -14,9 +14,11 @@ namespace LaunchDarkly.JsonStream.Implementation
 		private Utf8JsonReader _nativeReader;
 		private bool _alreadyRead;
 
-		public TokenReader(string input)
+		public TokenReader(string input) : this(Encoding.UTF8.GetBytes(input)) { }
+
+		public TokenReader(byte[] input)
 		{
-			_input = Encoding.UTF8.GetBytes(input);
+			_input = input;
 			_nativeReader = new Utf8JsonReader(_input);
 			_unreadToken = null;
 			_alreadyRead = false;

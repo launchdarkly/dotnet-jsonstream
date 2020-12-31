@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using BenchmarkDotNet.Attributes;
 using Newtonsoft.Json;
 
@@ -28,6 +29,24 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
 
         [Benchmark]
+        public void ReadBoolsUtf8()
+        {
+            var bools = JsonConvert.DeserializeObject<List<bool>>(Encoding.UTF8.GetString(ListOfBoolsJsonUtf8));
+        }
+
+        [Benchmark]
+        public void ReadIntsUtf8()
+        {
+            var ints = JsonConvert.DeserializeObject<List<int>>(Encoding.UTF8.GetString(ListOfIntsJsonUtf8));
+        }
+
+        [Benchmark]
+        public void ReadStructsUtf8()
+        {
+            var ts = JsonConvert.DeserializeObject<List<TestStruct>>(Encoding.UTF8.GetString(ListOfStructsJsonUtf8));
+        }
+
+        [Benchmark]
         public void WriteBools()
         {
             var s = JsonConvert.SerializeObject(ListOfBools);
@@ -43,6 +62,27 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         public void WriteStructs()
         {
             var s = JsonConvert.SerializeObject(ListOfStructs);
+        }
+
+        [Benchmark]
+        public void WriteBoolsUtf8()
+        {
+            var s = JsonConvert.SerializeObject(ListOfBools);
+            var b = Encoding.UTF8.GetBytes(s);
+        }
+
+        [Benchmark]
+        public void WriteIntsUtf8()
+        {
+            var s = JsonConvert.SerializeObject(ListOfInts);
+            var b = Encoding.UTF8.GetBytes(s);
+        }
+
+        [Benchmark]
+        public void WriteStructsUtf8()
+        {
+            var s = JsonConvert.SerializeObject(ListOfStructs);
+            var b = Encoding.UTF8.GetBytes(s);
         }
     }
 }

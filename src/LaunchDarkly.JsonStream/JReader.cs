@@ -64,10 +64,11 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         /// <param name="input">the input string</param>
         /// <returns>a new <see cref="JReader"/></returns>
-        public static JReader FromString(string input)
-        {
-            return new JReader(new TokenReader(input));
-        }
+        public static JReader FromString(string input) =>
+            new JReader(new TokenReader(input));
+
+        public static JReader FromUtf8Bytes(byte[] input) =>
+            new JReader(new TokenReader(input));
 
         internal JReader(TokenReader tokenReader)
         {

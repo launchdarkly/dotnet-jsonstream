@@ -36,6 +36,27 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
 
         [Benchmark]
+        public void ReadBoolsUtf8()
+        {
+            var jr = new Utf8JsonReader(ListOfBoolsJsonUtf8);
+            var bools = ReadBools(ref jr);
+        }
+
+        [Benchmark]
+        public void ReadIntsUtf8()
+        {
+            var jr = new Utf8JsonReader(ListOfIntsJsonUtf8);
+            var ints = ReadInts(ref jr);
+        }
+
+        [Benchmark]
+        public void ReadStructsUtf8()
+        {
+            var jr = new Utf8JsonReader(ListOfStructsJsonUtf8);
+            var ts = ReadStructs(ref jr);
+        }
+
+        [Benchmark]
         public void WriteBools()
         {
             var buf = new MemoryStream();
@@ -60,6 +81,33 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             var jw = new Utf8JsonWriter(buf);
             WriteStructs(jw, ListOfStructs);
             var s = new StreamReader(buf).ReadToEnd();
+        }
+
+        [Benchmark]
+        public void WriteBoolsUtf8()
+        {
+            var buf = new MemoryStream();
+            var jw = new Utf8JsonWriter(buf);
+            WriteBools(jw, ListOfBools);
+            var b = buf.ToArray();
+        }
+
+        [Benchmark]
+        public void WriteIntsUtf8()
+        {
+            var buf = new MemoryStream();
+            var jw = new Utf8JsonWriter(buf);
+            WriteInts(jw, ListOfInts);
+            var b = buf.ToArray();
+        }
+
+        [Benchmark]
+        public void WriteStructsUtf8()
+        {
+            var buf = new MemoryStream();
+            var jw = new Utf8JsonWriter(buf);
+            WriteStructs(jw, ListOfStructs);
+            var b = buf.ToArray();
         }
 
         private List<bool> ReadBools(ref Utf8JsonReader jr)
@@ -157,7 +205,6 @@ namespace LaunchDarkly.JsonStream.Benchmarks
 
         private TestStruct ReadTestStruct(ref Utf8JsonReader jr)
         {
-            jr.Read();
             if (jr.TokenType == JsonTokenType.Null)
             {
                 return null;
@@ -192,6 +239,7 @@ namespace LaunchDarkly.JsonStream.Benchmarks
                         ret.Bool = jr.GetBoolean();
                         break;
                     case "nested":
+                        jr.Read();
                         ret.Nested = ReadTestStruct(ref jr);
                         break;
                     default:
