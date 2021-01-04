@@ -159,49 +159,45 @@ namespace LaunchDarkly.JsonStream.Benchmarks
 
         private void WriteBools(IValueWriter w, List<bool> bools)
         {
-            using (var arr = w.Array())
+            var arr = w.Array();
+            for (var i = 0; i < bools.Count; i++)
             {
-                for (var i = 0; i < bools.Count; i++)
-                {
-                    w.Bool(bools[i]);
-                }
+                w.Bool(bools[i]);
             }
+            arr.End();
         }
 
         private void WriteInts(IValueWriter w, List<int> ints)
         {
-            using (var arr = w.Array())
+            var arr = w.Array();
+            for (var i = 0; i < ints.Count; i++)
             {
-                for (var i = 0; i < ints.Count; i++)
-                {
-                    w.Int(ints[i]);
-                }
+                w.Int(ints[i]);
             }
+            arr.End();
         }
 
         private void WriteStructs(IValueWriter w, List<TestStruct> structs)
         {
-            using (var arr = w.Array())
+            var arr = w.Array();
+            for (var i = 0; i < structs.Count; i++)
             {
-                for (var i = 0; i < structs.Count; i++)
-                {
-                    WriteTestStruct(w, structs[i]);
-                }
+                WriteTestStruct(w, structs[i]);
             }
+            arr.End();
         }
 
         private void WriteTestStruct(IValueWriter w, TestStruct ts)
         {
-            using (var obj = w.Object())
+            var obj = w.Object();
+            obj.Property("str").String(ts.Str);
+            WriteInts(obj.Property("nums"), ts.Nums);
+            obj.Property("bool").Bool(ts.Bool);
+            if (ts.Nested != null)
             {
-                obj.Property("str").String(ts.Str);
-                WriteInts(obj.Property("nums"), ts.Nums);
-                obj.Property("bool").Bool(ts.Bool);
-                if (ts.Nested != null)
-                {
-                    WriteTestStruct(obj.Property("nested"), ts.Nested);
-                }
+                WriteTestStruct(obj.Property("nested"), ts.Nested);
             }
+            obj.End();
         }
     }
 }
