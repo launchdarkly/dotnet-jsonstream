@@ -212,7 +212,7 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             }
             if (jr.TokenType != JsonTokenType.StartObject)
             {
-                throw new Exception();
+                throw new Exception("unexpected token: " + jr.TokenType);
             }
 
             var ret = new TestStruct();
@@ -227,7 +227,7 @@ namespace LaunchDarkly.JsonStream.Benchmarks
                 }
                 if (jr.TokenType != JsonTokenType.PropertyName)
                 {
-                    throw new Exception();
+                    throw new Exception("unexpected token: " + jr.TokenType);
                 }
                 switch (jr.GetString())
                 {
