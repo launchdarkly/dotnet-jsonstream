@@ -207,6 +207,7 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         {
             if (jr.TokenType == JsonTokenType.Null)
             {
+                jr.Skip();
                 return null;
             }
             if (jr.TokenType != JsonTokenType.StartObject)
@@ -221,6 +222,7 @@ namespace LaunchDarkly.JsonStream.Benchmarks
                 jr.Read();
                 if (jr.TokenType == JsonTokenType.EndObject)
                 {
+                    jr.Skip();
                     break;
                 }
                 if (jr.TokenType != JsonTokenType.PropertyName)
