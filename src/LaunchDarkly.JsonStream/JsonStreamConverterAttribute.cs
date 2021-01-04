@@ -34,7 +34,7 @@ namespace LaunchDarkly.JsonStream
     /// methods will also work with the target type and will delegate to the specified converter.
     /// </para>
     /// </remarks>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum)]
     public sealed class JsonStreamConverterAttribute :
 #if USE_SYSTEM_TEXT_JSON
         System.Text.Json.Serialization.JsonConverterAttribute
