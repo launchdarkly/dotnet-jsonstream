@@ -423,7 +423,17 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.NextValue(null, true);
+                var value = _delegate.NextValue(null, true);
+                switch (value.Type)
+                {
+                    // For arrays and objects, we need to set IsDefined to true here; the adapter won't
+                    // be able to do that if it can't see our internal APIs.
+                    case ValueType.Array:
+                        return AnyValue.Array(new ArrayReader(true));
+                    case ValueType.Object:
+                        return AnyValue.Object(new ObjectReader(true, null));
+                }
+                return value;
             }
             var token = _tr.Any();
             switch (token.Type)

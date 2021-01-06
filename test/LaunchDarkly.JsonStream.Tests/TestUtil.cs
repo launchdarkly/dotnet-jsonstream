@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using Xunit;
+﻿using System;
+using Newtonsoft.Json.Linq;
 
 namespace LaunchDarkly.JsonStream
 {
@@ -10,7 +10,11 @@ namespace LaunchDarkly.JsonStream
             // Newtonsoft.Json is useful here because it can do a deep-equality comparison of parsed data
             var parsedExpected = JToken.Parse(expected);
             var parsedActual = JToken.Parse(actual);
-            Assert.Equal(parsedExpected, parsedActual);
+            if (!JToken.DeepEquals(parsedActual, parsedExpected))
+            {
+                throw new Exception(string.Format("did not get expected JSON\nexpected: {0}\nactual: {1}",
+                    expected, actual));
+            }
         }
     }
 }

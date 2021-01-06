@@ -126,5 +126,60 @@ namespace LaunchDarkly.JsonStream
             var r = JReader.FromAdapter(adapter);
             return r.String();
         }
+
+        [Fact]
+        public void ReadSimpleTypesFromYamlParser()
+        {
+            // The .NET SDK allows flag data to be read from a YAML file by first running it through a YAML
+            // parser, which produces types like Dictionary, and then feeding that into JReader. So we'll
+            // verify that a basic use case like that works, using YamlDotNet.
+            var yamlContent = @"
+---
+flags:
+  flag1:
+    key: flag1
+    ""on"": true
+    version: 1
+    fallthrough:
+      variation: 2
+    variations:
+      - fall
+      - ""off""
+      - ""on""
+flagValues:
+  flag2: value2
+segments:
+  seg1:
+    key: seg1
+    version: 1
+    include: [""user1""]
+";
+            var yaml = new YamlDotNet.Serialization.DeserializerBuilder().Build();
+            var dataIn = yaml.Deserialize<object>(yamlContent);
+
+            var r = JReader.FromAdapter(ReaderAdapters.FromSimpleTypes(dataIn));
+
+            var dataOut = JsonStreamConvert.ConvertSimpleTypes.ReadJson(ref r);
+
+            var jsonOut = JsonStreamConvert.SerializeObject(dataOut, JsonStreamConvert.ConvertSimpleTypes);
+            var expectedJson = @"{
+""flags"": {
+  ""flag1"": {
+    ""key"": ""flag1"",
+    ""on"": ""true"",
+    ""version"": ""1"",
+    ""fallthrough"": { ""variation"": ""2"" },
+    ""variations"": [ ""fall"", ""off"", ""on"" ]
+  }
+},
+""flagValues"": { ""flag2"": ""value2"" },
+""segments"": {
+  ""seg1"": { ""key"": ""seg1"", ""version"": ""1"", ""include"": [""user1""] }
+}
+}";
+            // Note that YamlDotNet parses all the booleans and numbers as strings; that's why we provide a
+            // type coercion option.
+            TestUtil.AssertJsonEqual(expectedJson, jsonOut);
+        }
     }
 }
