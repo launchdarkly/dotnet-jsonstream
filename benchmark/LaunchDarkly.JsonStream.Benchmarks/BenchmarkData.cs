@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace LaunchDarkly.JsonStream.Benchmarks
@@ -25,10 +24,6 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         public static string ListOfBoolsJson = JsonConvert.SerializeObject(ListOfBools);
         public static string ListOfIntsJson = JsonConvert.SerializeObject(ListOfInts);
         public static string ListOfStructsJson = JsonConvert.SerializeObject(ListOfStructs);
-
-        public static byte[] ListOfBoolsJsonUtf8 = Encoding.UTF8.GetBytes(ListOfBoolsJson);
-        public static byte[] ListOfIntsJsonUtf8 = Encoding.UTF8.GetBytes(ListOfIntsJson);
-        public static byte[] ListOfStructsJsonUtf8 = Encoding.UTF8.GetBytes(ListOfStructsJson);
 
         private static List<bool> MakeListOfBools()
         {

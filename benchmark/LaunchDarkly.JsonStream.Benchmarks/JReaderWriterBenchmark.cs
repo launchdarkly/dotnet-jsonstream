@@ -30,27 +30,6 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         }
 
         [Benchmark]
-        public void ReadBoolsUtf8()
-        {
-            var r = JReader.FromUtf8Bytes(ListOfBoolsJsonUtf8);
-            var values = ReadBools(ref r);
-        }
-
-        [Benchmark]
-        public void ReadIntsUtf8()
-        {
-            var r = JReader.FromUtf8Bytes(ListOfIntsJsonUtf8);
-            var values = ReadInts(ref r);
-        }
-
-        [Benchmark]
-        public void ReadStructsUtf8()
-        {
-            var r = JReader.FromUtf8Bytes(ListOfStructsJsonUtf8);
-            var values = ReadStructs(ref r);
-        }
-
-        [Benchmark]
         public void WriteBools()
         {
             var w = JWriter.New();
@@ -72,30 +51,6 @@ namespace LaunchDarkly.JsonStream.Benchmarks
             var w = JWriter.New();
             WriteStructs(w, ListOfStructs);
             var s = w.GetString();
-        }
-
-        [Benchmark]
-        public void WriteBoolsUtf8()
-        {
-            var w = JWriter.New();
-            WriteBools(w, ListOfBools);
-            var b = w.GetUtf8Bytes();
-        }
-
-        [Benchmark]
-        public void WriteIntsUtf8()
-        {
-            var w = JWriter.New();
-            WriteInts(w, ListOfInts);
-            var b = w.GetUtf8Bytes();
-        }
-
-        [Benchmark]
-        public void WriteStructsUtf8()
-        {
-            var w = JWriter.New();
-            WriteStructs(w, ListOfStructs);
-            var b = w.GetUtf8Bytes();
         }
 
         private List<bool> ReadBools(ref JReader r)
