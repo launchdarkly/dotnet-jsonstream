@@ -145,12 +145,12 @@ namespace LaunchDarkly.JsonStream.Benchmarks
         private void WriteTestStruct(IValueWriter w, TestStruct ts)
         {
             var obj = w.Object();
-            obj.Property("str").String(ts.Str);
-            WriteInts(obj.Property("nums"), ts.Nums);
-            obj.Property("bool").Bool(ts.Bool);
+            obj.Name("str").String(ts.Str);
+            WriteInts(obj.Name("nums"), ts.Nums);
+            obj.Name("bool").Bool(ts.Bool);
             if (ts.Nested != null)
             {
-                WriteTestStruct(obj.Property("nested"), ts.Nested);
+                WriteTestStruct(obj.Name("nested"), ts.Nested);
             }
             obj.End();
         }

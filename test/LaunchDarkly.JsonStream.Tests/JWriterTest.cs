@@ -166,7 +166,7 @@ namespace LaunchDarkly.JsonStream
                             {
                                 foreach (var p in value.ObjectValue)
                                 {
-                                    var valueWriter = obj.Property(p.Name);
+                                    var valueWriter = obj.Name(p.Name);
                                     foreach (var action in p.Actions)
                                     {
                                         action(w);

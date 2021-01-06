@@ -173,7 +173,7 @@ namespace LaunchDarkly.JsonStream
                         var obj = writer.Object();
                         foreach (var kv in dict)
                         {
-                            WriteJson(kv.Value, obj.Property(kv.Key));
+                            WriteJson(kv.Value, obj.Name(kv.Key));
                         }
                         obj.End();
                         break;

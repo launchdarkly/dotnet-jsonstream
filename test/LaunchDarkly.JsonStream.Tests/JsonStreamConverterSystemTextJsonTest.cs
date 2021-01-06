@@ -193,14 +193,14 @@ namespace LaunchDarkly.JsonStream
             public void WriteJson(MyTestClass instance, IValueWriter writer)
             {
                 var obj = writer.Object();
-                obj.Property("stringProp").String(instance.StringProp);
-                obj.Property("boolProp").Bool(instance.BoolProp);
-                obj.Property("intProp").Int(instance.IntProp);
-                obj.Property("longProp").Long(instance.LongProp);
-                obj.Property("doubleProp").Double(instance.DoubleProp);
+                obj.Name("stringProp").String(instance.StringProp);
+                obj.Name("boolProp").Bool(instance.BoolProp);
+                obj.Name("intProp").Int(instance.IntProp);
+                obj.Name("longProp").Long(instance.LongProp);
+                obj.Name("doubleProp").Double(instance.DoubleProp);
                 if (instance.ArrayOfInts != null)
                 {
-                    using (var arr = obj.Property("arrayOfInts").Array())
+                    using (var arr = obj.Name("arrayOfInts").Array())
                     {
                         foreach (var n in instance.ArrayOfInts)
                         {
@@ -210,24 +210,24 @@ namespace LaunchDarkly.JsonStream
                 }
                 if (instance.ObjectOfInts != null)
                 {
-                    using (var subObj = obj.Property("objectOfInts").Object())
+                    using (var subObj = obj.Name("objectOfInts").Object())
                     {
                         foreach (var kv in instance.ObjectOfInts)
                         {
-                            subObj.Property(kv.Key).Int(kv.Value);
+                            subObj.Name(kv.Key).Int(kv.Value);
                         }
                     }
                 }
-                obj.Property("nullableString1").String(instance.NullableString1);
-                obj.Property("nullableBool1").BoolOrNull(instance.NullableBool1);
-                obj.Property("nullableInt1").IntOrNull(instance.NullableInt1);
-                obj.Property("nullableLong1").LongOrNull(instance.NullableLong1);
-                obj.Property("nullableDouble1").DoubleOrNull(instance.NullableDouble1);
-                obj.Property("nullableString2").String(instance.NullableString2);
-                obj.Property("nullableBool2").BoolOrNull(instance.NullableBool2);
-                obj.Property("nullableInt2").IntOrNull(instance.NullableInt2);
-                obj.Property("nullableLong2").LongOrNull(instance.NullableLong2);
-                obj.Property("nullableDouble2").DoubleOrNull(instance.NullableDouble2);
+                obj.Name("nullableString1").String(instance.NullableString1);
+                obj.Name("nullableBool1").BoolOrNull(instance.NullableBool1);
+                obj.Name("nullableInt1").IntOrNull(instance.NullableInt1);
+                obj.Name("nullableLong1").LongOrNull(instance.NullableLong1);
+                obj.Name("nullableDouble1").DoubleOrNull(instance.NullableDouble1);
+                obj.Name("nullableString2").String(instance.NullableString2);
+                obj.Name("nullableBool2").BoolOrNull(instance.NullableBool2);
+                obj.Name("nullableInt2").IntOrNull(instance.NullableInt2);
+                obj.Name("nullableLong2").LongOrNull(instance.NullableLong2);
+                obj.Name("nullableDouble2").DoubleOrNull(instance.NullableDouble2);
                 obj.End();
             }
         }

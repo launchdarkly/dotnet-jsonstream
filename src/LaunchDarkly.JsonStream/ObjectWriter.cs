@@ -8,7 +8,7 @@ namespace LaunchDarkly.JsonStream
     /// </summary>
     /// <remarks>
     /// Calling <see cref="JWriter.Object"/> creates an <see cref="ObjectWriter"/>. Use
-    /// <see cref="Property(string)"/> or <see cref="MaybeProperty(string, bool)"/> to begin
+    /// <see cref="Name(string)"/> or <see cref="MaybeName(string, bool)"/> to begin
     /// writing each object property, and <see cref="IValueWriter"/> methods to write each
     /// value. Calling <see cref="ObjectWriter.End"/> or <see cref="ObjectWriter.Dispose"/>
     /// terminates the object.
@@ -38,12 +38,12 @@ namespace LaunchDarkly.JsonStream
         /// <example>
         /// <code>
         ///     var obj = writer.Object();
-        ///     obj.Property("myStringProperty").String("the value");
+        ///     obj.Name("myStringProperty").String("the value");
         /// </code>
         /// </example>
         /// <param name="name">the property name</param>
         /// <returns>an <see cref="IValueWriter"/> for writing the value</returns>
-        public IValueWriter Property(string name)
+        public IValueWriter Name(string name)
         {
             if (_writer is null || _done)
             {
@@ -59,7 +59,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         /// <remarks>
         /// If <paramref name="present"/> is <see langword="true"/>, this behaves the same as
-        /// <see cref="Property(string)"/>. However, if <paramref name="present"/> is
+        /// <see cref="Name(string)"/>. However, if <paramref name="present"/> is
         /// <see langword="false"/>, it does not write a property name and instead of
         /// returning a functional <see cref="IValueWriter"/>, it returns a stub object that
         /// does not produce any output.
@@ -69,20 +69,20 @@ namespace LaunchDarkly.JsonStream
         ///     var obj = writer.Object();
         ///
         ///     // this writes a property "present":"value"
-        ///     obj.MaybeProperty("present", true).String("value");
+        ///     obj.MaybeName("present", true).String("value");
         ///
         ///     // this writes nothing
-        ///     obj.MaybeProperty("absent", false).String("value");
+        ///     obj.MaybeName("absent", false).String("value");
         /// </code>
         /// </example>
         /// <param name="name">the property name</param>
         /// <param name="present">true if the property should be written</param>
         /// <returns>an <see cref="IValueWriter"/> which may or may not be enabled</returns>
-        public IValueWriter MaybeProperty(string name, bool present)
+        public IValueWriter MaybeName(string name, bool present)
         {
             if (present)
             {
-                return Property(name);
+                return Name(name);
             }
             return NoOpWriter.Instance;
         }

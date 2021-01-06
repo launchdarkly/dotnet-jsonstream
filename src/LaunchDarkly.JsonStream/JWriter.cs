@@ -28,6 +28,18 @@ namespace LaunchDarkly.JsonStream
     /// attempt to use the <c>JWriter</c> any further after that point.</item>
     /// </list>
     /// </remarks>
+    /// <example>
+    ///     // This writes the following JSON object: {"a":true,"b":[1,2]}
+    ///     var w = JWriter.New();
+    ///     var obj = w.Object();
+    ///     obj.Name("a").Bool(true);
+    ///     var arr = obj.Name("b").Array();
+    ///     arr.Int(1);
+    ///     arr.Int(2);
+    ///     arr.End();
+    ///     obj.End();
+    ///     var json = w.GetString();
+    /// </example>
     public sealed class JWriter : IValueWriter
     {
         internal readonly TokenWriter _tw;

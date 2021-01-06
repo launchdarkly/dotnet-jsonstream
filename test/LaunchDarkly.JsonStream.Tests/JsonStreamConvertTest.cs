@@ -117,7 +117,7 @@ namespace LaunchDarkly.JsonStream
             public void WriteJson(MyTestClass instance, IValueWriter writer)
             {
                 var obj = writer.Object();
-                obj.Property("value").String(instance.Value);
+                obj.Name("value").String(instance.Value);
                 obj.End();
             }
         }
