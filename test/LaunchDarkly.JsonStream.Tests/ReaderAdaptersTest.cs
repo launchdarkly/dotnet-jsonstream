@@ -19,35 +19,54 @@ namespace LaunchDarkly.JsonStream
                 (float)5.5,
                 (double)6.5,
                 "x",
-                new Dictionary<string, object> { { "a", 1 } }
+                new Dictionary<string, object> { { "a", 1 } },
+                new Dictionary<object, object> { { "b", 2 } }
             };
             var r = JReader.FromAdapter(ReaderAdapters.FromSimpleTypes(value));
 
             var arr = r.Array();
+
             Assert.True(arr.Next(ref r));
             r.Null();
+
             Assert.True(arr.Next(ref r));
             Assert.True(r.Bool());
+
             Assert.True(arr.Next(ref r));
             Assert.Equal(1, r.Int());
+
             Assert.True(arr.Next(ref r));
             Assert.Equal(2, r.Int());
+
             Assert.True(arr.Next(ref r));
             Assert.Equal(3, r.Long());
+
             Assert.True(arr.Next(ref r));
             Assert.Equal(4, r.Long());
+
             Assert.True(arr.Next(ref r));
             Assert.Equal(5.5, r.Double());
+
             Assert.True(arr.Next(ref r));
             Assert.Equal(6.5, r.Double());
+
             Assert.True(arr.Next(ref r));
             Assert.Equal("x", r.String());
+
             Assert.True(arr.Next(ref r));
-            var obj = r.Object();
-            Assert.True(obj.Next(ref r));
-            Assert.Equal("a", obj.Name.ToString());
+            var obj1 = r.Object();
+            Assert.True(obj1.Next(ref r));
+            Assert.Equal("a", obj1.Name.ToString());
             Assert.Equal(1, r.Int());
-            Assert.False(obj.Next(ref r));
+            Assert.False(obj1.Next(ref r));
+
+            Assert.True(arr.Next(ref r));
+            var obj2 = r.Object();
+            Assert.True(obj2.Next(ref r));
+            Assert.Equal("b", obj2.Name.ToString());
+            Assert.Equal(2, r.Int());
+            Assert.False(obj2.Next(ref r));
+
             Assert.False(arr.Next(ref r));
             Assert.True(r.EOF);
         }
@@ -107,8 +126,5 @@ namespace LaunchDarkly.JsonStream
             var r = JReader.FromAdapter(adapter);
             return r.String();
         }
-
-        private object ParseSimpleValue(string json) =>
-            JsonStreamConvert.DeserializeObject(json, JsonStreamConvert.ConvertSimpleTypes);
     }
 }

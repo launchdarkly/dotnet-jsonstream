@@ -107,7 +107,8 @@ namespace LaunchDarkly.JsonStream
         /// <c>double</c>). Nulls are <c>null</c>. Arrays are read as <c>List&lt;object&gt;</c>
         /// and can be written from any <c>IEnumerable&lt;object&gt;</c>. JSON objects are
         /// read as <c>Dictionary&lt;string, object&gt;</c> and can be written from any
-        /// <c>IReadOnlyDictionary&lt;string, object&gt;</c>.
+        /// <c>IReadOnlyDictionary&lt;string, object&gt;</c> or
+        /// <c>IReadOnlyDictionary&lt;object, object&gt;</c>.
         /// </remarks>
         public static IJsonStreamConverter<object> ConvertSimpleTypes =>
             new SimpleTypesConverter();
@@ -176,6 +177,14 @@ namespace LaunchDarkly.JsonStream
                             WriteJson(kv.Value, obj.Name(kv.Key));
                         }
                         obj.End();
+                        break;
+                    case IReadOnlyDictionary<object, object> dict:
+                        var obj1 = writer.Object();
+                        foreach (var kv in dict)
+                        {
+                            WriteJson(kv.Value, obj1.Name(kv.Key.ToString()));
+                        }
+                        obj1.End();
                         break;
                     case IEnumerable<object> list:
                         var arr = writer.Array();
