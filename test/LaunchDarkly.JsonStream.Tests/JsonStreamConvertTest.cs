@@ -68,7 +68,7 @@ namespace LaunchDarkly.JsonStream
                 100,
                 "x",
                 new Dictionary<string, object> { { "a", 1 } },
-                new Dictionary<object, object> { { "b", 1 } }
+                new Dictionary<object, object> { { "b", 2 } }
             };
             var expected = @"[null, true, 100, ""x"", {""a"": 1}, {""b"": 2}]";
             var actual = JsonStreamConvert.SerializeObject(value, JsonStreamConvert.ConvertSimpleTypes);
