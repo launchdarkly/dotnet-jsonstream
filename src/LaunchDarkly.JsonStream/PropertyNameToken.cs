@@ -58,6 +58,14 @@ namespace LaunchDarkly.JsonStream
     {
         private readonly bool _defined;
 
+        /// <summary>
+        /// An empty value that indicates there are no more properties.
+        /// </summary>
+        public static PropertyNameToken None => new PropertyNameToken();
+
+        /// <summary>
+        /// True if this is <see cref="PropertyNameToken.None"/>.
+        /// </summary>
         public bool Empty => !_defined;
 
 #if USE_SYSTEM_TEXT_JSON

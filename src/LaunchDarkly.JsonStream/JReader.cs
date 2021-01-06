@@ -55,7 +55,7 @@ namespace LaunchDarkly.JsonStream
     /// </remarks>
     public ref struct JReader
     {
-        private readonly IReaderDelegate _delegate;
+        private readonly IReaderAdapter _delegate;
         private TokenReader _tr;
         private bool _awaitingReadValue;
 
@@ -67,17 +67,37 @@ namespace LaunchDarkly.JsonStream
         public static JReader FromString(string input) =>
             new JReader(new TokenReader(input));
 
+        /// <summary>
+        /// Creates a <see cref="JReader"/> that processes JSON data from a UTF-8 byte array.
+        /// </summary>
+        /// <param name="input">the input data</param>
+        /// <returns>a new <see cref="JReader"/></returns>
         public static JReader FromUtf8Bytes(byte[] input) =>
             new JReader(new TokenReader(input));
 
-        internal JReader(TokenReader tokenReader)
+        /// <summary>
+        /// Creates a <see cref="JReader"/> that processes JSON-equivalent data from a custom
+        /// source.
+        /// </summary>
+        /// <remarks>
+        /// This allows deserialization logic based on <see cref="JReader"/> to be used on a custom input
+        /// stream without involving the actual JSON parser. For instance, you could define an
+        /// implementation of <see cref="IReaderDelegate"/> that consumes YAML data.
+        /// </remarks>
+        /// <param name="dataAdapter">an implementation of <see cref="IReaderAdapter"/></param>
+        /// <returns>a new <see cref="JReader"/></returns>
+        /// <seealso cref="IReaderDelegate"/>
+        public static JReader FromAdapter(IReaderAdapter dataAdapter) =>
+            new JReader(dataAdapter);
+
+        private JReader(TokenReader tokenReader)
         {
             _tr = tokenReader;
             _awaitingReadValue = false;
             _delegate = null;
         }
 
-        internal JReader(IReaderDelegate d)
+        private JReader(IReaderAdapter d)
         {
             _tr = new TokenReader();
             _awaitingReadValue = false;
@@ -101,7 +121,7 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                _delegate.Null();
+                _delegate.NextValue(ValueType.Null, true);
                 return;
             }
             if (!_tr.Null())
@@ -121,7 +141,7 @@ namespace LaunchDarkly.JsonStream
         public bool Bool()
         {
             _awaitingReadValue = false;
-            return _delegate == null ? _tr.Bool() : _delegate.Bool();
+            return _delegate == null ? _tr.Bool() : _delegate.NextValue(ValueType.Bool, false).BoolValue;
         }
 
         /// <summary>
@@ -133,8 +153,12 @@ namespace LaunchDarkly.JsonStream
         public bool? BoolOrNull()
         {
             _awaitingReadValue = false;
-            return _delegate == null ?
-                (_tr.Null() ? null : (bool?)_tr.Bool()) : _delegate.BoolOrNull();
+            if (_delegate != null)
+            {
+                var val = _delegate.NextValue(ValueType.Bool, true);
+                return val.Type == ValueType.Null ? null : (bool?)val.BoolValue;
+            }
+            return _tr.Null() ? null : (bool?)_tr.Bool();
         }
 
         /// <summary>
@@ -146,7 +170,7 @@ namespace LaunchDarkly.JsonStream
         public int Int()
         {
             _awaitingReadValue = false;
-            return _delegate == null ? (int)_tr.Number() : (int)_delegate.Number();
+            return _delegate == null ? (int)_tr.Number() : (int)_delegate.NextValue(ValueType.Number, false).NumberValue;
         }
 
         /// <summary>
@@ -160,8 +184,8 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                var n = _delegate.NumberOrNull();
-                return n.HasValue ? (int)n.Value : (int?)null;
+                var val = _delegate.NextValue(ValueType.Number, true);
+                return val.Type == ValueType.Null ? null : (int?)val.NumberValue;
             }
             return _tr.Null() ? null : (int?)_tr.Number();
         }
@@ -175,7 +199,7 @@ namespace LaunchDarkly.JsonStream
         public long Long()
         {
             _awaitingReadValue = false;
-            return _delegate == null ? (long)_tr.Number() : (long)_delegate.Number();
+            return _delegate == null ? (long)_tr.Number() : (long)_delegate.NextValue(ValueType.Number, false).NumberValue;
         }
 
         /// <summary>
@@ -189,8 +213,8 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                var n = _delegate.NumberOrNull();
-                return n.HasValue ? (long)n.Value : (long?)null;
+                var val = _delegate.NextValue(ValueType.Number, true);
+                return val.Type == ValueType.Null ? null : (long?)val.NumberValue;
             }
             return _tr.Null() ? null : (long?)_tr.Number();
         }
@@ -204,7 +228,7 @@ namespace LaunchDarkly.JsonStream
         public double Double()
         {
             _awaitingReadValue = false;
-            return _delegate == null ? _tr.Number() : _delegate.Number();
+            return _delegate == null ? _tr.Number() : _delegate.NextValue(ValueType.Number, false).NumberValue;
         }
 
         /// <summary>
@@ -218,7 +242,8 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.NumberOrNull();
+                var val = _delegate.NextValue(ValueType.Number, true);
+                return val.Type == ValueType.Null ? null : (double?)val.NumberValue;
             }
             return _tr.Null() ? null : (double?)_tr.Number();
         }
@@ -232,7 +257,7 @@ namespace LaunchDarkly.JsonStream
         public string String()
         {
             _awaitingReadValue = false;
-            return _delegate == null ? _tr.String() : _delegate.String();
+            return _delegate == null ? _tr.String() : _delegate.NextValue(ValueType.String, false).StringValue;
         }
 
         /// <summary>
@@ -246,7 +271,7 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.StringOrNull();
+                return _delegate.NextValue(ValueType.String, true).StringValue;
             }
             return _tr.Null() ? null : _tr.String();
         }
@@ -272,7 +297,8 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.Array();
+                _delegate.NextValue(ValueType.Array, false);
+                return new ArrayReader(true);
             }
             _tr.StartArray();
             return new ArrayReader(true);
@@ -301,7 +327,8 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.ArrayOrNull();
+                var value = _delegate.NextValue(ValueType.Array, true);
+                return new ArrayReader(value.Type != ValueType.Null);
             }
             if (_tr.Null())
             {
@@ -332,7 +359,8 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.Object();
+                _delegate.NextValue(ValueType.Object, false);
+                return new ObjectReader(true, null);
             }
             _tr.StartObject();
             return new ObjectReader(true, null);
@@ -361,7 +389,8 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.ObjectOrNull();
+                var value = _delegate.NextValue(ValueType.Object, true);
+                return new ObjectReader(value.Type != ValueType.Null, null);
             }
             if (_tr.Null())
             {
@@ -394,7 +423,7 @@ namespace LaunchDarkly.JsonStream
             _awaitingReadValue = false;
             if (_delegate != null)
             {
-                return _delegate.Any();
+                return _delegate.NextValue(null, true);
             }
             var token = _tr.Any();
             switch (token.Type)
@@ -425,11 +454,6 @@ namespace LaunchDarkly.JsonStream
         public void SkipValue()
         {
             _awaitingReadValue = false;
-            if (_delegate != null)
-            {
-                _delegate.SkipValue();
-                return;
-            }
             var av = Any();
             switch (av.Type)
             {

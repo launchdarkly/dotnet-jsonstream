@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
@@ -55,6 +56,41 @@ namespace LaunchDarkly.JsonStream
         {
             Assert.Throws<InvalidOperationException>(() =>
                 JsonStreamConvert.DeserializeObject<TestClassWithNoConverter>("{}"));
+        }
+
+        [Fact]
+        public void ConvertFromSimpleTypes()
+        {
+            var value = new List<object>
+            {
+                null,
+                true,
+                100,
+                "x",
+                new Dictionary<string, object> { { "a", 1 } }
+            };
+            var expected = @"[null, true, 100, ""x"", {""a"": 1}]";
+            var actual = JsonStreamConvert.SerializeObject(value, JsonStreamConvert.ConvertSimpleTypes);
+            TestUtil.AssertJsonEqual(expected, actual);
+        }
+
+        [Fact]
+        public void ConvertToSimpleTypes()
+        {
+            var json = @"[null, true, 100, ""x"", {""a"": 1}]";
+            var value = JsonStreamConvert.DeserializeObject(json, JsonStreamConvert.ConvertSimpleTypes);
+            var list = Assert.IsType<List<object>>(value);
+            Assert.Collection(list,
+                e => Assert.Null(e),
+                e => Assert.Equal(true, e),
+                e => Assert.Equal((double)100, e),
+                e => Assert.Equal("x", e),
+                e =>
+                {
+                    var dict = Assert.IsType<Dictionary<string, object>>(e);
+                    Assert.Equal((double)1, dict["a"]);
+                }
+                );
         }
 
         [JsonStreamConverter(typeof(MyTestConverter))]
