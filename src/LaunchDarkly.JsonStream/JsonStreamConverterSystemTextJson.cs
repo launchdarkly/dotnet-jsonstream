@@ -18,15 +18,15 @@ namespace LaunchDarkly.JsonStream
             var attr = JsonStreamConverterAttribute.ForTargetType(typeToConvert);
             return (JsonConverter)Activator.CreateInstance(
                 typeof(ConverterImpl<>).MakeGenericType(typeToConvert),
-                attr.UntypedConverter
+                attr.Converter
                 );
         }
 
         private sealed class ConverterImpl<T> : JsonConverter<T>
         {
-            private IJsonStreamConverter<T> _jsonStreamConverter;
+            private IJsonStreamConverter _jsonStreamConverter;
 
-            public ConverterImpl(IJsonStreamConverter<T> jsonStreamConverter)
+            public ConverterImpl(IJsonStreamConverter jsonStreamConverter)
             {
                 _jsonStreamConverter = jsonStreamConverter;
             }
@@ -41,7 +41,7 @@ namespace LaunchDarkly.JsonStream
                 // delegate, but it's still better than actually parsing the JSON twice.
                 var jsonDocument = JsonDocument.ParseValue(ref reader);
                 var readerWrapper = JReader.FromAdapter(ReaderAdapters.FromJsonElement(jsonDocument.RootElement));
-                return _jsonStreamConverter.ReadJson(ref readerWrapper);
+                return (T)_jsonStreamConverter.ReadJson(ref readerWrapper);
             }
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)

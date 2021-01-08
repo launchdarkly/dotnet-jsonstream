@@ -4,63 +4,88 @@ using System.Collections.Generic;
 namespace LaunchDarkly.JsonStream
 {
     /// <summary>
-    /// Helper methods for serializing and deserializing types that have <see cref="IJsonStreamConverter{T}"/>
+    /// Helper methods for serializing and deserializing types that have <see cref="IJsonStreamConverter"/>
     /// implementations.
     /// </summary>
     public static class JsonStreamConvert
     {
         /// <summary>
-        /// Creates a JSON representation of a value using whatever converter is
-        /// specified in that type's attributes.
+        /// Creates a JSON representation of a value using the converter specified in
+        /// the type's attributes.
         /// </summary>
-        /// <typeparam name="T">a type that has a JSON conversion defined with a
-        /// <c>[JsonStreamConverter]</c> attribute</typeparam>
-        /// <param name="instance">an instance of type T</param>
+        /// <param name="instance">an instance of some type</param>
         /// <returns>the serialized JSON data as a string</returns>
-        /// <exception cref="ArgumentException">if type T does not have a
+        /// <exception cref="ArgumentException">if the type does not have a
         /// <c>[JsonStreamConverter]</c> attribute</exception>
         /// <seealso cref="JsonStreamConverterAttribute"/>
-        /// <seealso cref="SerializeObjectToUtf8Bytes{T}(T)"/>
-        public static string SerializeObject<T>(T instance) =>
-            SerializeObject(instance, JsonStreamConverterAttribute.GetConverter<T>());
+        /// <seealso cref="SerializeObjectToUtf8Bytes(object)"/>
+        public static string SerializeObject(object instance)
+        {
+            if (instance is null)
+            {
+                return "null";
+            }
+            return SerializeObject(instance,
+                JsonStreamConverterAttribute.ForTargetType(instance.GetType()).Converter);
+        }
 
         /// <summary>
         /// Uses the specified converter to create a JSON representation as a string.
         /// </summary>
-        /// <typeparam name="T">an arbitrary type</typeparam>
-        /// <param name="instance">an instance of type T</param>
-        /// <param name="converter">a converter for type T</param>
+        /// <param name="instance">an instance of some type</param>
+        /// <param name="converter">a converter for that type</param>
         /// <returns>the serialized JSON data as a string</returns>
-        public static string SerializeObject<T>(T instance, IJsonStreamConverter<T> converter)
+        public static string SerializeObject(object instance, IJsonStreamConverter converter)
         {
             var writer = JWriter.New();
-            converter.WriteJson(instance, writer);
+            SerializeObjectToJWriter(instance, writer, converter);
             return writer.GetString();
         }
 
         /// <summary>
-        /// Same as <see cref="SerializeObject{T}(T)"/>, but returns the JSON output
+        /// Same as <see cref="SerializeObject(object)"/>, but returns the JSON output
         /// as a byte array using UTF8 encoding.
         /// </summary>
-        /// <typeparam name="T">a type that has a JSON conversion defined with a
-        /// <c>[JsonStreamConverter]</c> attribute</typeparam>
-        /// <param name="instance">an instance of type T</param>
+        /// <param name="instance">an instance of some type</param>
         /// <returns>the serialized JSON data as a byte array</returns>
-        /// <exception cref="ArgumentException">if type T does not have a
+        /// <exception cref="ArgumentException">if the type does not have a
         /// <c>[JsonStreamConverter]</c> attribute</exception>
         /// <seealso cref="JsonStreamConverterAttribute"/>
-        /// <seealso cref="SerializeObject{T}(T)"/>
-        public static byte[] SerializeObjectToUtf8Bytes<T>(T instance)
+        /// <seealso cref="SerializeObject(object)"/>
+        public static byte[] SerializeObjectToUtf8Bytes(object instance)
         {
-            var converter = JsonStreamConverterAttribute.GetConverter<T>();
             var writer = JWriter.New();
-            converter.WriteJson(instance, writer);
+            if (instance is null)
+            {
+                writer.Null();
+            }
+            else
+            {
+                SerializeObjectToJWriter(instance, writer,
+                    JsonStreamConverterAttribute.ForTargetType(instance.GetType()).Converter);
+            }
             return writer.GetUtf8Bytes();
         }
 
+        private static void SerializeObjectToJWriter(object instance, IValueWriter writer, IJsonStreamConverter converter)
+        {
+            if (converter is null)
+            {
+                throw new NullReferenceException(nameof(converter));
+            }
+            if (instance is null)
+            {
+                writer.Null();
+            }
+            else
+            {
+                converter.WriteJson(instance, writer);
+            }
+        }
+
         /// <summary>
-        /// Decodes a value from a JSON representation using whatever converter is
-        /// specified in its type's attributes.
+        /// Decodes a value from a JSON representation using the converter specified
+        /// in the type's attributes.
         /// </summary>
         /// <typeparam name="T">a type that has a JSON conversion defined with a
         /// <c>[JsonStreamConverter]</c> attribute</typeparam>
@@ -71,20 +96,37 @@ namespace LaunchDarkly.JsonStream
         /// <exception cref="JsonReadException">if an error occurred in parsing
         /// the JSON or translating it to the desired type; see subclasses of
         /// <see cref="JsonReadException"/> for more specific errors</exception>
-        public static T DeserializeObject<T>(string json) =>
-            DeserializeObject(json, JsonStreamConverterAttribute.GetConverter<T>());
+        public static T DeserializeObject<T>(string json) => (T)DeserializeObject(json, typeof(T));
+
+        /// <summary>
+        /// Decodes a value from a JSON representation using the converter specified
+        /// in the type's attributes.
+        /// </summary>
+        /// <remarks>
+        /// This is the same as <see cref="DeserializeObject{T}(string)"/>, but for cases
+        /// where the type is not known at compile time.
+        /// </remarks>
+        /// <param name="json">the JSON representation as a string</param>
+        /// <param name="type">the desired type</param>
+        /// <returns>an instance of that type</returns>
+        /// <exception cref="ArgumentException">if the type does not have a
+        /// <c>[JsonStreamConverter]</c> attribute</exception>
+        /// <exception cref="JsonReadException">if an error occurred in parsing
+        /// the JSON or translating it to the desired type; see subclasses of
+        /// <see cref="JsonReadException"/> for more specific errors</exception>
+        public static object DeserializeObject(string json, Type type) =>
+            DeserializeObject(json, JsonStreamConverterAttribute.ForTargetType(type).Converter);
 
         /// <summary>
         /// Decodes a value from a JSON representation using the specified converter.
         /// </summary>
-        /// <typeparam name="T">an arbitrary type</typeparam>
         /// <param name="json">the JSON representation as a string</param>
-        /// <param name="converter">a converter for type T</param>
-        /// <returns>an instance of type T</returns>
+        /// <param name="converter">a converter for the desired type</param>
+        /// <returns>an instance of that type</returns>
         /// <exception cref="JsonReadException">if an error occurred in parsing
         /// the JSON or translating it to the desired type; see subclasses of
         /// <see cref="JsonReadException"/> for more specific errors</exception>
-        public static T DeserializeObject<T>(string json, IJsonStreamConverter<T> converter)
+        public static object DeserializeObject(string json, IJsonStreamConverter converter)
         {
             var reader = JReader.FromString(json);
             try
@@ -98,7 +140,7 @@ namespace LaunchDarkly.JsonStream
         }
 
         /// <summary>
-        /// Returns an <see cref="IJsonStreamConverter{T}"/> that converts between JSON and
+        /// Returns an <see cref="IJsonStreamConverter"/> that converts between JSON and
         /// a simple set of .NET data types.
         /// </summary>
         /// <remarks>
@@ -110,10 +152,10 @@ namespace LaunchDarkly.JsonStream
         /// <c>IReadOnlyDictionary&lt;string, object&gt;</c> or
         /// <c>IReadOnlyDictionary&lt;object, object&gt;</c>.
         /// </remarks>
-        public static IJsonStreamConverter<object> ConvertSimpleTypes =>
+        public static IJsonStreamConverter ConvertSimpleTypes =>
             new SimpleTypesConverter();
 
-        private sealed class SimpleTypesConverter : IJsonStreamConverter<object>
+        private sealed class SimpleTypesConverter : IJsonStreamConverter
         {
             public object ReadJson(ref JReader reader)
             {

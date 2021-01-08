@@ -9,7 +9,7 @@ namespace LaunchDarkly.JsonStream
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The specified type must implement <see cref="IJsonStreamConverter{T}"/>. This allows
+    /// The specified type must implement <see cref="IJsonStreamConverter"/>. This allows
     /// the <see cref="JsonStreamConvert"/> methods to work with the target type:
     /// </para>
     /// <example>
@@ -17,7 +17,7 @@ namespace LaunchDarkly.JsonStream
     ///     [JsonStreamConverter(typeof(MyConverter))]
     ///     public class MyType { ... }
     ///
-    ///     public class MyConverter : IJsonStreamConverter&lt;MyType&gt;
+    ///     public class MyConverter : IJsonStreamConverter
     ///     {
     ///         // implement IJsonStreamConverter methods to handle MyType
     ///     }
@@ -42,15 +42,12 @@ namespace LaunchDarkly.JsonStream
         System.Attribute
 #endif
     {
-        // The type of this object is really some implementation of IJsonStreamConverter<T> where T is
-        // the type specified in the attribute, but that's not available as a generic type parameter in
-        // this context so we'll have to cast it to that later.
-        internal object UntypedConverter { get; }
+        internal IJsonStreamConverter Converter { get; }
 
         /// <summary>
         /// Creates the attribute.
         /// </summary>
-        /// <param name="converterType">a type that implements <see cref="IJsonStreamConverter{T}"/></param>
+        /// <param name="converterType">a type that implements <see cref="IJsonStreamConverter"/></param>
         public JsonStreamConverterAttribute(Type converterType)
 #if USE_SYSTEM_TEXT_JSON
             : base(typeof(JsonStreamConverterSystemTextJson))
@@ -59,12 +56,16 @@ namespace LaunchDarkly.JsonStream
             // know to delegate to our logic.
 #endif
         {
+            if (!typeof(IJsonStreamConverter).IsAssignableFrom(converterType))
+            {
+                throw new ArgumentException("type for JsonStreamConverterAttribute must implement IJsonStreamConverter");
+            }
             var ctor = converterType.GetConstructor(Type.EmptyTypes);
             if (ctor is null)
             {
                 throw new ArgumentException("type for JsonStreamConverterAttribute must have a no-argument public constructor");
             }
-            UntypedConverter = ctor.Invoke(null);
+            Converter = ctor.Invoke(null) as IJsonStreamConverter;
         }
 
         internal static JsonStreamConverterAttribute ForTargetType(Type targetType)
@@ -72,22 +73,9 @@ namespace LaunchDarkly.JsonStream
             var attr = targetType.GetCustomAttribute(typeof(JsonStreamConverterAttribute)) as JsonStreamConverterAttribute;
             if (attr is null)
             {
-                throw new InvalidOperationException(string.Format("{0} does not have JsonStreamConverterAttribute", targetType.FullName));
-            }
-            var desiredInterface = typeof(IJsonStreamConverter<>).MakeGenericType(targetType);
-            if (!desiredInterface.IsAssignableFrom(attr.UntypedConverter.GetType()))
-            {
-                throw new InvalidOperationException(string.Format(
-                    "{0} was specified in JsonStreamConverterAttribute for {1} but does not implement IJsonStreamConverter<{1}>",
-                    attr.UntypedConverter.GetType().Name, targetType.Name));
+                throw new ArgumentException(string.Format("{0} does not have JsonStreamConverterAttribute", targetType.FullName));
             }
             return attr;
-        }
-
-        internal static IJsonStreamConverter<T> GetConverter<T>()
-        {
-            var attr = ForTargetType(typeof(T));
-            return attr.UntypedConverter as IJsonStreamConverter<T>;
         }
     }
 }
