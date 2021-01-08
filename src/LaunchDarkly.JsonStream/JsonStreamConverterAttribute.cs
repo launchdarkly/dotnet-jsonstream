@@ -47,6 +47,10 @@ namespace LaunchDarkly.JsonStream
         // this context so we'll have to cast it to that later.
         internal object UntypedConverter { get; }
 
+        /// <summary>
+        /// Creates the attribute.
+        /// </summary>
+        /// <param name="converterType">a type that implements <see cref="IJsonStreamConverter{T}"/></param>
         public JsonStreamConverterAttribute(Type converterType)
 #if USE_SYSTEM_TEXT_JSON
             : base(typeof(JsonStreamConverterSystemTextJson))

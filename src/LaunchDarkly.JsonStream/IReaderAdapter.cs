@@ -10,7 +10,7 @@ namespace LaunchDarkly.JsonStream
     /// without involving the actual JSON parser. The adapter is responsible for maintaining its
     /// own state information regarding the position of the next value to be read.
     /// </remarks>
-    /// <seealso cref="JReader.FromDelegate(IReaderDelegate)"/>
+    /// <seealso cref="JReader.FromAdapter(IReaderAdapter)"/>
     /// <seealso cref="ReaderAdapters"/>
     public interface IReaderAdapter
     {

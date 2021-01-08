@@ -13,23 +13,13 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         public int? Offset { get; }
 
+        /// <summary>
+        /// Base class constructor.
+        /// </summary>
+        /// <param name="offset">the character offset of the error, if known</param>
         protected JsonReadException(int? offset)
         {
             Offset = offset;
         }
-
-//        public static Exception FromException(Exception e)
-//        {
-//            if (e is JsonReadException)
-//            {
-//                return e;
-//            }
-//#if NETCORE3_0 || NET5_0
-//            if (e is System.Text.Json.JsonException je)
-//            {
-//                return new SyntaxException(je.Message, )
-//            }
-//#endif
-//        }
     }
 }

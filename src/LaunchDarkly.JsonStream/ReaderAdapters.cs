@@ -31,7 +31,7 @@ namespace LaunchDarkly.JsonStream
         /// </remarks>
         /// <param name="value">a value that corresponds to a JSON value</param>
         /// <param name="allowTypeCoercion">true if basic types can be interconverted</param>
-        /// <returns>an adapter for use with <see cref="JReader.FromAdapter(IReaderAdapter)"/>
+        /// <returns>an adapter for use with <see cref="JReader.FromAdapter(IReaderAdapter)"/></returns>
         public static IReaderAdapter FromSimpleTypes(object value, bool allowTypeCoercion = false) =>
             new SimpleTypesAdapter(value, allowTypeCoercion);
 
@@ -43,7 +43,7 @@ namespace LaunchDarkly.JsonStream
         /// This method is only available on platforms that support the <c>System.Text.Json</c> API.
         /// </remarks>
         /// <param name="value">a parsed element</param>
-        /// <returns>an adapter for use with <see cref="JReader.FromAdapter(IReaderAdapter)"/>
+        /// <returns>an adapter for use with <see cref="JReader.FromAdapter(IReaderAdapter)"/></returns>
         public static IReaderAdapter FromJsonElement(JsonElement value) =>
             new JsonElementReaderAdapter(value);
 #endif

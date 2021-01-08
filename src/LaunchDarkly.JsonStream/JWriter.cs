@@ -109,7 +109,7 @@ namespace LaunchDarkly.JsonStream
         /// This is defined separately from <see cref="GetUtf8Bytes"/> for situations in which it is
         /// preferable to read from the existing buffered data rather than copying it to a new array.
         /// However, on .NET Core 3.x and .NET 5.x, this method does perform a copy so it is better to use
-        /// <see cref="GetUTF8ReadOnlyMemory"/>.
+        /// <c>GetUTF8ReadOnlyMemory</c>.
         /// </remarks>
         /// <returns>a UTF8-encoded byte array</returns>
         public Stream GetUtf8Stream() =>

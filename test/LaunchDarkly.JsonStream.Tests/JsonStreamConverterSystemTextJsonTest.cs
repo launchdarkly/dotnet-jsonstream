@@ -73,6 +73,20 @@ namespace LaunchDarkly.JsonStream
             Assert.Equal(ExpectedInstance, instance);
         }
 
+        [Fact]
+        public void DeserializeObjectInStruct()
+        {
+            var json = @"{""myField"":" + ExpectedJson + "}";
+            var enclosingStruct = JsonSerializer.Deserialize<EnclosingStruct>(json);
+            Assert.Equal(new EnclosingStruct { MyField = ExpectedInstance }, enclosingStruct);
+        }
+
+        public struct EnclosingStruct
+        {
+            [System.Text.Json.Serialization.JsonPropertyName("myField")]
+            public MyTestClass MyField { get; set; }
+        }
+
         [JsonStreamConverter(typeof(MyTestConverter))]
 #pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
         public struct MyTestClass
@@ -117,7 +131,7 @@ namespace LaunchDarkly.JsonStream
                 NullableDouble2 == o.NullableDouble2;
         }
 
-        public class MyTestConverter : IJsonStreamConverter<MyTestClass>
+        internal class MyTestConverter : IJsonStreamConverter<MyTestClass>
         {
             public MyTestClass ReadJson(ref JReader reader)
             {

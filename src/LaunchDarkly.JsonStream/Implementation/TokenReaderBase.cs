@@ -105,7 +105,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 		// or TokenReaderInternalPlatformNative.cs. They can't be declared here as "partial" because
 		// they have non-void return types.
 
-		// public static bool IsPlatformNativeImplementation { get; }
+		// public static bool IsSystemTextJsonImplementation { get; }
 		// public Exception TranslateException(Exception);
 		// private int LastPosInternal { get; }
 		// private Token? ParseTokenInternal();

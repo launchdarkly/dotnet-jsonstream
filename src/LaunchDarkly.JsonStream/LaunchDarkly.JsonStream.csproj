@@ -19,6 +19,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\LaunchDarkly.JsonStream.xml</DocumentationFile>
   </PropertyGroup>
 
   <!-- System.Text.Json is built into the standard library in .NET Core 3.x and .NET 5.0.

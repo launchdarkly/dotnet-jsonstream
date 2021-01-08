@@ -3,7 +3,7 @@
 namespace LaunchDarkly.JsonStream
 {
     /// <summary>
-    /// A a decorator that manages the state of a JSON array that is in the process of being
+    /// A decorator that manages the state of a JSON array that is in the process of being
     /// written.
     /// </summary>
     /// <remarks>

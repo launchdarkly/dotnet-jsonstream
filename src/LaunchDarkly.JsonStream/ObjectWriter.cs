@@ -3,7 +3,7 @@
 namespace LaunchDarkly.JsonStream
 {
     /// <summary>
-    /// A a decorator that manages the state of a JSON object that is in the process of being
+    /// A decorator that manages the state of a JSON object that is in the process of being
     /// written.
     /// </summary>
     /// <remarks>
@@ -34,7 +34,7 @@ namespace LaunchDarkly.JsonStream
         /// <remarks>
         /// To write the property value, call any <see cref="IValueWriter"/> method on
         /// the returned <see cref="IValueWriter"/>.
-        /// </summary>
+        /// </remarks>
         /// <example>
         /// <code>
         ///     var obj = writer.Object();

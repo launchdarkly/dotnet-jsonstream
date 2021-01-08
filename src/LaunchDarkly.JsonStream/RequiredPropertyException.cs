@@ -11,6 +11,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         public string Name { get; }
 
+        /// <inheritdoc/>
         public override string Message =>
             string.Format("Missing required property \"{0}\" in JSON object that ended at position {1}", Name, Offset);
 

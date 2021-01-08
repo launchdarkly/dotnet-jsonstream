@@ -118,8 +118,8 @@ namespace LaunchDarkly.JsonStream
         ///     var requiredProps = new string[] { "key", "name" };
         ///     for (var obj = reader.Object().WithRequiredProperties(requiredProps); obj.Next(ref reader);)
         ///     {
-        //         switch (obj.Name) { ... }
-        //      }
+        ///         switch (obj.Name) { ... }
+        ///     }
         /// </code>
         /// <para>
         /// When the end of the object is reached, if one of the required properties has not yet been
@@ -144,11 +144,10 @@ namespace LaunchDarkly.JsonStream
         /// or if the object was empty or null.
         /// </para>
         /// <para>
-        /// If <c>Next</c> returns <see langword="true"/>, you can then use <see cref="Name"/> or
-        /// <see cref="NameIs(string)"/> to check the name of the property, and use <see cref="JReader"/>
-        /// methods such as <see cref="JReader.Bool"/> to read the element value. If you do not care about
-        /// the value, simply calling <c>Next</c> again without calling a <c>JReader</c> method will
-        /// discard the value.
+        /// If <c>Next</c> returns <see langword="true"/>, you can then use <see cref="Name"/> to check
+        /// the name of the property, and use <see cref="JReader"/> methods such as <see cref="JReader.Bool"/>
+        /// to read the element value. If you do not care about the value, simply calling <c>Next</c> again
+        /// without calling a <c>JReader</c> method will discard the value.
         /// </para>
         /// </remarks>
         /// <returns><see langword="true"/> if there is a next object property</returns>

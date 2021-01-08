@@ -99,7 +99,7 @@ namespace LaunchDarkly.JsonStream.Implementation
         /// The values are equal if their contents are equal, regardless of whether the token was
         /// created with <see cref="FromString"/> or <see cref="FromChars(char[], int, int)"/>.
         /// </remarks>
-        /// <param name="other">the value to compare</param>
+        /// <param name="value">the value to compare</param>
         /// <returns>true if the values are logically equal</returns>
         public bool Equals(string value)
         {

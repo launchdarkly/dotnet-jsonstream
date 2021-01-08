@@ -20,7 +20,7 @@ namespace LaunchDarkly.JsonStream
         /// Reads an object from its JSON representation.
         /// </summary>
         /// <param name="reader">the streaming reader</param>
-        /// <returns></returns>
+        /// <returns>the deserialized object</returns>
         T ReadJson(ref JReader reader);
     }
 }

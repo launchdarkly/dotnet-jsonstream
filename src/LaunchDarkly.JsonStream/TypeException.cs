@@ -21,6 +21,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         public ValueType ActualType { get; }
 
+        /// <inheritdoc/>
         public override string Message =>
             string.Format("expected {0} but got {1} at position {2}",
                 ExpectedType, ActualType, Offset);

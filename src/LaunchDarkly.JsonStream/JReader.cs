@@ -82,11 +82,11 @@ namespace LaunchDarkly.JsonStream
         /// <remarks>
         /// This allows deserialization logic based on <see cref="JReader"/> to be used on a custom input
         /// stream without involving the actual JSON parser. For instance, you could define an
-        /// implementation of <see cref="IReaderDelegate"/> that consumes YAML data.
+        /// implementation of <see cref="IReaderAdapter"/> that consumes YAML data.
         /// </remarks>
         /// <param name="dataAdapter">an implementation of <see cref="IReaderAdapter"/></param>
         /// <returns>a new <see cref="JReader"/></returns>
-        /// <seealso cref="IReaderDelegate"/>
+        /// <seealso cref="IReaderAdapter"/>
         public static JReader FromAdapter(IReaderAdapter dataAdapter) =>
             new JReader(dataAdapter);
 
@@ -374,7 +374,7 @@ namespace LaunchDarkly.JsonStream
         /// In the case of an object, the return value will be an <see cref="ObjectReader"/> containing the
         /// necessary state for iterating through the object properties. In the case of a null, the returned
         /// <see cref="ObjectReader"/> will be a stub that always returns <see langword="false"/> for both
-        /// <see cref="ObjectReader.Next"/> and <see cref="ArrayReader.IsDefined"/>.
+        /// <see cref="ObjectReader.Next"/> and <see cref="ObjectReader.IsDefined"/>.
         /// </para>
         /// <para>
         /// The <see cref="ObjectReader"/>is used only for the iteration state; to read the value of

@@ -11,6 +11,7 @@ namespace LaunchDarkly.JsonStream
         /// </summary>
         public string BaseMessage { get; }
 
+        /// <inheritdoc/>
         public override string Message =>
             string.Format("{0} at position {1}", BaseMessage, Offset);
 

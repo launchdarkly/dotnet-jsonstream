@@ -200,6 +200,7 @@ namespace LaunchDarkly.JsonStream
             return _jsonProperty.HasValue ? _jsonProperty.Value.NameEquals(value) : value.Equals(_string);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode() => ToString().GetHashCode();
 #else
         private readonly StringToken _stringToken;
@@ -236,11 +237,14 @@ namespace LaunchDarkly.JsonStream
         /// <returns>true if the string is an exact match</returns>
         public bool Equals(string value) => _stringToken.Equals(value);
 
+        /// <inheritdoc/>
         public override int GetHashCode() =>_stringToken.GetHashCode();
 #endif
 
+        /// <inheritdoc/>
         public override bool Equals(object o) => o is string s && Equals(s);
 
+#pragma warning disable CS1591 // don't need XML comments for these standard operators
         public static bool operator ==(PropertyNameToken p1, PropertyNameToken p2) => p1.Equals(p2);
 
         public static bool operator !=(PropertyNameToken p1, PropertyNameToken p2) => p1.Equals(p2);
@@ -248,5 +252,6 @@ namespace LaunchDarkly.JsonStream
         public static bool operator ==(PropertyNameToken p, string value) => p.Equals(value);
 
         public static bool operator !=(PropertyNameToken p, string value) => !p.Equals(value);
+#pragma warning restore CS1591
     }
 }
