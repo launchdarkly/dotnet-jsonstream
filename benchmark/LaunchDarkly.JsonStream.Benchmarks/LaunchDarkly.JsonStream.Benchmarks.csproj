@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!--
+      The reason there's a mechanism here for overriding the target frameworks with
+      an environment variable is that we want to be able to run CI tests using older
+      SDKs which do not consider "net5.0" to be a valid target framework that can be
+      referenced in a project file.
+
+      Also, the .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
+      is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
+      with .NET Framework 4.5.x.
+    -->
+    <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.1;netcoreapp3.1;net5.0;net461</TestFrameworks>
+    <TargetFrameworks>$(TESTFRAMEWORKS)</TargetFrameworks>
+    <StartupObject>LaunchDarkly.JsonStream.Benchmarks.RunBenchmarks</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\LaunchDarkly.JsonStream\LaunchDarkly.JsonStream.csproj" />
+  </ItemGroup>
+</Project>

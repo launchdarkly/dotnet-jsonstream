@@ -1,0 +1,166 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.4.0
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-linux:
+          name: .NET Core 2.1 (Linux)
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
+          build-target-frameworks: netstandard2.0
+          test-target-framework: netcoreapp2.1
+          uses-native-implementation: true
+      - test-linux:
+          name: .NET Core 3.1 (Linux)
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
+          build-target-frameworks: netcoreapp3.1
+          test-target-framework: netcoreapp3.1
+          uses-native-implementation: true
+      - test-windows:
+          name: .NET Core 3.1 (Windows)
+          test-target-framework: netcoreapp3.1
+          uses-native-implementation: true
+      - test-linux:
+          name: .NET 5.0 (Linux)
+          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+          test-target-framework: net5.0
+          uses-native-implementation: true
+      - test-windows:
+          name: .NET 5.0 (Windows)
+          test-target-framework: net5.0
+          uses-native-implementation: true
+      - test-windows:
+          name: .NET Framework 4.5.2 (Windows)
+          test-target-framework: net452
+          uses-native-implementation: false
+      - test-windows:
+          name: .NET Framework 4.6.1 (Windows)
+          test-target-framework: net461
+          uses-native-implementation: true
+      - benchmark-linux:
+          name: .NET Core 2.1 benchmarks (Linux)
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
+          build-target-frameworks: netstandard2.0
+          test-target-framework: netcoreapp2.1
+      - benchmark-linux:
+          name: .NET Core 3.1 benchmarks (Linux)
+          docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
+          build-target-frameworks: netcoreapp3.1
+          test-target-framework: netcoreapp3.1
+      - benchmark-windows:
+          name: .NET Core 3.1 benchmarks (Windows)
+          test-target-framework: netcoreapp3.1
+      - benchmark-linux:
+          name: .NET 5.0 benchmarks (Linux)
+          docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+          test-target-framework: net5.0
+      - benchmark-windows:
+          name: .NET 5.0 benchmarks (Windows)
+          test-target-framework: net5.0
+      - benchmark-windows:
+          name: .NET Framework 4.6.1 benchmarks (Windows)
+          test-target-framework: net461
+          # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
+          # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
+          # with .NET Framework 4.5.x.
+
+jobs:
+  test-linux:
+    parameters:
+      docker-image:
+        type: string
+      build-target-frameworks:
+        type: string
+        default: ""
+      test-target-framework:
+        type: string
+      uses-native-implementation:
+        type: boolean
+    docker:
+      - image: <<parameters.docker-image>>
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
+      BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      TESTFRAMEWORKS: <<parameters.test-target-framework>>
+      SHOULD_USE_SYSTEM_TEXT_JSON: <<parameters.uses-native-implementation>>
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore test/LaunchDarkly.JsonStream.Tests
+      - run:
+          name: run tests
+          command: dotnet test test/LaunchDarkly.JsonStream.Tests/LaunchDarkly.JsonStream.Tests.csproj -f <<parameters.test-target-framework>>
+
+  test-windows:
+    parameters:
+      test-target-framework:
+        type: string
+      uses-native-implementation:
+        type: boolean
+    executor:
+      name: win/default
+      shell: powershell.exe
+    environment:
+      SHOULD_USE_SYSTEM_TEXT_JSON: <<parameters.uses-native-implementation>>
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore test/LaunchDarkly.JsonStream.Tests
+      - run:
+          name: run tests
+          command: dotnet test test/LaunchDarkly.JsonStream.Tests/LaunchDarkly.JsonStream.Tests.csproj -f <<parameters.test-target-framework>>
+
+  benchmark-linux:
+    parameters:
+      docker-image:
+        type: string
+      build-target-frameworks:
+        type: string
+        default: ""
+      test-target-framework:
+        type: string
+    docker:
+      - image: <<parameters.docker-image>>
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
+      BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      TESTFRAMEWORKS: <<parameters.test-target-framework>>
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
+      - run:
+          name: build library in Release configuration
+          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
+      - run:
+          name: run benchmarks
+          command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
+      - store_artifacts:
+          path: BenchmarkDotNet.Artifacts/results
+
+  benchmark-windows:
+    parameters:
+      test-target-framework:
+        type: string
+    executor:
+      name: win/default
+      shell: powershell.exe
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
+      - run:
+          name: build library in Release configuration
+          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
+      - run:
+          name: run benchmarks
+          command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
+      - store_artifacts:
+          path: BenchmarkDotNet.Artifacts/results
