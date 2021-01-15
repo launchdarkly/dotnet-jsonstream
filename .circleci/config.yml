@@ -43,12 +43,12 @@ workflows:
       - benchmark-linux:
           name: .NET Core 2.1 benchmarks (Linux)
           docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
-          build-target-frameworks: netstandard2.0
+          build-target-framework: netstandard2.0
           test-target-framework: netcoreapp2.1
       - benchmark-linux:
           name: .NET Core 3.1 benchmarks (Linux)
           docker-image: mcr.microsoft.com/dotnet/core/sdk:3.1-focal
-          build-target-frameworks: netcoreapp3.1
+          build-target-framework: netcoreapp3.1
           test-target-framework: netcoreapp3.1
       - benchmark-windows:
           name: .NET Core 3.1 benchmarks (Windows)
@@ -56,6 +56,7 @@ workflows:
       - benchmark-linux:
           name: .NET 5.0 benchmarks (Linux)
           docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+          build-target-framework: net5.0
           test-target-framework: net5.0
       - benchmark-windows:
           name: .NET 5.0 benchmarks (Windows)
@@ -119,7 +120,7 @@ jobs:
     parameters:
       docker-image:
         type: string
-      build-target-frameworks:
+      build-target-framework:
         type: string
         default: ""
       test-target-framework:
@@ -128,7 +129,7 @@ jobs:
       - image: <<parameters.docker-image>>
     environment:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
-      BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      BUILDFRAMEWORKS: <<parameters.build-target-framework>>
       TESTFRAMEWORKS: <<parameters.test-target-framework>>
     steps:
       - checkout
@@ -137,7 +138,7 @@ jobs:
           command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
       - run:
           name: build library in Release configuration
-          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
+          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj -f <<parameters.build-target-framework>>
       - run:
           name: run benchmarks
           command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
@@ -158,7 +159,7 @@ jobs:
           command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
       - run:
           name: build library in Release configuration
-          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
+          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj -f net461
       - run:
           name: run benchmarks
           command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
