@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-alpha.7</Version>
+    <Version>1.0.0-alpha.8</Version>
     <!--
       The reason there's a mechanism here for overriding the target frameworks with
       an environment variable is that we want to be able to run CI tests using older
       SDKs which do not consider "net5.0" to be a valid target framework that can be
       referenced in a project file.
     -->
-    <BuildFrameworks Condition="'$(BUILDFRAMEWORKS)' == ''">netstandard2.0;netcoreapp3.1;net5.0;net452;net461</BuildFrameworks>
+    <BuildFrameworks Condition="'$(BUILDFRAMEWORKS)' == ''">netstandard2.0;netcoreapp3.1;net5.0;net452;net461;monoandroid71;xamarin.ios10</BuildFrameworks>
     <TargetFrameworks>$(BUILDFRAMEWORKS)</TargetFrameworks>
+    <TargetFrameworkBase>$(TargetFramework.TrimEnd('0123456789'))</TargetFrameworkBase>
     <LangVersion>7.3</LangVersion>
     <AssemblyName>LaunchDarkly.JsonStream</AssemblyName>
     <OutputType>Library</OutputType>
@@ -29,7 +30,15 @@
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' != 'net452'">
+  <!-- extra runtime library dependencies for Xamarin -->
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) or
+                         $(TargetFramework.StartsWith('xamarin.ios')) ">
+    <Reference Include="System.Core" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'net452' and
+                             (! $(TargetFramework.StartsWith('monoandroid'))) and
+                             (! $(TargetFramework.StartsWith('xamarin.ios'))) ">
     <!-- USE_SYSTEM_TEXT_JSON is what we look for in conditionally-compiled code -->
     <DefineConstants>$(DefineConstants);USE_SYSTEM_TEXT_JSON</DefineConstants>
   </PropertyGroup>
