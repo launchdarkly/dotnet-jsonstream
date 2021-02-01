@@ -131,9 +131,9 @@ namespace LaunchDarkly.JsonStream
                 NullableDouble2 == o.NullableDouble2;
         }
 
-        internal class MyTestConverter : IJsonStreamConverter<MyTestClass>
+        internal class MyTestConverter : IJsonStreamConverter
         {
-            public MyTestClass ReadJson(ref JReader reader)
+            public object ReadJson(ref JReader reader)
             {
                 var ret = new MyTestClass();
                 for (var obj = reader.Object(); obj.Next(ref reader);)
@@ -204,8 +204,9 @@ namespace LaunchDarkly.JsonStream
                 return ret;
             }
 
-            public void WriteJson(MyTestClass instance, IValueWriter writer)
+            public void WriteJson(object o, IValueWriter writer)
             {
+                var instance = (MyTestClass)o;
                 var obj = writer.Object();
                 obj.Name("stringProp").String(instance.StringProp);
                 obj.Name("boolProp").Bool(instance.BoolProp);

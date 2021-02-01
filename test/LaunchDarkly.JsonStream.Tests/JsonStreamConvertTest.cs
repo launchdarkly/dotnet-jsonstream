@@ -14,6 +14,7 @@ namespace LaunchDarkly.JsonStream
         public void SerializeObject()
         {
             Assert.Equal(ExpectedJson, JsonStreamConvert.SerializeObject(ExpectedInstance));
+            Assert.Equal(ExpectedJson, JsonStreamConvert.SerializeObject(ExpectedInstance, new MyTestConverter()));
         }
 
         [Fact]
@@ -26,35 +27,38 @@ namespace LaunchDarkly.JsonStream
         [Fact]
         public void DeserializeObject()
         {
-            var instance = JsonStreamConvert.DeserializeObject<MyTestClass>(ExpectedJson);
-            Assert.Equal(ExpectedInstance.Value, instance.Value);
+            var instance1 = JsonStreamConvert.DeserializeObject<MyTestClass>(ExpectedJson);
+            Assert.Equal(ExpectedInstance.Value, instance1.Value);
+
+            var instance2 = (MyTestClass)JsonStreamConvert.DeserializeObject(ExpectedJson, typeof(MyTestClass));
+            Assert.Equal(ExpectedInstance.Value, instance2.Value);
         }
 
         [Fact]
         public void SerializeObjectFailsForClassWithInvalidConverter()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 JsonStreamConvert.SerializeObject(new TestClassWithInvalidConverter()));
         }
 
         [Fact]
         public void DeserializeObjectFailsForClassWithInvalidConverter()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 JsonStreamConvert.DeserializeObject<TestClassWithInvalidConverter>("{}"));
         }
 
         [Fact]
         public void SerializeObjectFailsForClassWithNoConverter()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 JsonStreamConvert.SerializeObject(new TestClassWithNoConverter()));
         }
 
         [Fact]
         public void DeserializeObjectFailsForClassWithNoConverter()
         {
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<ArgumentException>(() =>
                 JsonStreamConvert.DeserializeObject<TestClassWithNoConverter>("{}"));
         }
 
@@ -100,9 +104,9 @@ namespace LaunchDarkly.JsonStream
             public string Value { get; set; }
         }
 
-        public class MyTestConverter : IJsonStreamConverter<MyTestClass>
+        public class MyTestConverter : IJsonStreamConverter
         {
-            public MyTestClass ReadJson(ref JReader reader)
+            public object ReadJson(ref JReader reader)
             {
                 string value = null;
                 for (var obj = reader.Object().WithRequiredProperties(new string[] { "value" }); obj.Next(ref reader);)
@@ -115,8 +119,9 @@ namespace LaunchDarkly.JsonStream
                 return new MyTestClass { Value = value };
             }
 
-            public void WriteJson(MyTestClass instance, IValueWriter writer)
+            public void WriteJson(object o, IValueWriter writer)
             {
+                var instance = o as MyTestClass;
                 var obj = writer.Object();
                 obj.Name("value").String(instance.Value);
                 obj.End();
