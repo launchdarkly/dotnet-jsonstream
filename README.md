@@ -20,6 +20,21 @@ This version of the SDK is built for the following targets:
 * .NET Framework 4.6.1: runs on .NET Framework 4.6.1 and above.
 * .NET Standard 2.0: runs on .NET Core 2.x, in an application; or within a library that is targeted to .NET Standard 2.x.
 
+## Signing
+
+The published version of this assembly is both digitally signed by LaunchDarkly and [strong-named](https://docs.microsoft.com/en-us/dotnet/framework/app-domains/strong-named-assemblies). Building the code locally in the default Debug configuration does not sign the assembly and does not require a key file. The public key file is in this repository at `LaunchDarkly.JsonStream.pk` as well as here:
+
+```
+Public Key:
+0024000004800000940000000602000000240000525341310004000001000100
+9d95e00dd6f9ef0bfc51850129b6b6292b99d4c3a2ab0f35cdfd6879eed457bf
+aa79a4c0f848c592727cd6bae3a795eda5533a5c54623918303ecabd1c022da6
+fe90b8c3e4b61c96595c0b90ff8019872fec9b763dcc5156083a29bad49cf685
+f16d1be32d1a13478d59b4c02b4773ad31dceb7828ab8c21ec5b388e1b90c3b0
+
+Public Key Token: baa039a572ce18d0
+```
+
 ## Contributing
 
 We encourage pull requests and other contributions from the community. Check out our [contributing guidelines](CONTRIBUTING.md) for instructions on how to contribute to this project.
