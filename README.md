@@ -1,16 +1,14 @@
 # LaunchDarkly Streaming JSON for .NET
 
-[![Circle CI](https://circleci.com/gh/launchdarkly/dotnet-jsonstream.svg?style=shield)](https://circleci.com/gh/launchdarkly/dotnet-jsonstream)
-
-## This is incomplete prerelease code
-
-This repository is still under preliminary development. It has been made public in order to allow other internal projects to reference it during development and testing.
+[![NuGet](https://img.shields.io/nuget/v/LaunchDarkly.JsonStream.svg?style=flat-square)](https://www.nuget.org/packages/LaunchDarkly.JsonStream/)
+[![CircleCI](https://circleci.com/gh/launchdarkly/dotnet-jsonstream.svg?style=shield)](https://circleci.com/gh/launchdarkly/dotnet-jsonstream)
+[![Documentation](https://img.shields.io/static/v1?label=GitHub+Pages&message=API+reference&color=00add8)](https://launchdarkly.github.io/dotnet-jsonstream)
 
 ## Overview
 
 The `LaunchDarkly.JsonStream` library implements a streaming approach to JSON encoding and decoding designed for efficiency at high volume, assuming a text encoding of UTF8. Unlike reflection-based frameworks, it has no knowledge of structs or other complex types; you must explicitly tell it what values and properties to write or read. It was implemented for the [LaunchDarkly .NET SDK](https://github.com/launchdarkly/dotnet-server-sdk) and [LaunchDarkly Xamarin SDK](http://github.com/launchdarkly/xamarin-client-sdk), but may be useful in other applications.
 
-On platforms where `System.Text.Json` is available either in the standard runtime library (.NET Core 3.1+, .NET 5.0+) or as a NuGet package (all other platforms except .NET Framework 4.5.2), this works as a wrapper for `System.Text.Json.Utf8JsonReader` and `System.Text.Json.Utf8Jsonwriter`, providing a more convenient API for common JSON parsing and writing operations while taking advantage of the very efficient implementation of these core types. On platforms that do not have `System.Text.Json` (.NET Framework 4.5.2), it falls back to a portable implementation that is not as fast as <c>System.Text.Json</c> but still highly efficient. Portable JSON unmarshaling logic can therefore be written against this API without needing to know the target platform.
+On platforms where `System.Text.Json` is available either in the standard runtime library (.NET Core 3.1+, .NET 5.0+) or as a NuGet package (all other platforms except .NET Framework 4.5.2), this works as a wrapper for `System.Text.Json.Utf8JsonReader` and `System.Text.Json.Utf8Jsonwriter`, providing a more convenient API for common JSON parsing and writing operations while taking advantage of the very efficient implementation of these core types. On platforms that do not have `System.Text.Json` (.NET Framework 4.5.2), it falls back to a portable implementation that is not as fast as `System.Text.Json` but still highly efficient. Portable JSON unmarshaling logic can therefore be written against this API without needing to know the target platform.
 
 ## Supported .NET versions
 
