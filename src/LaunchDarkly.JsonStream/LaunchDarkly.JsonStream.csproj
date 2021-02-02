@@ -42,6 +42,10 @@
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release' and '$(BuildBenchmarks)'==''">
+    <!-- The environment BUILDBENCHMARKS is set in our CI build for benchmarks. BenchmarkDotNet
+         requires code to be built in the Release configuration, but we don't want to have to
+         bother with signing (which requires a credential that we can't easily access in CI)
+         unless we're building a real release. -->
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../LaunchDarkly.JsonStream.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

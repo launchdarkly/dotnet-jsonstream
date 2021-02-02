@@ -130,7 +130,7 @@ jobs:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
       BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
       TESTFRAMEWORKS: <<parameters.test-target-framework>>
-      BUILDBENCHMARKS: true
+      BUILDBENCHMARKS: true  # see LaunchDarkly.JsonStream.csproj for the purpose of this variable
     steps:
       - checkout
       - run:
