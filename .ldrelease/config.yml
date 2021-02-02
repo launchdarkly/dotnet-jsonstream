@@ -8,3 +8,10 @@ circleci:
 
 template:
   name: dotnet-windows
+  env:
+    LD_RELEASE_TEST_TARGET_FRAMEWORK: net461
+    LD_RELEASE_DOCS_TARGET_FRAMEWORK: net461
+
+documentation:
+  githubPages: true
+  title: LaunchDarkly Streaming JSON for .NET
