@@ -130,6 +130,7 @@ jobs:
       ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
       BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
       TESTFRAMEWORKS: <<parameters.test-target-framework>>
+      BUILDBENCHMARKS: true
     steps:
       - checkout
       - run:
@@ -151,6 +152,8 @@ jobs:
     executor:
       name: win/default
       shell: powershell.exe
+    environment:
+      BUILDBENCHMARKS: true
     steps:
       - checkout
       - run:

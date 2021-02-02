@@ -41,7 +41,7 @@
     <Folder Include="Implementation\" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release' and '$(BuildBenchmarks)'==''">
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>../../LaunchDarkly.JsonStream.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
