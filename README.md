@@ -8,7 +8,7 @@
 
 The `LaunchDarkly.JsonStream` library implements a streaming approach to JSON encoding and decoding designed for efficiency at high volume, assuming a text encoding of UTF8. Unlike reflection-based frameworks, it has no knowledge of structs or other complex types; you must explicitly tell it what values and properties to write or read. It was implemented for the [LaunchDarkly .NET SDK](https://github.com/launchdarkly/dotnet-server-sdk) and [LaunchDarkly Xamarin SDK](http://github.com/launchdarkly/xamarin-client-sdk), but may be useful in other applications.
 
-On platforms where `System.Text.Json` is available either in the standard runtime library (.NET Core 3.1+, .NET 5.0+) or as a NuGet package (all other platforms except .NET Framework 4.5.2), this works as a wrapper for `System.Text.Json.Utf8JsonReader` and `System.Text.Json.Utf8Jsonwriter`, providing a more convenient API for common JSON parsing and writing operations while taking advantage of the very efficient implementation of these core types. On platforms that do not have `System.Text.Json` (.NET Framework 4.5.2), it falls back to a portable implementation that is not as fast as `System.Text.Json` but still highly efficient. Portable JSON unmarshaling logic can therefore be written against this API without needing to know the target platform.
+On platforms where `System.Text.Json` is available either in the standard runtime library (.NET Core 3.1+, .NET 5.0+) or as a NuGet package (all other platforms except .NET Framework 4.5.2), this works as a wrapper for `System.Text.Json.Utf8JsonReader` and `System.Text.Json.Utf8Jsonwriter`, providing a more convenient API for common JSON parsing and writing operations while taking advantage of the very efficient implementation of these core types. On platforms that do not have `System.Text.Json` (.NET Framework 4.5.2), or where `System.Text.Json` is technically available but problematic (Xamarin-- see below), it falls back to a portable implementation that is not as fast as `System.Text.Json` but still highly efficient. Portable JSON unmarshaling logic can therefore be written against this API without needing to know the target platform.
 
 ## Supported .NET versions
 
@@ -19,6 +19,7 @@ This version of the SDK is built for the following targets:
 * .NET Framework 4.5.2: runs on .NET Framework 4.5.2 and above. This uses the portable implementation instead of `System.Text.Json`.
 * .NET Framework 4.6.1: runs on .NET Framework 4.6.1 and above.
 * .NET Standard 2.0: runs on .NET Core 2.x, in an application; or within a library that is targeted to .NET Standard 2.x.
+* Xamarin Android and iOS (MonoAndroid7.1, Xamarin.iOS1.0): for all versions of Xamarin Android and Xamarin iOS. These builds do not have any Android-specific or iOS-specific dependencies; they are identical to the .NET Standard 2.0 build (which would normally be used in Xamarin if these targets did not exist), except that they use the portable implementation instead of `System.Text.Json`. This is to avoid known Xamarin compatibility problems with `System.Text.Json`, and also to reduce the size of mobile application binaries.
 
 ## Signing
 

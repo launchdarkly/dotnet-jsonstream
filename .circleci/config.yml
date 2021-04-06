@@ -70,6 +70,8 @@ workflows:
           # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
           # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
           # with .NET Framework 4.5.x.
+      - build-xamarin:
+          name: Xamarin targets (build only)
 
 jobs:
   test-linux:
@@ -171,3 +173,18 @@ jobs:
           command: dotnet run -c Release -f <<parameters.test-target-framework>> --project benchmark/LaunchDarkly.JsonStream.Benchmarks/LaunchDarkly.JsonStream.Benchmarks.csproj
       - store_artifacts:
           path: BenchmarkDotNet.Artifacts/results
+
+  build-xamarin:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+    environment:
+      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
+      BUILDFRAMEWORKS: monoandroid7.1;xamarin.ios1.0
+    steps:
+      - checkout
+      - run:
+          name: restore packages
+          command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
+      - run:
+          name: build Xamarin targets in Release configuration
+          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj

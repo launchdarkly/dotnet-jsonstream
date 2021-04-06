@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 #if USE_SYSTEM_TEXT_JSON
 using System.Text.Json;
@@ -90,8 +89,12 @@ namespace LaunchDarkly.JsonStream
                         PushContext(new ParentContext { ObjectEnumerator = dict.GetEnumerator() });
                         return AnyValue.Object(new ObjectReader());
                     case IEnumerable<KeyValuePair<object, object>> dict:
-                        var transformedDict = dict.Select(kv => new KeyValuePair<string, object>(kv.Key.ToString(), kv.Value));
-                        PushContext(new ParentContext { ObjectEnumerator = transformedDict.GetEnumerator() });
+                        var transformedElements = new List<KeyValuePair<string, object>>();
+                        foreach (var kv in dict)
+                        {
+                            transformedElements.Add(new KeyValuePair<string, object>(kv.Key.ToString(), kv.Value));
+                        }
+                        PushContext(new ParentContext { ObjectEnumerator = transformedElements.GetEnumerator() });
                         return AnyValue.Object(new ObjectReader());
                     case IEnumerable<object> enumerable:
                         PushContext(new ParentContext { ArrayEnumerator = enumerable.GetEnumerator() });
