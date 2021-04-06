@@ -182,17 +182,25 @@ jobs:
       - store_artifacts:
           path: BenchmarkDotNet.Artifacts/results
 
+  # Currently, Xamarin targets can only be built on MacOS
   build-xamarin:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+    macos:
+      xcode: "12.4.0"
+
     environment:
-      ASPNETCORE_SUPPRESSSTATUSMESSAGES: true
       BUILDFRAMEWORKS: monoandroid7.1;xamarin.ios1.0
+
     steps:
       - checkout
+
+      - run:
+          name: Install .NET/Xamarin build tools
+          command: ./scripts/macos-install-xamarin.sh android ios
+
       - run:
           name: restore packages
           command: dotnet restore src/LaunchDarkly.JsonStream
+      
       - run:
           name: build Xamarin targets in Release configuration
           command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
