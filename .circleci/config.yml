@@ -158,11 +158,16 @@ jobs:
     parameters:
       test-target-framework:
         type: string
+      build-target-frameworks:
+        type: string
+        default: ""
     executor:
       name: win/default
       shell: powershell.exe
     environment:
       BUILDBENCHMARKS: true
+      BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      TESTFRAMEWORKS: <<parameters.test-target-framework>>
     steps:
       - checkout
       - run:
