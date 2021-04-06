@@ -60,12 +60,15 @@ workflows:
       - benchmark-linux:
           name: .NET 5.0 benchmarks (Linux)
           docker-image: mcr.microsoft.com/dotnet/sdk:5.0-focal
+          build-target-frameworks: net5.0
           test-target-framework: net5.0
       - benchmark-windows:
           name: .NET 5.0 benchmarks (Windows)
+          build-target-frameworks: net5.0
           test-target-framework: net5.0
       - benchmark-windows:
           name: .NET Framework 4.6.1 benchmarks (Windows)
+          build-target-frameworks: net452
           test-target-framework: net461
           # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
           # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
@@ -184,7 +187,7 @@ jobs:
       - checkout
       - run:
           name: restore packages
-          command: dotnet restore benchmark/LaunchDarkly.JsonStream.Benchmarks
+          command: dotnet restore src/LaunchDarkly.JsonStream
       - run:
           name: build Xamarin targets in Release configuration
           command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
