@@ -21,7 +21,7 @@ This version of the SDK is built for the following targets:
 
 ## `System.Text.Json` support
 
-All builds of `LaunchDarkly.JsonStream` except for .NET Framework 4.5.2 and .NET Standard 2.0 make use of the `System.Text.Json` API, which is built into the standard runtime library for .NET Core 3.x and .NET 5.x and is imported as a NuGet package on other platforms. `System.Text.Json` is the new standard .NET API for JSON handling, and is optimized for operating on UTF-8-encoded text. Any types that use the `LaunchDarkly.JsonStream.JsonStreamConverter` attribute will automatically be recognized by `System.Text.Json`'s reflection-based APIs.
+All builds of `LaunchDarkly.JsonStream` except for .NET Framework 4.5.2 and .NET Standard 2.0 make use of the `System.Text.Json` API, which is built into the standard runtime library for .NET Core 3.x and .NET 5.x and is imported as a NuGet package on other platforms. Any types that use the `LaunchDarkly.JsonStream.JsonStreamConverter` attribute will automatically be recognized by `System.Text.Json`'s reflection-based APIs.
 
 The .NET Framework and .NET Standard 2.0 builds of `LaunchDarkly.JsonStream` use a different portable implementation that is not as fast as `System.Text.Json`, but still highly efficient. `System.Text.Json` is not available for .NET Framework 4.5.2. It is available for .NET Standard 2.0, but the .NET Standard 2.0 target of `LaunchDarkly.JsonStream` is also used in Xamarin, and `System.Text.Json` currently has compatibility problems with Xamarin.
 
