@@ -12,7 +12,8 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' != 'net452'">
+  <PropertyGroup Condition="'$(TargetFramework)' != 'netstandard2.0'
+                        and '$(TargetFramework)' != 'net452'">
     <!-- USE_SYSTEM_TEXT_JSON is what we look for in conditionally-compiled code -->
     <DefineConstants>$(DefineConstants);USE_SYSTEM_TEXT_JSON</DefineConstants>
   </PropertyGroup>
