@@ -56,6 +56,7 @@ workflows:
           test-target-framework: netcoreapp3.1
       - benchmark-windows:
           name: .NET Core 3.1 benchmarks (Windows)
+          build-target-frameworks: netcoreapp3.1
           test-target-framework: netcoreapp3.1
       - benchmark-linux:
           name: .NET 5.0 benchmarks (Linux)
@@ -68,7 +69,7 @@ workflows:
           test-target-framework: net5.0
       - benchmark-windows:
           name: .NET Framework 4.6.1 benchmarks (Windows)
-          build-target-frameworks: net452
+          build-target-frameworks: net461
           test-target-framework: net461
           # The .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
           # is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
@@ -182,7 +183,12 @@ jobs:
       - store_artifacts:
           path: BenchmarkDotNet.Artifacts/results
 
-  # Currently, Xamarin targets can only be built on MacOS
+  # Currently, Xamarin targets can only be built on MacOS, using the msbuild command
+  # rather than the dotnet command. This CI job simply verifies that the build passes;
+  # running the tests in Xamarin would require building a test application as we do in
+  # https://github.com/launchdarkly/xamarin-client-sdk, and in this case since there
+  # are no Xamarin-specific dependencies at all-- it's really just the .NET Standard
+  # code, minus System.Text.Json-- the runtime behavior is predictable.
   build-xamarin:
     macos:
       xcode: "12.4.0"
@@ -200,7 +206,7 @@ jobs:
       - run:
           name: restore packages
           command: dotnet restore src/LaunchDarkly.JsonStream
-      
+
       - run:
-          name: build Xamarin targets in Release configuration
-          command: dotnet build -c Release src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
+          name: build Xamarin targets in Debug configuration
+          command: msbuild /restore /p:Configuration=Debug src/LaunchDarkly.JsonStream/LaunchDarkly.JsonStream.csproj
