@@ -8,9 +8,17 @@ workflows:
   test:
     jobs:
       - test-linux:
+          name: .NET Core 2.0 using .NET Standard 2.0 (Linux)
+          # .NET Core 2.0 is obsolete, but this is how we verify that the .NET
+          # Standard 2.0 build (which doesn't use System.Text.Json) works as intended.
+          docker-image: microsoft/dotnet:2.0-sdk-jessie
+          build-target-frameworks: netstandard2.0
+          test-target-framework: netcoreapp2.0
+          uses-native-implementation: false
+      - test-linux:
           name: .NET Core 2.1 (Linux)
           docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
-          build-target-frameworks: netstandard2.0
+          build-target-frameworks: netcoreapp2.1
           test-target-framework: netcoreapp2.1
           uses-native-implementation: true
       - test-linux:
@@ -47,7 +55,7 @@ workflows:
       - benchmark-linux:
           name: .NET Core 2.1 benchmarks (Linux)
           docker-image: mcr.microsoft.com/dotnet/core/sdk:2.1-focal
-          build-target-frameworks: netstandard2.0
+          build-target-frameworks: netcoreapp2.1
           test-target-framework: netcoreapp2.1
       - benchmark-linux:
           name: .NET Core 3.1 benchmarks (Linux)
