@@ -6,13 +6,13 @@
       SDKs which do not consider "net5.0" to be a valid target framework that can be
       referenced in a project file.
     -->
-    <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.1;netcoreapp3.1;net5.0;net452;net461</TestFrameworks>
+    <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.0;netcoreapp2.1;netcoreapp3.1;net5.0;net452;net461</TestFrameworks>
     <TargetFrameworks>$(TESTFRAMEWORKS)</TargetFrameworks>
     <RootNamespace>LaunchDarkly.JsonStream</RootNamespace>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' != 'netstandard2.0'
+  <PropertyGroup Condition="'$(TargetFramework)' != 'netcoreapp2.0'
                         and '$(TargetFramework)' != 'net452'">
     <!-- USE_SYSTEM_TEXT_JSON is what we look for in conditionally-compiled code -->
     <DefineConstants>$(DefineConstants);USE_SYSTEM_TEXT_JSON</DefineConstants>
