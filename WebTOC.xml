@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HelpTOC>
 
-  <HelpTOCNode Id="c84b4843-a3f6-426e-abc0-abcde9e0eb82" Title="Namespaces" Url="html/R_Project_Documentation.htm">
-    <HelpTOCNode Id="6f0065ef-a0e6-45a4-a117-c3643849a6d2" Title="LaunchDarkly.JsonStream" Url="html/N_LaunchDarkly_JsonStream.htm">
-      <HelpTOCNode Id="97b98ccf-5e50-40f8-92b6-6ab5d5134ffc" Title="AnyValue Structure" Url="html/T_LaunchDarkly_JsonStream_AnyValue.htm">
-        <HelpTOCNode Id="a07b5893-5ff1-41dd-a4ae-c122cb3a6a94" Title="AnyValue Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_AnyValue.htm">
+  <HelpTOCNode Id="21bb95ad-4486-45b2-bf9e-20448203d9d9" Title="Namespaces" Url="html/R_Project_Documentation.htm">
+    <HelpTOCNode Id="16e0a010-b3f6-45ff-99f2-b47d5c8046fc" Title="LaunchDarkly.JsonStream" Url="html/N_LaunchDarkly_JsonStream.htm">
+      <HelpTOCNode Id="fb36616d-0b72-470c-b24d-a986930fc543" Title="AnyValue Structure" Url="html/T_LaunchDarkly_JsonStream_AnyValue.htm">
+        <HelpTOCNode Id="6c19710b-3fc0-4811-8149-23c2482b20f5" Title="AnyValue Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_AnyValue.htm">
           <HelpTOCNode Title="ArrayValue Property " Url="html/P_LaunchDarkly_JsonStream_AnyValue_ArrayValue.htm" />
           <HelpTOCNode Title="BoolValue Property " Url="html/P_LaunchDarkly_JsonStream_AnyValue_BoolValue.htm" />
           <HelpTOCNode Title="NumberValue Property " Url="html/P_LaunchDarkly_JsonStream_AnyValue_NumberValue.htm" />
@@ -12,7 +12,7 @@
           <HelpTOCNode Title="StringValue Property " Url="html/P_LaunchDarkly_JsonStream_AnyValue_StringValue.htm" />
           <HelpTOCNode Title="Type Property " Url="html/P_LaunchDarkly_JsonStream_AnyValue_Type.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="8474649c-8f00-40a0-90f6-0d3992076beb" Title="AnyValue Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_AnyValue.htm">
+        <HelpTOCNode Id="545d0658-5ac9-4340-b2b9-324858674c6c" Title="AnyValue Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_AnyValue.htm">
           <HelpTOCNode Title="Array Method " Url="html/M_LaunchDarkly_JsonStream_AnyValue_Array.htm" />
           <HelpTOCNode Title="Bool Method " Url="html/M_LaunchDarkly_JsonStream_AnyValue_Bool.htm" />
           <HelpTOCNode Title="Null Method " Url="html/M_LaunchDarkly_JsonStream_AnyValue_Null.htm" />
@@ -21,16 +21,16 @@
           <HelpTOCNode Title="String Method " Url="html/M_LaunchDarkly_JsonStream_AnyValue_String.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="f1ce27e8-6f33-4bf5-85c0-8c019543db24" Title="ArrayReader Structure" Url="html/T_LaunchDarkly_JsonStream_ArrayReader.htm">
-        <HelpTOCNode Id="55e600b9-a5df-4d2c-ace7-13e06ae56754" Title="ArrayReader Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_ArrayReader.htm">
+      <HelpTOCNode Id="34575419-1de8-40ee-ac2f-26921b8182d7" Title="ArrayReader Structure" Url="html/T_LaunchDarkly_JsonStream_ArrayReader.htm">
+        <HelpTOCNode Id="7c53b799-551b-4f1b-b95a-552b438904a7" Title="ArrayReader Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_ArrayReader.htm">
           <HelpTOCNode Title="IsDefined Property " Url="html/P_LaunchDarkly_JsonStream_ArrayReader_IsDefined.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="a502f3e1-ec21-4689-b184-dd4422590b1d" Title="ArrayReader Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ArrayReader.htm">
+        <HelpTOCNode Id="96b7b54d-cca3-47b7-80bd-bd9d681eae05" Title="ArrayReader Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ArrayReader.htm">
           <HelpTOCNode Title="Next Method " Url="html/M_LaunchDarkly_JsonStream_ArrayReader_Next.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="c49ef018-d785-4c6f-b8c9-cb1a0801cbb1" Title="ArrayWriter Structure" Url="html/T_LaunchDarkly_JsonStream_ArrayWriter.htm">
-        <HelpTOCNode Id="b9b50ff5-d016-4aab-b403-41e568c2b272" Title="ArrayWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ArrayWriter.htm">
+      <HelpTOCNode Id="e6d46233-3c8a-40ee-8a81-188ff3453795" Title="ArrayWriter Structure" Url="html/T_LaunchDarkly_JsonStream_ArrayWriter.htm">
+        <HelpTOCNode Id="f6b72c3d-510c-4192-b564-9e8acc5748ad" Title="ArrayWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ArrayWriter.htm">
           <HelpTOCNode Title="Array Method " Url="html/M_LaunchDarkly_JsonStream_ArrayWriter_Array.htm" />
           <HelpTOCNode Title="Bool Method " Url="html/M_LaunchDarkly_JsonStream_ArrayWriter_Bool.htm" />
           <HelpTOCNode Title="BoolOrNull Method " Url="html/M_LaunchDarkly_JsonStream_ArrayWriter_BoolOrNull.htm" />
@@ -47,24 +47,24 @@
           <HelpTOCNode Title="String Method " Url="html/M_LaunchDarkly_JsonStream_ArrayWriter_String.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="402e83b6-e960-426c-a81a-717d99f20b03" Title="IJsonStreamConverter Interface" Url="html/T_LaunchDarkly_JsonStream_IJsonStreamConverter.htm">
-        <HelpTOCNode Id="b666c412-52ac-4e04-a99d-2fa5d78040a3" Title="IJsonStreamConverter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_IJsonStreamConverter.htm">
+      <HelpTOCNode Id="5cea9f8c-c267-42a2-82ae-4142fcd067b7" Title="IJsonStreamConverter Interface" Url="html/T_LaunchDarkly_JsonStream_IJsonStreamConverter.htm">
+        <HelpTOCNode Id="b4493393-acb7-4ecb-ad4b-732b78e377f1" Title="IJsonStreamConverter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_IJsonStreamConverter.htm">
           <HelpTOCNode Title="ReadJson Method " Url="html/M_LaunchDarkly_JsonStream_IJsonStreamConverter_ReadJson.htm" />
           <HelpTOCNode Title="WriteJson Method " Url="html/M_LaunchDarkly_JsonStream_IJsonStreamConverter_WriteJson.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="d2f84805-ad54-4986-8807-58b549b74d3e" Title="IReaderAdapter Interface" Url="html/T_LaunchDarkly_JsonStream_IReaderAdapter.htm">
-        <HelpTOCNode Id="f980eb09-3076-47f9-ab35-0a016128c5bf" Title="IReaderAdapter Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_IReaderAdapter.htm">
+      <HelpTOCNode Id="af62ed6d-81fd-4c60-b279-0d5703bf1b74" Title="IReaderAdapter Interface" Url="html/T_LaunchDarkly_JsonStream_IReaderAdapter.htm">
+        <HelpTOCNode Id="7daea626-14eb-4c6c-bae1-8fdde6e75efd" Title="IReaderAdapter Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_IReaderAdapter.htm">
           <HelpTOCNode Title="EOF Property " Url="html/P_LaunchDarkly_JsonStream_IReaderAdapter_EOF.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="6eb3ead1-78b1-4d63-81f2-8340d90f8a39" Title="IReaderAdapter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_IReaderAdapter.htm">
+        <HelpTOCNode Id="4d9cf16f-ad3b-4a99-9417-2bcef875a3fb" Title="IReaderAdapter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_IReaderAdapter.htm">
           <HelpTOCNode Title="ArrayNext Method " Url="html/M_LaunchDarkly_JsonStream_IReaderAdapter_ArrayNext.htm" />
           <HelpTOCNode Title="NextValue Method " Url="html/M_LaunchDarkly_JsonStream_IReaderAdapter_NextValue.htm" />
           <HelpTOCNode Title="ObjectNext Method " Url="html/M_LaunchDarkly_JsonStream_IReaderAdapter_ObjectNext.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="ef499e1c-cfb5-4af9-b5d9-4ca4ca7a51f3" Title="IValueWriter Interface" Url="html/T_LaunchDarkly_JsonStream_IValueWriter.htm">
-        <HelpTOCNode Id="c38524bb-54ea-4910-b1d5-2860289ee723" Title="IValueWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_IValueWriter.htm">
+      <HelpTOCNode Id="e2f77100-14bf-459a-a76d-614a4ad2deca" Title="IValueWriter Interface" Url="html/T_LaunchDarkly_JsonStream_IValueWriter.htm">
+        <HelpTOCNode Id="b12bb98c-0449-4d1d-9724-d71dbc1c006a" Title="IValueWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_IValueWriter.htm">
           <HelpTOCNode Title="Array Method " Url="html/M_LaunchDarkly_JsonStream_IValueWriter_Array.htm" />
           <HelpTOCNode Title="Bool Method " Url="html/M_LaunchDarkly_JsonStream_IValueWriter_Bool.htm" />
           <HelpTOCNode Title="BoolOrNull Method " Url="html/M_LaunchDarkly_JsonStream_IValueWriter_BoolOrNull.htm" />
@@ -79,11 +79,11 @@
           <HelpTOCNode Title="String Method " Url="html/M_LaunchDarkly_JsonStream_IValueWriter_String.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="3e4d3831-20b0-42de-aa9f-3afc292ee922" Title="JReader Structure" Url="html/T_LaunchDarkly_JsonStream_JReader.htm">
-        <HelpTOCNode Id="f8ca3ac9-be1b-4daf-888e-5995ac3c8e7e" Title="JReader Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_JReader.htm">
+      <HelpTOCNode Id="f3c84c83-1b2e-4392-908e-7f1b7061a002" Title="JReader Structure" Url="html/T_LaunchDarkly_JsonStream_JReader.htm">
+        <HelpTOCNode Id="c3e7e452-586d-479b-8627-08459d399e1c" Title="JReader Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_JReader.htm">
           <HelpTOCNode Title="EOF Property " Url="html/P_LaunchDarkly_JsonStream_JReader_EOF.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="761c1e4c-eced-41ce-b8ac-f54935db72ac" Title="JReader Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JReader.htm">
+        <HelpTOCNode Id="3ef0d61b-255b-49a1-a02c-51049339c5f5" Title="JReader Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JReader.htm">
           <HelpTOCNode Title="Any Method " Url="html/M_LaunchDarkly_JsonStream_JReader_Any.htm" />
           <HelpTOCNode Title="Array Method " Url="html/M_LaunchDarkly_JsonStream_JReader_Array.htm" />
           <HelpTOCNode Title="ArrayOrNull Method " Url="html/M_LaunchDarkly_JsonStream_JReader_ArrayOrNull.htm" />
@@ -107,38 +107,38 @@
           <HelpTOCNode Title="TranslateException Method " Url="html/M_LaunchDarkly_JsonStream_JReader_TranslateException.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="3a86771f-3cf4-4611-b55f-c711b4fa4f01" Title="JsonReadException Class" Url="html/T_LaunchDarkly_JsonStream_JsonReadException.htm">
+      <HelpTOCNode Id="74bf36e8-4d0b-49a7-a4ea-7129d3e974fa" Title="JsonReadException Class" Url="html/T_LaunchDarkly_JsonStream_JsonReadException.htm">
         <HelpTOCNode Title="JsonReadException Constructor " Url="html/M_LaunchDarkly_JsonStream_JsonReadException__ctor.htm" />
-        <HelpTOCNode Id="70050a2f-268d-42f0-a353-b165185a7f4c" Title="JsonReadException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_JsonReadException.htm">
+        <HelpTOCNode Id="f384a6d7-ded3-4bd5-8abd-7fbb0fc75172" Title="JsonReadException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_JsonReadException.htm">
           <HelpTOCNode Title="Offset Property " Url="html/P_LaunchDarkly_JsonStream_JsonReadException_Offset.htm" />
         </HelpTOCNode>
         <HelpTOCNode Title="JsonReadException Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JsonReadException.htm" />
         <HelpTOCNode Title="JsonReadException Events" Url="html/Events_T_LaunchDarkly_JsonStream_JsonReadException.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="4004f926-3032-4893-aca7-6e678f4916bd" Title="JsonStreamConvert Class" Url="html/T_LaunchDarkly_JsonStream_JsonStreamConvert.htm">
-        <HelpTOCNode Id="30500d62-061c-4b4d-b41a-2ed31f992fb1" Title="JsonStreamConvert Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_JsonStreamConvert.htm">
+      <HelpTOCNode Id="cd14970b-cd41-4ba2-a288-8680776f61cb" Title="JsonStreamConvert Class" Url="html/T_LaunchDarkly_JsonStream_JsonStreamConvert.htm">
+        <HelpTOCNode Id="3f0951ad-3aa0-4049-8e8a-e5a1822fa92c" Title="JsonStreamConvert Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_JsonStreamConvert.htm">
           <HelpTOCNode Title="ConvertSimpleTypes Property " Url="html/P_LaunchDarkly_JsonStream_JsonStreamConvert_ConvertSimpleTypes.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="ee683726-489b-46d9-b86e-fce37261bb4d" Title="JsonStreamConvert Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JsonStreamConvert.htm">
-          <HelpTOCNode Id="d80c7ca3-112d-4eb6-8f95-640cc53e83a7" Title="DeserializeObject Method " Url="html/Overload_LaunchDarkly_JsonStream_JsonStreamConvert_DeserializeObject.htm">
+        <HelpTOCNode Id="071a3ad2-f5ff-438b-883f-c64a400589f0" Title="JsonStreamConvert Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JsonStreamConvert.htm">
+          <HelpTOCNode Id="6d960c3c-5ff7-4fee-93f3-5d060cb8774e" Title="DeserializeObject Method " Url="html/Overload_LaunchDarkly_JsonStream_JsonStreamConvert_DeserializeObject.htm">
             <HelpTOCNode Title="DeserializeObject(T) Method (String)" Url="html/M_LaunchDarkly_JsonStream_JsonStreamConvert_DeserializeObject__1.htm" />
             <HelpTOCNode Title="DeserializeObject Method (String, IJsonStreamConverter)" Url="html/M_LaunchDarkly_JsonStream_JsonStreamConvert_DeserializeObject.htm" />
             <HelpTOCNode Title="DeserializeObject Method (String, Type)" Url="html/M_LaunchDarkly_JsonStream_JsonStreamConvert_DeserializeObject_1.htm" />
           </HelpTOCNode>
-          <HelpTOCNode Id="6101a39a-3874-43ee-9081-74029c532273" Title="SerializeObject Method " Url="html/Overload_LaunchDarkly_JsonStream_JsonStreamConvert_SerializeObject.htm">
+          <HelpTOCNode Id="44ce2b67-c9b5-4941-a5e1-7412bb5d5670" Title="SerializeObject Method " Url="html/Overload_LaunchDarkly_JsonStream_JsonStreamConvert_SerializeObject.htm">
             <HelpTOCNode Title="SerializeObject Method (Object)" Url="html/M_LaunchDarkly_JsonStream_JsonStreamConvert_SerializeObject.htm" />
             <HelpTOCNode Title="SerializeObject Method (Object, IJsonStreamConverter)" Url="html/M_LaunchDarkly_JsonStream_JsonStreamConvert_SerializeObject_1.htm" />
           </HelpTOCNode>
           <HelpTOCNode Title="SerializeObjectToUtf8Bytes Method " Url="html/M_LaunchDarkly_JsonStream_JsonStreamConvert_SerializeObjectToUtf8Bytes.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="b3d4b170-6622-4e67-9f00-12f2d061f14c" Title="JsonStreamConverterAttribute Class" Url="html/T_LaunchDarkly_JsonStream_JsonStreamConverterAttribute.htm">
+      <HelpTOCNode Id="ed689f34-d414-4899-8e14-c4f0e1c4ecad" Title="JsonStreamConverterAttribute Class" Url="html/T_LaunchDarkly_JsonStream_JsonStreamConverterAttribute.htm">
         <HelpTOCNode Title="JsonStreamConverterAttribute Constructor " Url="html/M_LaunchDarkly_JsonStream_JsonStreamConverterAttribute__ctor.htm" />
         <HelpTOCNode Title="JsonStreamConverterAttribute Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_JsonStreamConverterAttribute.htm" />
         <HelpTOCNode Title="JsonStreamConverterAttribute Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JsonStreamConverterAttribute.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="980584c9-c009-4104-a115-df64a6f8a072" Title="JWriter Class" Url="html/T_LaunchDarkly_JsonStream_JWriter.htm">
-        <HelpTOCNode Id="40481123-7e11-4c97-92b5-e1757ca06dab" Title="JWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JWriter.htm">
+      <HelpTOCNode Id="4758713f-6d88-456f-811c-d2a2699d86d0" Title="JWriter Class" Url="html/T_LaunchDarkly_JsonStream_JWriter.htm">
+        <HelpTOCNode Id="150f82e3-a6bf-4c7d-a2b1-b0c41fe28545" Title="JWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_JWriter.htm">
           <HelpTOCNode Title="Array Method " Url="html/M_LaunchDarkly_JsonStream_JWriter_Array.htm" />
           <HelpTOCNode Title="Bool Method " Url="html/M_LaunchDarkly_JsonStream_JWriter_Bool.htm" />
           <HelpTOCNode Title="BoolOrNull Method " Url="html/M_LaunchDarkly_JsonStream_JWriter_BoolOrNull.htm" />
@@ -159,31 +159,31 @@
           <HelpTOCNode Title="String Method " Url="html/M_LaunchDarkly_JsonStream_JWriter_String.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="d7b3caf3-05f8-437c-adb1-e84404d8c4d2" Title="ObjectReader Structure" Url="html/T_LaunchDarkly_JsonStream_ObjectReader.htm">
-        <HelpTOCNode Id="40c7a362-049e-46c9-8a86-da71ce672518" Title="ObjectReader Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_ObjectReader.htm">
+      <HelpTOCNode Id="6da99b75-64ac-480a-80d2-9bfdd83165c2" Title="ObjectReader Structure" Url="html/T_LaunchDarkly_JsonStream_ObjectReader.htm">
+        <HelpTOCNode Id="a53905ba-bd9c-47da-8bb2-d1e3401fa7ff" Title="ObjectReader Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_ObjectReader.htm">
           <HelpTOCNode Title="IsDefined Property " Url="html/P_LaunchDarkly_JsonStream_ObjectReader_IsDefined.htm" />
           <HelpTOCNode Title="Name Property " Url="html/P_LaunchDarkly_JsonStream_ObjectReader_Name.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="5b911bff-9a44-429a-950b-331923fe3897" Title="ObjectReader Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ObjectReader.htm">
+        <HelpTOCNode Id="3f8810af-d695-43d8-aa7e-8d8d492e9cd1" Title="ObjectReader Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ObjectReader.htm">
           <HelpTOCNode Title="Next Method " Url="html/M_LaunchDarkly_JsonStream_ObjectReader_Next.htm" />
           <HelpTOCNode Title="WithRequiredProperties Method " Url="html/M_LaunchDarkly_JsonStream_ObjectReader_WithRequiredProperties.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="72997b37-b385-44eb-a08f-fcfc6c2538af" Title="ObjectWriter Structure" Url="html/T_LaunchDarkly_JsonStream_ObjectWriter.htm">
-        <HelpTOCNode Id="39769f05-40c1-4158-95b3-2476dbd47b83" Title="ObjectWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ObjectWriter.htm">
+      <HelpTOCNode Id="c584671c-59f7-454a-a301-33f405f5f57a" Title="ObjectWriter Structure" Url="html/T_LaunchDarkly_JsonStream_ObjectWriter.htm">
+        <HelpTOCNode Id="6c3957d4-a6dd-414d-90f8-9654422bf22f" Title="ObjectWriter Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ObjectWriter.htm">
           <HelpTOCNode Title="Dispose Method " Url="html/M_LaunchDarkly_JsonStream_ObjectWriter_Dispose.htm" />
           <HelpTOCNode Title="End Method " Url="html/M_LaunchDarkly_JsonStream_ObjectWriter_End.htm" />
           <HelpTOCNode Title="MaybeName Method " Url="html/M_LaunchDarkly_JsonStream_ObjectWriter_MaybeName.htm" />
           <HelpTOCNode Title="Name Method " Url="html/M_LaunchDarkly_JsonStream_ObjectWriter_Name.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="5d044aa4-9d7b-498b-8b54-d72e393d610a" Title="PropertyNameToken Structure" Url="html/T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
-        <HelpTOCNode Id="219f4dcf-2bfb-40ba-bad2-fbfe4f2a56ec" Title="PropertyNameToken Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
+      <HelpTOCNode Id="04804a59-6e5b-41de-ab23-866fa24b518f" Title="PropertyNameToken Structure" Url="html/T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
+        <HelpTOCNode Id="e7ee94ee-e795-4651-9815-2eeb15d4558c" Title="PropertyNameToken Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
           <HelpTOCNode Title="Empty Property " Url="html/P_LaunchDarkly_JsonStream_PropertyNameToken_Empty.htm" />
           <HelpTOCNode Title="None Property " Url="html/P_LaunchDarkly_JsonStream_PropertyNameToken_None.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="f1b96e5c-c141-45c1-989d-db7fcee634f3" Title="PropertyNameToken Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
-          <HelpTOCNode Id="5fa84f04-4853-4729-b93f-3946484dbd9d" Title="Equals Method " Url="html/Overload_LaunchDarkly_JsonStream_PropertyNameToken_Equals.htm">
+        <HelpTOCNode Id="a57e6945-2821-4211-8370-8c8884bbd239" Title="PropertyNameToken Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
+          <HelpTOCNode Id="24e90783-5322-44f8-a7a2-ba555cfb33f3" Title="Equals Method " Url="html/Overload_LaunchDarkly_JsonStream_PropertyNameToken_Equals.htm">
             <HelpTOCNode Title="Equals Method (Object)" Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_Equals_1.htm" />
             <HelpTOCNode Title="Equals Method (String)" Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_Equals_2.htm" />
             <HelpTOCNode Title="Equals Method (PropertyNameToken)" Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_Equals.htm" />
@@ -191,42 +191,42 @@
           <HelpTOCNode Title="GetHashCode Method " Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_GetHashCode.htm" />
           <HelpTOCNode Title="ToString Method " Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_ToString.htm" />
         </HelpTOCNode>
-        <HelpTOCNode Id="c71095da-acb7-4bb2-81dc-b693b58e1fbd" Title="PropertyNameToken Operators" Url="html/Operators_T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
-          <HelpTOCNode Id="53478304-96e2-4d61-9e69-b5251a323c59" Title="Equality Operator " Url="html/Overload_LaunchDarkly_JsonStream_PropertyNameToken_op_Equality.htm">
+        <HelpTOCNode Id="5829c1ed-4123-499d-9541-5ce2b488672f" Title="PropertyNameToken Operators" Url="html/Operators_T_LaunchDarkly_JsonStream_PropertyNameToken.htm">
+          <HelpTOCNode Id="2ba87822-bef6-4560-9bcc-8d0d7028d4f5" Title="Equality Operator " Url="html/Overload_LaunchDarkly_JsonStream_PropertyNameToken_op_Equality.htm">
             <HelpTOCNode Title="Equality Operator (PropertyNameToken, PropertyNameToken)" Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_op_Equality.htm" />
             <HelpTOCNode Title="Equality Operator (PropertyNameToken, String)" Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_op_Equality_1.htm" />
           </HelpTOCNode>
-          <HelpTOCNode Id="994e5a83-463b-4a78-bf25-a8103e7a5af0" Title="Inequality Operator " Url="html/Overload_LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality.htm">
+          <HelpTOCNode Id="a6d4e310-ef20-41b7-9066-6699a4306aa3" Title="Inequality Operator " Url="html/Overload_LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality.htm">
             <HelpTOCNode Title="Inequality Operator (PropertyNameToken, PropertyNameToken)" Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality.htm" />
             <HelpTOCNode Title="Inequality Operator (PropertyNameToken, String)" Url="html/M_LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality_1.htm" />
           </HelpTOCNode>
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="5adaef6d-ee41-4f3c-849a-5982bf090272" Title="ReaderAdapters Class" Url="html/T_LaunchDarkly_JsonStream_ReaderAdapters.htm">
-        <HelpTOCNode Id="bd08d5bf-0544-4b1f-a32d-eef55333ce1e" Title="ReaderAdapters Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ReaderAdapters.htm">
+      <HelpTOCNode Id="8228e811-3e0f-47a7-bf05-86bac6071232" Title="ReaderAdapters Class" Url="html/T_LaunchDarkly_JsonStream_ReaderAdapters.htm">
+        <HelpTOCNode Id="09b4fada-6ecf-4e2f-aa40-23ca76bbd06f" Title="ReaderAdapters Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_ReaderAdapters.htm">
           <HelpTOCNode Title="FromJsonElement Method " Url="html/M_LaunchDarkly_JsonStream_ReaderAdapters_FromJsonElement.htm" />
           <HelpTOCNode Title="FromSimpleTypes Method " Url="html/M_LaunchDarkly_JsonStream_ReaderAdapters_FromSimpleTypes.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
-      <HelpTOCNode Id="c4178b68-5408-4e6c-a1d6-32e68db0c34c" Title="RequiredPropertyException Class" Url="html/T_LaunchDarkly_JsonStream_RequiredPropertyException.htm">
+      <HelpTOCNode Id="e7e70098-73d8-4ff2-9eb1-a084fc5698d7" Title="RequiredPropertyException Class" Url="html/T_LaunchDarkly_JsonStream_RequiredPropertyException.htm">
         <HelpTOCNode Title="RequiredPropertyException Constructor " Url="html/M_LaunchDarkly_JsonStream_RequiredPropertyException__ctor.htm" />
-        <HelpTOCNode Id="53c30fc3-9979-45e0-9651-7e61635244d4" Title="RequiredPropertyException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_RequiredPropertyException.htm">
+        <HelpTOCNode Id="2ead4849-f08c-4b3e-8c65-cc21e45cb7f0" Title="RequiredPropertyException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_RequiredPropertyException.htm">
           <HelpTOCNode Title="Message Property " Url="html/P_LaunchDarkly_JsonStream_RequiredPropertyException_Message.htm" />
           <HelpTOCNode Title="Name Property " Url="html/P_LaunchDarkly_JsonStream_RequiredPropertyException_Name.htm" />
         </HelpTOCNode>
         <HelpTOCNode Title="RequiredPropertyException Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_RequiredPropertyException.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="9c04d346-f104-4168-a79f-5671a5fe690a" Title="SyntaxException Class" Url="html/T_LaunchDarkly_JsonStream_SyntaxException.htm">
+      <HelpTOCNode Id="7f9f7553-13db-4c32-bc14-a58a2eae7a6f" Title="SyntaxException Class" Url="html/T_LaunchDarkly_JsonStream_SyntaxException.htm">
         <HelpTOCNode Title="SyntaxException Constructor " Url="html/M_LaunchDarkly_JsonStream_SyntaxException__ctor.htm" />
-        <HelpTOCNode Id="fc013d14-7094-4054-9b75-7fee0ec2a67b" Title="SyntaxException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_SyntaxException.htm">
+        <HelpTOCNode Id="cfb69df0-1331-4791-9f54-1ade0c8bed3e" Title="SyntaxException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_SyntaxException.htm">
           <HelpTOCNode Title="BaseMessage Property " Url="html/P_LaunchDarkly_JsonStream_SyntaxException_BaseMessage.htm" />
           <HelpTOCNode Title="Message Property " Url="html/P_LaunchDarkly_JsonStream_SyntaxException_Message.htm" />
         </HelpTOCNode>
         <HelpTOCNode Title="SyntaxException Methods" Url="html/Methods_T_LaunchDarkly_JsonStream_SyntaxException.htm" />
       </HelpTOCNode>
-      <HelpTOCNode Id="693218f5-d8bc-4aca-b4e5-c4fef3812105" Title="TypeException Class" Url="html/T_LaunchDarkly_JsonStream_TypeException.htm">
+      <HelpTOCNode Id="6b21efe9-5bbd-4652-b6d9-7adc00e75faa" Title="TypeException Class" Url="html/T_LaunchDarkly_JsonStream_TypeException.htm">
         <HelpTOCNode Title="TypeException Constructor " Url="html/M_LaunchDarkly_JsonStream_TypeException__ctor.htm" />
-        <HelpTOCNode Id="2b9ed79a-ce8b-4688-93b7-712ed0c58da4" Title="TypeException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_TypeException.htm">
+        <HelpTOCNode Id="f1f2eebb-b9ac-40be-9abe-cbdd76e4db98" Title="TypeException Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_TypeException.htm">
           <HelpTOCNode Title="ActualType Property " Url="html/P_LaunchDarkly_JsonStream_TypeException_ActualType.htm" />
           <HelpTOCNode Title="ExpectedType Property " Url="html/P_LaunchDarkly_JsonStream_TypeException_ExpectedType.htm" />
           <HelpTOCNode Title="Message Property " Url="html/P_LaunchDarkly_JsonStream_TypeException_Message.htm" />
@@ -235,9 +235,9 @@
       </HelpTOCNode>
       <HelpTOCNode Title="ValueType Enumeration" Url="html/T_LaunchDarkly_JsonStream_ValueType.htm" />
     </HelpTOCNode>
-    <HelpTOCNode Id="7c384508-dca0-4000-9db0-5a7fb93633ef" Title="LaunchDarkly.JsonStream.Implementation" Url="html/N_LaunchDarkly_JsonStream_Implementation.htm">
-      <HelpTOCNode Id="173ff698-54fa-4eff-8c2e-36ed3a1f79cf" Title="Properties Class" Url="html/T_LaunchDarkly_JsonStream_Implementation_Properties.htm">
-        <HelpTOCNode Id="880d2825-0361-472f-aa1b-d89b5ec2ecca" Title="Properties Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_Implementation_Properties.htm">
+    <HelpTOCNode Id="3c3c828e-9891-4088-bb19-3b04e593314d" Title="LaunchDarkly.JsonStream.Implementation" Url="html/N_LaunchDarkly_JsonStream_Implementation.htm">
+      <HelpTOCNode Id="3a176f8c-d286-4c0b-9918-2c92f7dd6691" Title="Properties Class" Url="html/T_LaunchDarkly_JsonStream_Implementation_Properties.htm">
+        <HelpTOCNode Id="aa7a1ed8-07e2-4878-b5ef-14f4fdb51453" Title="Properties Properties" Url="html/Properties_T_LaunchDarkly_JsonStream_Implementation_Properties.htm">
           <HelpTOCNode Title="IsSystemTextJsonImplementation Property " Url="html/P_LaunchDarkly_JsonStream_Implementation_Properties_IsSystemTextJsonImplementation.htm" />
         </HelpTOCNode>
       </HelpTOCNode>
