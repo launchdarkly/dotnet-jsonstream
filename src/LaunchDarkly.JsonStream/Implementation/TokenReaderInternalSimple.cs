@@ -168,18 +168,18 @@ namespace LaunchDarkly.JsonStream.Implementation
 
 		private double ReadNumber(char firstCh)
 		{
-			var hasDecimal = false;
+			var isFloat = false;
 			char ch = (char)0;
 			for (; _pos < _length; _pos++)
 			{
 				ch = _buf[_pos];
-				if (!char.IsDigit(ch) && !(ch == '.' && !hasDecimal))
+				if (!char.IsDigit(ch) && !(ch == '.' && !isFloat))
 				{
 					break;
 				}
 				if (ch == '.')
 				{
-					hasDecimal = true;
+					isFloat = true;
 				}
 			}
 			if (ch == 'e' || ch == 'E')
@@ -188,7 +188,7 @@ namespace LaunchDarkly.JsonStream.Implementation
 				_pos++;
 				if (_pos >= _length)
 				{
-					throw new Exception("no"); // TODO
+					throw MakeSyntaxException("invalid number format");
 				}
 				ch = _buf[_pos];
 				if (ch == '+' || ch == '-')
@@ -197,9 +197,9 @@ namespace LaunchDarkly.JsonStream.Implementation
 				}
 				else if (ch < '0' || ch > '9')
 				{
-					throw new Exception("no"); // TODO
+					throw MakeSyntaxException("invalid number format");
 				}
-				var haveExpDigits = false;
+				var hasExponent = false;
 				for (; _pos < _length; _pos++)
 				{
 					ch = _buf[_pos];
@@ -207,15 +207,16 @@ namespace LaunchDarkly.JsonStream.Implementation
 					{
 						break;
 					}
-					haveExpDigits = true;
+					hasExponent = true;
 				}
-				if (!haveExpDigits)
+				if (!hasExponent)
 				{
-					throw new Exception("no"); // TODO
+					throw MakeSyntaxException("invalid number format");
 				}
+				isFloat = true;
 			}
 			var st = StringToken.FromChars(_buf, _lastPos, _pos - _lastPos);
-			return hasDecimal ? st.ParseDouble() : st.ParseLong();
+			return isFloat ? st.ParseDouble() : st.ParseLong();
 		}
 
 		private StringToken ReadString()
