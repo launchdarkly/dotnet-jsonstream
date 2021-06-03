@@ -85,10 +85,14 @@ namespace LaunchDarkly.JsonStream.TestSuite
                 new NumberTestValue("int large", 1603312301195, "1603312301195", null), // enough magnitude for a millisecond timestamp
 		        new NumberTestValue("float", 3.5, "3.5", null),
                 new NumberTestValue("float negative", -3.5, "-3.5", null),
-                new NumberTestValue("float with exp", 3500, "3.5e3", "3500"),
-                new NumberTestValue("float with Exp", 3500, "3.5E3", "3500"),
-                new NumberTestValue("float with exp+", 3500, "3.5e+3", "3500"),
-                new NumberTestValue("float with exp-", 0.0035, "3.5e-3", "0.0035")
+                new NumberTestValue("float with exp and decimal", 3500, "3.5e3", "3500"),
+                new NumberTestValue("float with Exp and decimal", 3500, "3.5E3", "3500"),
+                new NumberTestValue("float with exp+ and decimal", 3500, "3.5e+3", "3500"),
+                new NumberTestValue("float with exp- and decimal", 0.0035, "3.5e-3", "0.0035"),
+                new NumberTestValue("float with exp but no decimal", 5000, "5e3", "5000"),
+                new NumberTestValue("float with Exp but no decimal", 5000, "5E3", "5000"),
+                new NumberTestValue("float with exp+ but no decimal", 5000, "5e+3", "5000"),
+                new NumberTestValue("float with exp- but no decimal", 0.005, "5e-3", "0.005")
             };
             var ret = new List<ValueTest<T>>();
             foreach (var ntv in ntvs)
