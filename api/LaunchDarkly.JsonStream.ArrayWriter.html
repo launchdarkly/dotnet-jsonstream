@@ -1,0 +1,491 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct ArrayWriter
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct ArrayWriter
+   ">
+    <meta name="generator" content="docfx 2.57.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="LaunchDarkly.JsonStream.ArrayWriter">
+  
+  
+  <h1 id="LaunchDarkly_JsonStream_ArrayWriter" data-uid="LaunchDarkly.JsonStream.ArrayWriter" class="text-break">Struct ArrayWriter
+  </h1>
+  <div class="markdown level0 summary"><p>A decorator that manages the state of a JSON array that is in the process of being
+written.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="LaunchDarkly.JsonStream.IValueWriter.html">IValueWriter</a></div>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.ValueType.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.ValueType.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.ValueType.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="LaunchDarkly.JsonStream.html">LaunchDarkly.JsonStream</a></h6>
+  <h6><strong>Assembly</strong>: LaunchDarkly.JsonStream.dll</h6>
+  <h5 id="LaunchDarkly_JsonStream_ArrayWriter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct ArrayWriter : IValueWriter, IDisposable</code></pre>
+  </div>
+  <h5 id="LaunchDarkly_JsonStream_ArrayWriter_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Calling <a class="xref" href="LaunchDarkly.JsonStream.JWriter.html#LaunchDarkly_JsonStream_JWriter_Array">Array()</a> creates an <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a>. Until
+<a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html#LaunchDarkly_JsonStream_ArrayWriter_End">End()</a> or <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html#LaunchDarkly_JsonStream_ArrayWriter_Dispose">Dispose()</a> is called,
+writing any value to the <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a> (or to the original
+<a class="xref" href="LaunchDarkly.JsonStream.JWriter.html">JWriter</a>) will cause commas to be added between values as needed.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Array_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Array*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Array" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Array">Array()</h4>
+  <div class="markdown level1 summary"><p>Begins writing a JSON array to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ArrayWriter Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a></td>
+        <td><p>an <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_ArrayWriter_Array_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>It returns an <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a> that provides the array formatting. You must
+call <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html#LaunchDarkly_JsonStream_ArrayWriter_End">End()</a> when finished (or use a <code>using</code> block to
+cause it to close automatically).</p>
+</div>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Bool_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Bool*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Bool_System_Boolean_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Bool(System.Boolean)">Bool(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Writes a JSON boolean value to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Bool(bool value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_BoolOrNull_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.BoolOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_BoolOrNull_System_Nullable_System_Boolean__" data-uid="LaunchDarkly.JsonStream.ArrayWriter.BoolOrNull(System.Nullable{System.Boolean})">BoolOrNull(Nullable&lt;Boolean&gt;)</h4>
+  <div class="markdown level1 summary"><p>Writes either a JSON boolean value or a JSON null to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void BoolOrNull(bool? value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Dispose_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Dispose*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Dispose" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"><p>The <code>Dispose</code> method calls <code>End()</code>, so that you can use a <code>using</code>
+block to make the array close automatically.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Double_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Double*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Double_System_Double_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Double(System.Double)">Double(Double)</h4>
+  <div class="markdown level1 summary"><p>Writes a JSON numeric value to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Double(double value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_DoubleOrNull_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.DoubleOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_DoubleOrNull_System_Nullable_System_Double__" data-uid="LaunchDarkly.JsonStream.ArrayWriter.DoubleOrNull(System.Nullable{System.Double})">DoubleOrNull(Nullable&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Writes either a JSON numeric value or a JSON null to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void DoubleOrNull(double? value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_End_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.End*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_End" data-uid="LaunchDarkly.JsonStream.ArrayWriter.End">End()</h4>
+  <div class="markdown level1 summary"><p>Writes the closing delimiter of the array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void End()</code></pre>
+  </div>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Int_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Int*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Int_System_Int32_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Int(System.Int32)">Int(Int32)</h4>
+  <div class="markdown level1 summary"><p>Writes a JSON numeric value to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Int(int value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_IntOrNull_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.IntOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_IntOrNull_System_Nullable_System_Int32__" data-uid="LaunchDarkly.JsonStream.ArrayWriter.IntOrNull(System.Nullable{System.Int32})">IntOrNull(Nullable&lt;Int32&gt;)</h4>
+  <div class="markdown level1 summary"><p>Writes either a JSON numeric value or a JSON null to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void IntOrNull(int? value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Long_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Long*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Long_System_Int64_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Long(System.Int64)">Long(Int64)</h4>
+  <div class="markdown level1 summary"><p>Writes a JSON numeric value to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Long(long value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_LongOrNull_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.LongOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_LongOrNull_System_Nullable_System_Int64__" data-uid="LaunchDarkly.JsonStream.ArrayWriter.LongOrNull(System.Nullable{System.Int64})">LongOrNull(Nullable&lt;Int64&gt;)</h4>
+  <div class="markdown level1 summary"><p>Writes either a JSON numeric value or a JSON null to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void LongOrNull(long? value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int64</span>&gt;</td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Null_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Null*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Null" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Null">Null()</h4>
+  <div class="markdown level1 summary"><p>Writes a JSON null value to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Null()</code></pre>
+  </div>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_Object_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Object*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_Object" data-uid="LaunchDarkly.JsonStream.ArrayWriter.Object">Object()</h4>
+  <div class="markdown level1 summary"><p>Begins writing a JSON object to the output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObjectWriter Object()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.ObjectWriter.html">ObjectWriter</a></td>
+        <td><p>an <a class="xref" href="LaunchDarkly.JsonStream.ObjectWriter.html">ObjectWriter</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_ArrayWriter_Object_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>It returns an <a class="xref" href="LaunchDarkly.JsonStream.ObjectWriter.html">ObjectWriter</a> that provides the object formatting. You must
+call <a class="xref" href="LaunchDarkly.JsonStream.ObjectWriter.html#LaunchDarkly_JsonStream_ObjectWriter_End">End()</a> when finished (or use a <code>using</code> block to
+cause it to close automatically).</p>
+</div>
+  <a id="LaunchDarkly_JsonStream_ArrayWriter_String_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.String*"></a>
+  <h4 id="LaunchDarkly_JsonStream_ArrayWriter_String_System_String_" data-uid="LaunchDarkly.JsonStream.ArrayWriter.String(System.String)">String(String)</h4>
+  <div class="markdown level1 summary"><p>Writes a JSON string value to the output, adding quotes and performing any
+necessary escaping. If the value is <span class="xref">null</span>, it writes a null instead.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void String(string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="LaunchDarkly.JsonStream.IValueWriter.html">IValueWriter</a>
+  </div>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

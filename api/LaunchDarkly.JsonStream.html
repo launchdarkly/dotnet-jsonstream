@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace LaunchDarkly.JsonStream
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace LaunchDarkly.JsonStream
+   ">
+    <meta name="generator" content="docfx 2.57.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="LaunchDarkly.JsonStream">
+  
+  <h1 id="LaunchDarkly_JsonStream" data-uid="LaunchDarkly.JsonStream" class="text-break">Namespace LaunchDarkly.JsonStream
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.JsonReadException.html">JsonReadException</a></h4>
+      <section><p>Base class for all exceptions thrown by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a>.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.JsonStreamConvert.html">JsonStreamConvert</a></h4>
+      <section><p>Helper methods for serializing and deserializing types that have <a class="xref" href="LaunchDarkly.JsonStream.IJsonStreamConverter.html">IJsonStreamConverter</a>
+implementations.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.JsonStreamConverterAttribute.html">JsonStreamConverterAttribute</a></h4>
+      <section><p>Apply this attribute to a type that can use the <code>LaunchDarkly.JsonStream</code> API to
+serialize or deserialize its instances.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.JWriter.html">JWriter</a></h4>
+      <section><p>A high-level API for writing JSON data sequentially.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ReaderAdapters.html">ReaderAdapters</a></h4>
+      <section><p>Built-in implementations of <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html">IReaderAdapter</a>.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.RequiredPropertyException.html">RequiredPropertyException</a></h4>
+      <section><p>Thrown by <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> if a property that you marked as required was not found.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></h4>
+      <section><p>Thrown by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> when the input data is not well-formed JSON.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></h4>
+      <section><p>Thrown by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> when the input data contains a value of an unexpected
+type, even though it is well-formed JSON.</p>
+</section>
+    <h3 id="structs">Structs
+  </h3>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a></h4>
+      <section><p>Returned by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Any">Any()</a> to represent a JSON value of an arbitrary type.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a></h4>
+      <section><p>Used in conjunction with <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to iterate through a JSON array.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a></h4>
+      <section><p>A decorator that manages the state of a JSON array that is in the process of being
+written.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></h4>
+      <section><p>A high-level API for reading JSON data sequentially.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a></h4>
+      <section><p>Used in conjunction with <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to iterate through a JSON object.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ObjectWriter.html">ObjectWriter</a></h4>
+      <section><p>A decorator that manages the state of a JSON object that is in the process of being
+written.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></h4>
+      <section><p>Used by <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> to return an object property name in situations where it
+may not be desirable to allocate a <code>string</code> instance.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.IJsonStreamConverter.html">IJsonStreamConverter</a></h4>
+      <section><p>Interface for an object that knows how to convert some type to or from JSON.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html">IReaderAdapter</a></h4>
+      <section><p>An interface for providing JSON-equivalent data from some other source that can be
+read by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a>.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.IValueWriter.html">IValueWriter</a></h4>
+      <section><p>Common interface for classes that allow writing a JSON value (<a class="xref" href="LaunchDarkly.JsonStream.JWriter.html">JWriter</a>
+and <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a>).</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ValueType.html">ValueType</a></h4>
+      <section><p>Defines the allowable value types for <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a>.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

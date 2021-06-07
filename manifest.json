@@ -1,0 +1,356 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/circleci/AppData/Local/Temp/project-releaser-temp/build-docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.AnyValue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.AnyValue.html",
+          "hash": "dt+3ZCIfhy+06sloXGcbnD5D3uo2f5xezA2l6tTB+cA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.ArrayReader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.ArrayReader.html",
+          "hash": "B9GM6xDFEaHAMoZhLmvDDfSBfsDOzyrnfej7lLX56c8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.ArrayWriter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.ArrayWriter.html",
+          "hash": "8sYrqImN+Q8U+EcthAw1G7frq10XOnnpD5to5iyttcg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.IJsonStreamConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.IJsonStreamConverter.html",
+          "hash": "qALxMHsNnq52n1xesjfhcmugndM4nwc1C3wOwhZrs3k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.IReaderAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.IReaderAdapter.html",
+          "hash": "vPGhuZw4jdxrXG5u9vyAiFvUdkg/a2G74pFKmh1QaiM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.IValueWriter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.IValueWriter.html",
+          "hash": "LmkumAzuru6Vptn7PB8ZJJ3HVHNoaP5ODraoMvSbkvg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.Implementation.Properties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.Implementation.Properties.html",
+          "hash": "aoUVororF492LKz7b2TpJnYE//zij8Mw4mmg56WgjXQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.Implementation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.Implementation.html",
+          "hash": "0Bo8XCMmhPfDeCQdAuKXPStTevAtVLmoxPvrWtOAe5U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.JReader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.JReader.html",
+          "hash": "IN3dHMctL56uYZQQYdJ12GUnFbELWgvMr2rVCqHdEjU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.JWriter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.JWriter.html",
+          "hash": "AeUFS4etjVto8AOp5ohabxT0abmZPW441ro41E2/t+s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.JsonReadException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.JsonReadException.html",
+          "hash": "tf1DqrBvdws+oRMew6fwmmccFFJHU0Ohk8N3T2Diefg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.JsonStreamConvert.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.JsonStreamConvert.html",
+          "hash": "uCzGZrbqeRVvoSbVGwyc3MXFh+hxFhbkxum+cCZkOFw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.JsonStreamConverterAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.JsonStreamConverterAttribute.html",
+          "hash": "wGWeVUi6ldwpEKQmLEY0AZ7/ZV0PHQA//9wX0Uay5lE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.ObjectReader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.ObjectReader.html",
+          "hash": "N2g3QX850T5X4lRfjD69B/1tMWYhZGfL9UuIaAXj4YU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.ObjectWriter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.ObjectWriter.html",
+          "hash": "zzG5vcvGqDrxi+b89l6BQ8ptN9enP9bK1c5/DzvLVBY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.PropertyNameToken.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.PropertyNameToken.html",
+          "hash": "isL8WrJjnDkSUWYG6umUnY1Ev7MJyMcABOZZNCeJGDo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.ReaderAdapters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.ReaderAdapters.html",
+          "hash": "hXQ0YGOnl1MWGLbGXpZ7NuLT44iZ34Um2LbvS6yPitw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.RequiredPropertyException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.RequiredPropertyException.html",
+          "hash": "Pk4ByYK9IhL14fpflb8SkTrAyc7xvSWdxVpwVpzPel4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.SyntaxException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.SyntaxException.html",
+          "hash": "63Qqf6WS/lSRMopu76opOIeKyN7APxaQISMgcGDSeOc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.TypeException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.TypeException.html",
+          "hash": "NNq8MJfSD5UWBg86geVTu7PYH8zi1H20pF68KdcCGLw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.ValueType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.ValueType.html",
+          "hash": "VqahAcQslV+KwbtKI764/PYrxaT1iaEYwJrEjgyPxig="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "build/api/LaunchDarkly.JsonStream.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/LaunchDarkly.JsonStream.html",
+          "hash": "9yKC/DDdPvZLUAU4rpFrugsCoFePtYopyoZm5AHVcCA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "build/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "mX/s5s39nO46+N+Zx0D+1Md/b3FT0Klt+iTO9wPuL0c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "RlFIsGgGuY+NZLiJ5IAAdc2D4BZW3W3yRw5PKjYFgrE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "OcAt2qAclfw54rsNjx1spbCRH1t7sXHE7qN4xSTepyQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 1,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 23,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

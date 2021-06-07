@@ -1,0 +1,381 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IReaderAdapter
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IReaderAdapter
+   ">
+    <meta name="generator" content="docfx 2.57.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="LaunchDarkly.JsonStream.IReaderAdapter">
+  
+  
+  <h1 id="LaunchDarkly_JsonStream_IReaderAdapter" data-uid="LaunchDarkly.JsonStream.IReaderAdapter" class="text-break">Interface IReaderAdapter
+  </h1>
+  <div class="markdown level0 summary"><p>An interface for providing JSON-equivalent data from some other source that can be
+read by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a>.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="LaunchDarkly.JsonStream.html">LaunchDarkly.JsonStream</a></h6>
+  <h6><strong>Assembly</strong>: LaunchDarkly.JsonStream.dll</h6>
+  <h5 id="LaunchDarkly_JsonStream_IReaderAdapter_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IReaderAdapter</code></pre>
+  </div>
+  <h5 id="LaunchDarkly_JsonStream_IReaderAdapter_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This allows deserialization logic based on <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to be used on a custom input stream
+without involving the actual JSON parser. The adapter is responsible for maintaining its
+own state information regarding the position of the next value to be read.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="LaunchDarkly_JsonStream_IReaderAdapter_EOF_" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.EOF*"></a>
+  <h4 id="LaunchDarkly_JsonStream_IReaderAdapter_EOF" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.EOF">EOF</h4>
+  <div class="markdown level1 summary"><p>Returns true if there is no more input data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool EOF { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if the input data is malformed</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="LaunchDarkly_JsonStream_IReaderAdapter_ArrayNext_" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.ArrayNext*"></a>
+  <h4 id="LaunchDarkly_JsonStream_IReaderAdapter_ArrayNext_System_Boolean_" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.ArrayNext(System.Boolean)">ArrayNext(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Prepares to read the next element of an array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ArrayNext(bool first)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>true if this is the first array element being read</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if there is a next array element, false if there are no more elements</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_IReaderAdapter_ArrayNext_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method will only be called if <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html#LaunchDarkly_JsonStream_IReaderAdapter_NextValue_System_Nullable_LaunchDarkly_JsonStream_ValueType__System_Boolean_">NextValue(Nullable&lt;ValueType&gt;, Boolean)</a>
+previously returned <a class="xref" href="LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_Array">Array</a>. It should update the adapter&apos;s state
+so that the next call to <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html#LaunchDarkly_JsonStream_IReaderAdapter_NextValue_System_Nullable_LaunchDarkly_JsonStream_ValueType__System_Boolean_">NextValue(Nullable&lt;ValueType&gt;, Boolean)</a> will return the
+next element of the array. If there are no more array elements, it should return false
+and update the adapter&apos;s state so that the current position is after the end of the array.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if the input data is malformed</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_IReaderAdapter_NextValue_" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.NextValue*"></a>
+  <h4 id="LaunchDarkly_JsonStream_IReaderAdapter_NextValue_System_Nullable_LaunchDarkly_JsonStream_ValueType__System_Boolean_" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.NextValue(System.Nullable{LaunchDarkly.JsonStream.ValueType},System.Boolean)">NextValue(Nullable&lt;ValueType&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Consumes the next value of a scalar type, or prepares to read the contents
+of an array or object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">AnyValue NextValue(ValueType? desiredType, bool allowNull)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<a class="xref" href="LaunchDarkly.JsonStream.ValueType.html">ValueType</a>&gt;</td>
+        <td><span class="parametername">desiredType</span></td>
+        <td><p>the desired data type, or null if any type is allowable</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">allowNull</span></td>
+        <td><p>true if a null value is allowed instead of the desired type</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a></td>
+        <td><p>an <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a> that contains the actual value if it is a scalar,
+or just indicates the type if it is an array or object</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_IReaderAdapter_NextValue_System_Nullable_LaunchDarkly_JsonStream_ValueType__System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The adapter should throw an exception if there is a type mismatch.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the actual type of the next value does not match
+the desired type</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if the input data is malformed</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_IReaderAdapter_ObjectNext_" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.ObjectNext*"></a>
+  <h4 id="LaunchDarkly_JsonStream_IReaderAdapter_ObjectNext_System_Boolean_" data-uid="LaunchDarkly.JsonStream.IReaderAdapter.ObjectNext(System.Boolean)">ObjectNext(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Prepares to read the next property of an object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">PropertyNameToken ObjectNext(bool first)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">first</span></td>
+        <td><p>true if this is the first object element being read</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><p>a <a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a> for the next property, or
+<a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html#LaunchDarkly_JsonStream_PropertyNameToken_None">None</a> if there are no more properties</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_IReaderAdapter_ObjectNext_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method will only be called if <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html#LaunchDarkly_JsonStream_IReaderAdapter_NextValue_System_Nullable_LaunchDarkly_JsonStream_ValueType__System_Boolean_">NextValue(Nullable&lt;ValueType&gt;, Boolean)</a>
+previously returned <a class="xref" href="LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_Object">Object</a>. It should update the adapter&apos;s state
+so that the next call to <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html#LaunchDarkly_JsonStream_IReaderAdapter_NextValue_System_Nullable_LaunchDarkly_JsonStream_ValueType__System_Boolean_">NextValue(Nullable&lt;ValueType&gt;, Boolean)</a> will return the value
+of the next property. If there are no more properties, it should return <a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html#LaunchDarkly_JsonStream_PropertyNameToken_None">None</a>
+and update the adapter&apos;s state so that the current position is after the end of the object.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if the input data is malformed</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="seealso">See Also</h3>
+  <div class="seealso">
+      <div><a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_FromAdapter_LaunchDarkly_JsonStream_IReaderAdapter_">FromAdapter(IReaderAdapter)</a></div>
+      <div><a class="xref" href="LaunchDarkly.JsonStream.ReaderAdapters.html">ReaderAdapters</a></div>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

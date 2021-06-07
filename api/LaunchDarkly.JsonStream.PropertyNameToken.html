@@ -1,0 +1,584 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct PropertyNameToken
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct PropertyNameToken
+   ">
+    <meta name="generator" content="docfx 2.57.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="LaunchDarkly.JsonStream.PropertyNameToken">
+  
+  
+  <h1 id="LaunchDarkly_JsonStream_PropertyNameToken" data-uid="LaunchDarkly.JsonStream.PropertyNameToken" class="text-break">Struct PropertyNameToken
+  </h1>
+  <div class="markdown level0 summary"><p>Used by <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> to return an object property name in situations where it
+may not be desirable to allocate a <code>string</code> instance.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="LaunchDarkly.JsonStream.html">LaunchDarkly.JsonStream</a></h6>
+  <h6><strong>Assembly</strong>: LaunchDarkly.JsonStream.dll</h6>
+  <h5 id="LaunchDarkly_JsonStream_PropertyNameToken_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct PropertyNameToken</code></pre>
+  </div>
+  <h5 id="LaunchDarkly_JsonStream_PropertyNameToken_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p><p>
+This type is used for the <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html#LaunchDarkly_JsonStream_ObjectReader_Name">Name</a> property of <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a>,
+to allow for a slight efficiency gain in some circumstances by not always having to create
+a <code>string</code> instance. The rationale is that JSON property names are often used only
+briefly for comparisons during parsing, and if they do not need to be retained in the parsed
+data, it is preferable to avoid creating many <code>string</code> instances that will increase
+garbage collection overhead.
+</p>
+<p>
+Whenever possible, the parser will set the <a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a> to work as a direct
+view onto the underlying character sequence in the JSON input, in which case using
+<a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html#LaunchDarkly_JsonStream_PropertyNameToken_Equals_System_String_">Equals(String)</a> or <code>==</code> will not cause any allocations. In some cases
+(such as if the property name contains string escape sequences) that is not possible, and the
+parser will have to allocate a <code>string</code>, but will wrap it in a <code>PropertyNameToken</code>
+so your code can treat it the same either way.
+</p>
+<p>
+The down side is that it is not possible to use a <code>PropertyNameToken</code> as the value in an
+ordinary <code>switch</code> statement; if you want to use <code>switch</code>, you must either call
+<a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html#LaunchDarkly_JsonStream_PropertyNameToken_ToString">ToString()</a> to get the name as a string, or use <code>when</code> clauses in the <code>switch</code>
+as shown in the example. But even though <code>switch</code> can be slightly faster than a series of
+equality tests, if the number of comparisons is small that advantage may not matter.
+</p>
+<example><p>
+<pre><code>    string prop1Value, prop2Value;
+    for (var obj = reader.Object(); obj.Next();)
+    {
+        switch (obj.Name)
+        {
+            case var n when n == &quot;prop1&quot;:
+                prop1Value = obj.String();
+                break;
+            case var n when n == &quot;prop2&quot;:
+                prop2Value = obj.String();
+                break;
+        }
+    }</code></pre>
+<p></example></p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_Empty_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Empty*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_Empty" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Empty">Empty</h4>
+  <div class="markdown level1 summary"><p>True if this is <a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html#LaunchDarkly_JsonStream_PropertyNameToken_None">None</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Empty { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_None_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.None*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_None" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.None">None</h4>
+  <div class="markdown level1 summary"><p>An empty value that indicates there are no more properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PropertyNameToken None { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_Equals_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Equals*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_Equals_LaunchDarkly_JsonStream_PropertyNameToken_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Equals(LaunchDarkly.JsonStream.PropertyNameToken)">Equals(PropertyNameToken)</h4>
+  <div class="markdown level1 summary"><p>Compares the <code>PropertyNameToken</code> to another <code>PropertyNameToken</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(PropertyNameToken other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>another name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if the names are equal</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_Equals_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Equals*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_Equals_System_Object_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object o)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">o</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_Equals_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Equals*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_Equals_System_String_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.Equals(System.String)">Equals(String)</h4>
+  <div class="markdown level1 summary"><p>Compares the <code>PropertyNameToken</code> to a string value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>a string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>true if the string is an exact match</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_GetHashCode_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.GetHashCode*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_GetHashCode" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.ValueType.GetHashCode()</span></div>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_ToString_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.ToString*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_ToString" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Converts the <code>PropertyNameToken</code> to a <code>string</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>the name as a string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.ValueType.ToString()</span></div>
+  <h3 id="operators">Operators
+  </h3>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_op_Equality_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Equality*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_op_Equality_LaunchDarkly_JsonStream_PropertyNameToken_LaunchDarkly_JsonStream_PropertyNameToken_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Equality(LaunchDarkly.JsonStream.PropertyNameToken,LaunchDarkly.JsonStream.PropertyNameToken)">Equality(PropertyNameToken, PropertyNameToken)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(PropertyNameToken p1, PropertyNameToken p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_op_Equality_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Equality*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_op_Equality_LaunchDarkly_JsonStream_PropertyNameToken_System_String_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Equality(LaunchDarkly.JsonStream.PropertyNameToken,System.String)">Equality(PropertyNameToken, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(PropertyNameToken p, string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><span class="parametername">p</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Inequality*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality_LaunchDarkly_JsonStream_PropertyNameToken_LaunchDarkly_JsonStream_PropertyNameToken_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Inequality(LaunchDarkly.JsonStream.PropertyNameToken,LaunchDarkly.JsonStream.PropertyNameToken)">Inequality(PropertyNameToken, PropertyNameToken)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(PropertyNameToken p1, PropertyNameToken p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Inequality*"></a>
+  <h4 id="LaunchDarkly_JsonStream_PropertyNameToken_op_Inequality_LaunchDarkly_JsonStream_PropertyNameToken_System_String_" data-uid="LaunchDarkly.JsonStream.PropertyNameToken.op_Inequality(LaunchDarkly.JsonStream.PropertyNameToken,System.String)">Inequality(PropertyNameToken, String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(PropertyNameToken p, string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></td>
+        <td><span class="parametername">p</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

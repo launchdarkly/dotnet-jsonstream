@@ -1,0 +1,1194 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct JReader
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct JReader
+   ">
+    <meta name="generator" content="docfx 2.57.2.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="LaunchDarkly.JsonStream.JReader">
+  
+  
+  <h1 id="LaunchDarkly_JsonStream_JReader" data-uid="LaunchDarkly.JsonStream.JReader" class="text-break">Struct JReader
+  </h1>
+  <div class="markdown level0 summary"><p>A high-level API for reading JSON data sequentially.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.ValueType.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.ValueType.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.ValueType.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="LaunchDarkly.JsonStream.html">LaunchDarkly.JsonStream</a></h6>
+  <h6><strong>Assembly</strong>: LaunchDarkly.JsonStream.dll</h6>
+  <h5 id="LaunchDarkly_JsonStream_JReader_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct JReader</code></pre>
+  </div>
+  <h5 id="LaunchDarkly_JsonStream_JReader_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>
+On platforms that provide the <code>System.Text.Json</code> API (.NET Core 3.1+, .NET 5.0+), this
+works as a wrapper for <code>System.Text.Json.Utf8JsonReader</code>, providing a more convenient API
+for common JSON parsing operations. On platforms that do not have <code>System.Text.Json</code>, it
+falls back to a portable implementation that is not as fast as <code>Utf8JsonReader</code> but still
+highly efficient and has no external dependencies. Portable JSON unmarshaling logic can
+therefore be written against this API without needing to know the target platform.
+</p>
+<p>
+The general usage pattern is as follows:
+</p>
+<ul><li></li><li></li><li></li><li></li></ul>
+<p>
+<code>JReader</code> is defined as a <code>ref struct</code>, which places certain limitations on how it
+can be used in .NET code. This is done for two reasons. First, this is necessary in order for
+it to be able to take advantage of <code>System.Text.Json</code> on compatible platforms. Second, it
+allows the compiler to make significant optimizations regardless of the platform, since it
+guarantees that this object will never be allocated on the heap. An indirect result of this
+design is that methods like <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html#LaunchDarkly_JsonStream_ArrayReader_Next_LaunchDarkly_JsonStream_JReader__">Next(ref JReader)</a> and
+<a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html#LaunchDarkly_JsonStream_ObjectReader_Next_LaunchDarkly_JsonStream_JReader__">Next(ref JReader)</a> require the original <code>JReader</code> to be passed
+as a <code>ref</code> parameter, because they are not allowed to retain a reference to it in a field
+of their own.
+</p>
+<p>
+Another design decision based on <code>System.Text.Json</code> interoperability and efficiency is
+that <code>JReader</code> methods can throw either their own exception types (derived from
+<a class="xref" href="LaunchDarkly.JsonStream.JsonReadException.html">JsonReadException</a>), or, on some platforms, a <code>System.Text.Json.JsonException</code>.
+<code>JReader</code> does not automatically catch the latter and translate them to its own types, in
+order to avoid the overhead of <code>try</code> blocks within high-traffic code paths. If you need to
+be able to distinguish between different kinds of JSON errors, you can call
+<a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_TranslateException_System_Exception_">TranslateException(Exception)</a> after catching an exception.
+</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  <a id="LaunchDarkly_JsonStream_JReader_EOF_" data-uid="LaunchDarkly.JsonStream.JReader.EOF*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_EOF" data-uid="LaunchDarkly.JsonStream.JReader.EOF">EOF</h4>
+  <div class="markdown level1 summary"><p>True if all of the input has been consumed (not counting whitespace).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool EOF { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <a id="LaunchDarkly_JsonStream_JReader_Any_" data-uid="LaunchDarkly.JsonStream.JReader.Any*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Any" data-uid="LaunchDarkly.JsonStream.JReader.Any">Any()</h4>
+  <div class="markdown level1 summary"><p>Reads a single value of any type, if it is a scalar value or a null, or prepares to read
+the value if it is an array or object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AnyValue Any()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a></td>
+        <td><p>a scalar value or a marker for the beginning of a complex value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_JReader_Any_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+The returned <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a>&apos;s <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html#LaunchDarkly_JsonStream_AnyValue_Type">Type</a> property indicates the
+value type. If it is <a class="xref" href="LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_Bool">Bool</a>, <a class="xref" href="LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_Number">Number</a>, or
+<a class="xref" href="LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_String">String</a>, check the corresponding <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html#LaunchDarkly_JsonStream_AnyValue_BoolValue">BoolValue</a>,
+<a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html#LaunchDarkly_JsonStream_AnyValue_NumberValue">NumberValue</a>, or <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html#LaunchDarkly_JsonStream_AnyValue_StringValue">StringValue</a> property. If it is
+<a class="xref" href="LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_Array">Array</a> or <a class="xref" href="LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_Object">Object</a>, the <code>AnyValue</code>&apos;s
+<a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html#LaunchDarkly_JsonStream_AnyValue_ArrayValue">ArrayValue</a> or <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html#LaunchDarkly_JsonStream_AnyValue_ObjectValue">ObjectValue</a> property has been
+initialized with an <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a> or <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> just as if you
+had called the <code>JReader</code>&apos;s <a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Array">Array()</a> or <a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Object">Object()</a> method.
+</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_Array_" data-uid="LaunchDarkly.JsonStream.JReader.Array*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Array" data-uid="LaunchDarkly.JsonStream.JReader.Array">Array()</h4>
+  <div class="markdown level1 summary"><p>Attempts to begin reading a JSON array value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ArrayReader Array()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a></td>
+        <td><p>an <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_JReader_Array_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+If successful, the return value will be an <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a> containing the
+necessary state for iterating through the array elements.
+</p>
+<p>
+The <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a>is used only for the iteration state; to read the value of
+each array element, you will still use the <code>JReader</code>&apos;s methods.
+</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not the beginning of an array</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_ArrayOrNull_" data-uid="LaunchDarkly.JsonStream.JReader.ArrayOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_ArrayOrNull" data-uid="LaunchDarkly.JsonStream.JReader.ArrayOrNull">ArrayOrNull()</h4>
+  <div class="markdown level1 summary"><p>Attempts to either begin reading a JSON array value or read a null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ArrayReader ArrayOrNull()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a></td>
+        <td><p>an <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_JReader_ArrayOrNull_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+In the case of an array, the return value will be an <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a> containing the
+necessary state for iterating through the array elements. In the case of a null, the returned
+<a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a> will be a stub that always returns <span class="xref">false</span> for both
+<a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html#LaunchDarkly_JsonStream_ArrayReader_Next_LaunchDarkly_JsonStream_JReader__">Next(ref JReader)</a> and <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html#LaunchDarkly_JsonStream_ArrayReader_IsDefined">IsDefined</a>.
+</p>
+<p>
+The <a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a>is used only for the iteration state; to read the value of
+each array element, you will still use the <code>JReader</code>&apos;s methods.
+</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is neither the beginning of an array nor a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_Bool_" data-uid="LaunchDarkly.JsonStream.JReader.Bool*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Bool" data-uid="LaunchDarkly.JsonStream.JReader.Bool">Bool()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read a boolean value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Bool()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>the boolean value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not a boolean</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_BoolOrNull_" data-uid="LaunchDarkly.JsonStream.JReader.BoolOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_BoolOrNull" data-uid="LaunchDarkly.JsonStream.JReader.BoolOrNull">BoolOrNull()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read either a boolean value or a null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool? BoolOrNull()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><p>the boolean value or null</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is neither a boolean nor a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_Double_" data-uid="LaunchDarkly.JsonStream.JReader.Double*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Double" data-uid="LaunchDarkly.JsonStream.JReader.Double">Double()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read a numeric value as a <span class="xref">langword_csharp_double</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Double()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>the numeric value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not a number</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_DoubleOrNull_" data-uid="LaunchDarkly.JsonStream.JReader.DoubleOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_DoubleOrNull" data-uid="LaunchDarkly.JsonStream.JReader.DoubleOrNull">DoubleOrNull()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read either a numeric value or a null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double? DoubleOrNull()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><p>the numeric value or null</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is neither a number nor a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_FromAdapter_" data-uid="LaunchDarkly.JsonStream.JReader.FromAdapter*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_FromAdapter_LaunchDarkly_JsonStream_IReaderAdapter_" data-uid="LaunchDarkly.JsonStream.JReader.FromAdapter(LaunchDarkly.JsonStream.IReaderAdapter)">FromAdapter(IReaderAdapter)</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> that processes JSON-equivalent data from a custom
+source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static JReader FromAdapter(IReaderAdapter dataAdapter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html">IReaderAdapter</a></td>
+        <td><span class="parametername">dataAdapter</span></td>
+        <td><p>an implementation of <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html">IReaderAdapter</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></td>
+        <td><p>a new <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_JReader_FromAdapter_LaunchDarkly_JsonStream_IReaderAdapter__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This allows deserialization logic based on <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to be used on a custom input
+stream without involving the actual JSON parser. For instance, you could define an
+implementation of <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html">IReaderAdapter</a> that consumes YAML data.</p>
+</div>
+  <h5 id="LaunchDarkly_JsonStream_JReader_FromAdapter_LaunchDarkly_JsonStream_IReaderAdapter__seealso">See Also</h5>
+  <div class="seealso">
+      <div><a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html">IReaderAdapter</a></div>
+  </div>
+  <a id="LaunchDarkly_JsonStream_JReader_FromString_" data-uid="LaunchDarkly.JsonStream.JReader.FromString*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_FromString_System_String_" data-uid="LaunchDarkly.JsonStream.JReader.FromString(System.String)">FromString(String)</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> that processes JSON data from a stirng.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static JReader FromString(string input)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">input</span></td>
+        <td><p>the input string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></td>
+        <td><p>a new <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_FromUtf8Bytes_" data-uid="LaunchDarkly.JsonStream.JReader.FromUtf8Bytes*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_FromUtf8Bytes_System_Byte___" data-uid="LaunchDarkly.JsonStream.JReader.FromUtf8Bytes(System.Byte[])">FromUtf8Bytes(Byte[])</h4>
+  <div class="markdown level1 summary"><p>Creates a <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> that processes JSON data from a UTF-8 byte array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static JReader FromUtf8Bytes(byte[] input)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Byte</span>[]</td>
+        <td><span class="parametername">input</span></td>
+        <td><p>the input data</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></td>
+        <td><p>a new <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_Int_" data-uid="LaunchDarkly.JsonStream.JReader.Int*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Int" data-uid="LaunchDarkly.JsonStream.JReader.Int">Int()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read a numeric value as an <span class="xref">langword_csharp_int</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Int()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><p>the numeric value, truncated to an integer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not a number</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_IntOrNull_" data-uid="LaunchDarkly.JsonStream.JReader.IntOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_IntOrNull" data-uid="LaunchDarkly.JsonStream.JReader.IntOrNull">IntOrNull()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read either an integer value or a null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int? IntOrNull()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
+        <td><p>the numeric value, truncated to an integer, or null</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is neither a number nor a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_Long_" data-uid="LaunchDarkly.JsonStream.JReader.Long*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Long" data-uid="LaunchDarkly.JsonStream.JReader.Long">Long()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read a numeric value as an <span class="xref">langword_csharp_long</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long Long()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int64</span></td>
+        <td><p>the numeric value, truncated to an integer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not a number</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_LongOrNull_" data-uid="LaunchDarkly.JsonStream.JReader.LongOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_LongOrNull" data-uid="LaunchDarkly.JsonStream.JReader.LongOrNull">LongOrNull()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read either a long integer value or a null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long? LongOrNull()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Nullable</span>&lt;<span class="xref">System.Int64</span>&gt;</td>
+        <td><p>the numeric value, truncated to an integer, or null</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is neither a number nor a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_Null_" data-uid="LaunchDarkly.JsonStream.JReader.Null*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Null" data-uid="LaunchDarkly.JsonStream.JReader.Null">Null()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read a null value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Null()</code></pre>
+  </div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_Object_" data-uid="LaunchDarkly.JsonStream.JReader.Object*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_Object" data-uid="LaunchDarkly.JsonStream.JReader.Object">Object()</h4>
+  <div class="markdown level1 summary"><p>Attempts to begin reading a JSON object value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObjectReader Object()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a></td>
+        <td><p>an <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_JReader_Object_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+If successful, the return value will be an <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> containing the
+necessary state for iterating through the object properties.
+</p>
+<p>
+The <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a>is used only for the iteration state; to read the value of
+each property, you will still use the <code>JReader</code>&apos;s methods.
+</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not the beginning of an object</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_ObjectOrNull_" data-uid="LaunchDarkly.JsonStream.JReader.ObjectOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_ObjectOrNull" data-uid="LaunchDarkly.JsonStream.JReader.ObjectOrNull">ObjectOrNull()</h4>
+  <div class="markdown level1 summary"><p>Attempts to either begin reading a JSON object value or read a null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ObjectReader ObjectOrNull()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a></td>
+        <td><p>an <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a></p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_JReader_ObjectOrNull_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>
+In the case of an object, the return value will be an <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> containing the
+necessary state for iterating through the object properties. In the case of a null, the returned
+<a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> will be a stub that always returns <span class="xref">false</span> for both
+<a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html#LaunchDarkly_JsonStream_ObjectReader_Next_LaunchDarkly_JsonStream_JReader__">Next(ref JReader)</a> and <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html#LaunchDarkly_JsonStream_ObjectReader_IsDefined">IsDefined</a>.
+</p>
+<p>
+The <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a>is used only for the iteration state; to read the value of
+each property, you will still use the <code>JReader</code>&apos;s methods.
+</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is neither the beginning of an object nor a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_SkipValue_" data-uid="LaunchDarkly.JsonStream.JReader.SkipValue*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_SkipValue" data-uid="LaunchDarkly.JsonStream.JReader.SkipValue">SkipValue()</h4>
+  <div class="markdown level1 summary"><p>Consumes and discards the next JSON value of any type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SkipValue()</code></pre>
+  </div>
+  <h5 id="LaunchDarkly_JsonStream_JReader_SkipValue_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For an array or object value, it recurses to also consume and discard all array elements or
+object properties.</p>
+</div>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_String_" data-uid="LaunchDarkly.JsonStream.JReader.String*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_String" data-uid="LaunchDarkly.JsonStream.JReader.String">String()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read a non-null string value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string String()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>the string value</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is not a string</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_StringOrNull_" data-uid="LaunchDarkly.JsonStream.JReader.StringOrNull*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_StringOrNull" data-uid="LaunchDarkly.JsonStream.JReader.StringOrNull">StringOrNull()</h4>
+  <div class="markdown level1 summary"><p>Attempts to read either a string value or a null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string StringOrNull()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>a <code>string</code> which may be null</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="exceptions">Exceptions</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Condition</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a></td>
+        <td><p>if the next token is neither a string nor a null</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a></td>
+        <td><p>if there is a JSON parsing error</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a id="LaunchDarkly_JsonStream_JReader_TranslateException_" data-uid="LaunchDarkly.JsonStream.JReader.TranslateException*"></a>
+  <h4 id="LaunchDarkly_JsonStream_JReader_TranslateException_System_Exception_" data-uid="LaunchDarkly.JsonStream.JReader.TranslateException(System.Exception)">TranslateException(Exception)</h4>
+  <div class="markdown level1 summary"><p>Normalizes exceptions that may have been thrown from low-level code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Exception TranslateException(Exception e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Exception</span></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>the exception that was thrown</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Exception</span></td>
+        <td><p>a <a class="xref" href="LaunchDarkly.JsonStream.SyntaxException.html">SyntaxException</a> or <a class="xref" href="LaunchDarkly.JsonStream.TypeException.html">TypeException</a> if the original
+exception was a different type that can be translated to those types; otherwise, the
+original exception</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="LaunchDarkly_JsonStream_JReader_TranslateException_System_Exception__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>When using a target framework that has <code>System.Text.Json</code>, some low-level JSON parsing
+logic may throw a <code>System.Text.Json</code> exception type rather than the <a class="xref" href="LaunchDarkly.JsonStream.JsonReadException.html">JsonReadException</a>
+types used by <code>JReader</code>. To avoid the overhead of using <code>try</code>/<code>catch</code> in
+high-traffic code paths, <code>JReader</code> does not translate these exceptions on a per-method-call
+basis. Instead, if you want to be able to distinguish between different kinds of errors in a
+consistent way, you should catch <code>Exception</code> in general and then pass the exception to
+this method.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
