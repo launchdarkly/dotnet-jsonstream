@@ -13,5 +13,5 @@ jobs:
       LD_RELEASE_DOCS_TARGET_FRAMEWORK: netstandard2.0
 
 documentation:
-  githubPages: true
+  gitHubPages: true
   title: LaunchDarkly Streaming JSON for .NET
