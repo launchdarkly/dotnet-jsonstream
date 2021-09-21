@@ -20,17 +20,17 @@ namespace LaunchDarkly.JsonStream
     /// </para>
     /// <list type="bullet">
     /// <item>Values are parsed in the order that they appear.</item>
-    /// <item>In general, the caller should know what data type is expected. Since it is common for
+    /// <item><description>In general, the caller should know what data type is expected. Since it is common for
     /// properties to be nullable, the methods for reading scalar types have variants for allowing
     /// a null instead of the specified type. If the type is completely unknown, use
-    /// <see cref="Any"/>.</item>
-    /// <item>For reading array or object structures, the <see cref="Array"/> and <see cref="Object"/>
+    /// <see cref="Any"/>.</description></item>
+    /// <item><description>For reading array or object structures, the <see cref="Array"/> and <see cref="Object"/>
     /// methods return a struct that keeps track of additional reader state while that structure is
-    /// being parsed.</item>
-    /// <item>If any method encounters an error (due to either malformed JSON, or well-formed JSON that
+    /// being parsed.</description></item>
+    /// <item><description>If any method encounters an error (due to either malformed JSON, or well-formed JSON that
     /// did not match the caller's data type expectations), an exception derived from
     /// <see cref="JsonReadException"/> is thrown. The caller should not attempt to use the
-    /// <c>JReader</c> any further after that point.</item>
+    /// <c>JReader</c> any further after that point.</description></item>
     /// </list>
     /// <para>
     /// <c>JReader</c> is defined as a <c>ref struct</c>, which places certain limitations on how it
