@@ -1,17 +1,17 @@
+version: 2
+
 publications:
   - url: https://nuget.org/packages/LaunchDarkly.JsonStream
     description: NuGet
 
-circleci:
-  windows:
-    context: org-global
-
-template:
-  name: dotnet-windows
-  env:
-    LD_RELEASE_TEST_TARGET_FRAMEWORK: net461
-    LD_RELEASE_DOCS_TARGET_FRAMEWORK: net461
+jobs:
+  - docker: {}
+    template:
+      name: dotnet-linux
+    env:
+      LD_RELEASE_TEST_TARGET_FRAMEWORK: net5.0
+      LD_RELEASE_DOCS_TARGET_FRAMEWORK: netstandard2.0
 
 documentation:
-  githubPages: true
+  gitHubPages: true
   title: LaunchDarkly Streaming JSON for .NET

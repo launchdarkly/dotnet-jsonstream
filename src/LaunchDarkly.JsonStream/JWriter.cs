@@ -20,12 +20,12 @@ namespace LaunchDarkly.JsonStream
     /// The general usage pattern is as follows:
     /// </para>
     /// <list type="bullet">
-    /// <item>There is one method for each JSON data type.</item>
-    /// <item>For writing array or object structures, the <see cref="Array"/> and <see cref="Object"/>
+    /// <item><description>There is one method for each JSON data type.</description></item>
+    /// <item><description>For writing array or object structures, the <see cref="Array"/> and <see cref="Object"/>
     /// methods return a struct that keeps track of additional writer state while that structure is
-    /// being written.</item>
-    /// <item>If any method encounters an error, an exception is thrown and the caller should not
-    /// attempt to use the <c>JWriter</c> any further after that point.</item>
+    /// being written.</description></item>
+    /// <item><description>If any method encounters an error, an exception is thrown and the caller should not
+    /// attempt to use the <c>JWriter</c> any further after that point.</description></item>
     /// </list>
     /// </remarks>
     /// <example>
