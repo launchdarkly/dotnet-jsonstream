@@ -2,6 +2,10 @@
 
 All notable changes to the project will be documented in this file. For full release notes for the projects that depend on this project, see their respective changelogs. This file describes changes only to the common code. This project adheres to [Semantic Versioning](http://semver.org).
 
+## [1.0.3] - 2021-10-18
+### Fixed:
+- When using the adapter that allows SDK types to be deserialized with the `System.Text.Json` API, temporary `JsonDocument` instances are now disposed of immediately rather than leaving them to be garbage-collected. (Thanks, [JeffAshton](https://github.com/launchdarkly/dotnet-jsonstream/pull/8)!)
+
 ## [1.0.2] - 2021-06-07
 ### Fixed:
 - On platforms where `System.Text.Json` is not available, the default JSON parsing implementation was broken for numbers that have an exponent but do not have a decimal (such as `1e-5`, as opposed to `1.0e-5`). For such numbers, the parser was incorrectly throwing a syntax error.
