@@ -39,9 +39,11 @@ namespace LaunchDarkly.JsonStream
                 // that a JReader can read from. That's less efficient than reading directly from the original
                 // reader, due to 1. preallocating the value struct(s) and 2. the overhead of JReader calling the
                 // delegate, but it's still better than actually parsing the JSON twice.
-                var jsonDocument = JsonDocument.ParseValue(ref reader);
-                var readerWrapper = JReader.FromAdapter(ReaderAdapters.FromJsonElement(jsonDocument.RootElement));
-                return (T)_jsonStreamConverter.ReadJson(ref readerWrapper);
+                using(JsonDocument jsonDocument = JsonDocument.ParseValue(ref reader))
+                {
+                    var readerWrapper = JReader.FromAdapter(ReaderAdapters.FromJsonElement(jsonDocument.RootElement));
+                    return (T)_jsonStreamConverter.ReadJson(ref readerWrapper);
+                }
             }
 
             public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
