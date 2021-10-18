@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/Users/circleci/AppData/Local/Temp/project-releaser-temp/build-docs",
+  "source_base_path": "/tmp/project-releaser/temp/build-docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.AnyValue.html",
-          "hash": "dt+3ZCIfhy+06sloXGcbnD5D3uo2f5xezA2l6tTB+cA="
+          "hash": "pXvCDP3L4+pjZn8osUvGVYMdTy1WS8mPV5UvBSz8Ai4="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.ArrayReader.html",
-          "hash": "B9GM6xDFEaHAMoZhLmvDDfSBfsDOzyrnfej7lLX56c8="
+          "hash": "THFOCRwWm3ciyxz8nC/5ehwey0NSQKsDQy4frffRznA="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.ArrayWriter.html",
-          "hash": "8sYrqImN+Q8U+EcthAw1G7frq10XOnnpD5to5iyttcg="
+          "hash": "CHydz5siFcxZ6Qech2Os2zxTo8HGZ7avqDWBeNHNWCg="
         }
       },
       "is_incremental": false,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.IReaderAdapter.html",
-          "hash": "vPGhuZw4jdxrXG5u9vyAiFvUdkg/a2G74pFKmh1QaiM="
+          "hash": "QkWMzr1ZG7ok0KqCwoFlN6VZc7AeqDvJJUMzdm3RsLM="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.IValueWriter.html",
-          "hash": "LmkumAzuru6Vptn7PB8ZJJ3HVHNoaP5ODraoMvSbkvg="
+          "hash": "D1An212qF50Kgd+3qsh2ENZdT8Znw4bI4ocDT7qY/to="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.Implementation.Properties.html",
-          "hash": "aoUVororF492LKz7b2TpJnYE//zij8Mw4mmg56WgjXQ="
+          "hash": "TZCjqb5fvUSGcHQxNUDjGhyXFpvfaK4XEfQv2vhBULY="
         }
       },
       "is_incremental": false,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.JReader.html",
-          "hash": "IN3dHMctL56uYZQQYdJ12GUnFbELWgvMr2rVCqHdEjU="
+          "hash": "gSAjg3U/a7kTXamyxx04uPfFAe1jO+qfDxeO+hh7X88="
         }
       },
       "is_incremental": false,
@@ -117,7 +117,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.JWriter.html",
-          "hash": "AeUFS4etjVto8AOp5ohabxT0abmZPW441ro41E2/t+s="
+          "hash": "6S35ijZEXWb9ud9GFJp+2B/kvt1HHIgTDoDE4gE9kS0="
         }
       },
       "is_incremental": false,
@@ -129,7 +129,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.JsonReadException.html",
-          "hash": "tf1DqrBvdws+oRMew6fwmmccFFJHU0Ohk8N3T2Diefg="
+          "hash": "wWWzozoB3sTzYit+ZxvEqEylSFbWMF6EhXCTqsLyImQ="
         }
       },
       "is_incremental": false,
@@ -141,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.JsonStreamConvert.html",
-          "hash": "uCzGZrbqeRVvoSbVGwyc3MXFh+hxFhbkxum+cCZkOFw="
+          "hash": "t7xX5O3p9/FfRIyCXgK8a244d95gGj2IunAKKk7ub90="
         }
       },
       "is_incremental": false,
@@ -153,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.JsonStreamConverterAttribute.html",
-          "hash": "wGWeVUi6ldwpEKQmLEY0AZ7/ZV0PHQA//9wX0Uay5lE="
+          "hash": "lc5yMCk/VjH4gMD/eeZVJtPQGjw6WZ1lx+bE1W9Q7DY="
         }
       },
       "is_incremental": false,
@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.ObjectReader.html",
-          "hash": "N2g3QX850T5X4lRfjD69B/1tMWYhZGfL9UuIaAXj4YU="
+          "hash": "esyy4vqwu+WoVKl8X8NOmVibdE766CUbr5WJtH5R524="
         }
       },
       "is_incremental": false,
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.ObjectWriter.html",
-          "hash": "zzG5vcvGqDrxi+b89l6BQ8ptN9enP9bK1c5/DzvLVBY="
+          "hash": "Gijt7jQ1Pp2f0WIKWA3PztWfX+yqm5c5hl7YMabt5uk="
         }
       },
       "is_incremental": false,
@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.PropertyNameToken.html",
-          "hash": "isL8WrJjnDkSUWYG6umUnY1Ev7MJyMcABOZZNCeJGDo="
+          "hash": "Yta/1R32sUz0M7q0HROJIaLRWjGA2jxq1xmP9m0PfqI="
         }
       },
       "is_incremental": false,
@@ -201,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.ReaderAdapters.html",
-          "hash": "hXQ0YGOnl1MWGLbGXpZ7NuLT44iZ34Um2LbvS6yPitw="
+          "hash": "mJdcCjebmJygChqyWIIe8AlW8iqgIu4TONG7T09dbSY="
         }
       },
       "is_incremental": false,
@@ -213,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.RequiredPropertyException.html",
-          "hash": "Pk4ByYK9IhL14fpflb8SkTrAyc7xvSWdxVpwVpzPel4="
+          "hash": "Gogy8/LCgai1dMLx/SGa3Lx/+Ui7BH+TLZXp0GB3IGg="
         }
       },
       "is_incremental": false,
@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.SyntaxException.html",
-          "hash": "63Qqf6WS/lSRMopu76opOIeKyN7APxaQISMgcGDSeOc="
+          "hash": "45WrOZrG+Nm3EuJcJmuXWyarI//0GQcJAXEAZRMhDh0="
         }
       },
       "is_incremental": false,
@@ -237,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.TypeException.html",
-          "hash": "NNq8MJfSD5UWBg86geVTu7PYH8zi1H20pF68KdcCGLw="
+          "hash": "JMVTYisFDmDZcgyj+tFvJM73N1KFZz15IT1MPHPa/as="
         }
       },
       "is_incremental": false,
@@ -249,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.ValueType.html",
-          "hash": "VqahAcQslV+KwbtKI764/PYrxaT1iaEYwJrEjgyPxig="
+          "hash": "VNJ2CO9zJpu/4/BvpYeB8JNaLBwhgU21XYJ62t/8oXE="
         }
       },
       "is_incremental": false,
@@ -261,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/LaunchDarkly.JsonStream.html",
-          "hash": "9yKC/DDdPvZLUAU4rpFrugsCoFePtYopyoZm5AHVcCA="
+          "hash": "5ia2T5TrTZRw6HDBg4J1vrGTL/KSob2uNgET09Talgk="
         }
       },
       "is_incremental": false,
@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "RlFIsGgGuY+NZLiJ5IAAdc2D4BZW3W3yRw5PKjYFgrE="
+          "hash": "wilSEHgRtizTYC40liAngdy5Y0gjD/O0552n1c/muR4="
         }
       },
       "is_incremental": false,

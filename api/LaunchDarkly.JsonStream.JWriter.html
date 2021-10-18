@@ -85,35 +85,11 @@
     <h5>Implements</h5>
     <div><a class="xref" href="LaunchDarkly.JsonStream.IValueWriter.html">IValueWriter</a></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.Object.ToString()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.MemberwiseClone()</span>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="LaunchDarkly.JsonStream.html">LaunchDarkly.JsonStream</a></h6>
   <h6><strong>Assembly</strong>: LaunchDarkly.JsonStream.dll</h6>
   <h5 id="LaunchDarkly_JsonStream_JWriter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class JWriter : IValueWriter</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class JWriter : Object, IValueWriter</code></pre>
   </div>
   <h5 id="LaunchDarkly_JsonStream_JWriter_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p><p>
@@ -127,7 +103,10 @@ be written against this API without needing to know the target platform.
 <p>
 The general usage pattern is as follows:
 </p>
-<ul><li></li><li></li><li></li></ul></p>
+<ul><li>There is one method for each JSON data type.</li><li>For writing array or object structures, the <a class="xref" href="LaunchDarkly.JsonStream.JWriter.html#LaunchDarkly_JsonStream_JWriter_Array">Array()</a> and <a class="xref" href="LaunchDarkly.JsonStream.JWriter.html#LaunchDarkly_JsonStream_JWriter_Object">Object()</a>
+methods return a struct that keeps track of additional writer state while that structure is
+being written.</li><li>If any method encounters an error, an exception is thrown and the caller should not
+attempt to use the <code>JWriter</code> any further after that point.</li></ul></p>
 </div>
   <h5 id="LaunchDarkly_JsonStream_JWriter_examples"><strong>Examples</strong></h5>
   <p>// This writes the following JSON object: {&quot;a&quot;:true,&quot;b&quot;:[1,2]}
@@ -207,7 +186,7 @@ cause it to close automatically).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void BoolOrNull(bool? value)</code></pre>
+    <pre><code class="lang-csharp hljs">public void BoolOrNull(Nullable&lt;bool&gt; value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -261,7 +240,7 @@ cause it to close automatically).</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void DoubleOrNull(double? value)</code></pre>
+    <pre><code class="lang-csharp hljs">public void DoubleOrNull(Nullable&lt;double&gt; value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -404,7 +383,7 @@ However, on .NET Core 3.x and .NET 5.x, this method does perform a copy so it is
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void IntOrNull(int? value)</code></pre>
+    <pre><code class="lang-csharp hljs">public void IntOrNull(Nullable&lt;int&gt; value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -458,7 +437,7 @@ However, on .NET Core 3.x and .NET 5.x, this method does perform a copy so it is
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void LongOrNull(long? value)</code></pre>
+    <pre><code class="lang-csharp hljs">public void LongOrNull(Nullable&lt;long&gt; value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -546,53 +525,6 @@ However, on .NET Core 3.x and .NET 5.x, this method does perform a copy so it is
       </tr>
     </tbody>
   </table>
-  <a id="LaunchDarkly_JsonStream_JWriter_NewWithUtf8JsonWriter_" data-uid="LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter*"></a>
-  <h4 id="LaunchDarkly_JsonStream_JWriter_NewWithUtf8JsonWriter_System_Text_Json_Utf8JsonWriter_" data-uid="LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter(System.Text.Json.Utf8JsonWriter)">NewWithUtf8JsonWriter(Utf8JsonWriter)</h4>
-  <div class="markdown level1 summary"><p>Constructs a new instance that writes to an existing <code>Utf8JsonWriter</code>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static JWriter NewWithUtf8JsonWriter(Utf8JsonWriter writer)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Text.Json.Utf8JsonWriter</span></td>
-        <td><span class="parametername">writer</span></td>
-        <td><p>a <span class="xref">System.Text.Json.Utf8JsonWriter</span></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="LaunchDarkly.JsonStream.JWriter.html">JWriter</a></td>
-        <td><p>a new <a class="xref" href="LaunchDarkly.JsonStream.JWriter.html">JWriter</a></p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="LaunchDarkly_JsonStream_JWriter_NewWithUtf8JsonWriter_System_Text_Json_Utf8JsonWriter__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This method only exists on platforms where <code>System.Text.Json</code> is available.
-It allows <code>JWriter</code> to be used within a custom serializer for that API.</p>
-</div>
   <a id="LaunchDarkly_JsonStream_JWriter_Null_" data-uid="LaunchDarkly.JsonStream.JWriter.Null*"></a>
   <h4 id="LaunchDarkly_JsonStream_JWriter_Null" data-uid="LaunchDarkly.JsonStream.JWriter.Null">Null()</h4>
   <div class="markdown level1 summary"><p>Writes a JSON null value to the output.</p>

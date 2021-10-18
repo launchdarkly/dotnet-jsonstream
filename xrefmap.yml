@@ -1237,18 +1237,6 @@ references:
   commentId: Overload:LaunchDarkly.JsonStream.JWriter.NewWithInitialCapacity
   fullName: LaunchDarkly.JsonStream.JWriter.NewWithInitialCapacity
   nameWithType: JWriter.NewWithInitialCapacity
-- uid: LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter(System.Text.Json.Utf8JsonWriter)
-  name: NewWithUtf8JsonWriter(Utf8JsonWriter)
-  href: api/LaunchDarkly.JsonStream.JWriter.html#LaunchDarkly_JsonStream_JWriter_NewWithUtf8JsonWriter_System_Text_Json_Utf8JsonWriter_
-  commentId: M:LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter(System.Text.Json.Utf8JsonWriter)
-  fullName: LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter(System.Text.Json.Utf8JsonWriter)
-  nameWithType: JWriter.NewWithUtf8JsonWriter(Utf8JsonWriter)
-- uid: LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter*
-  name: NewWithUtf8JsonWriter
-  href: api/LaunchDarkly.JsonStream.JWriter.html#LaunchDarkly_JsonStream_JWriter_NewWithUtf8JsonWriter_
-  commentId: Overload:LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter
-  fullName: LaunchDarkly.JsonStream.JWriter.NewWithUtf8JsonWriter
-  nameWithType: JWriter.NewWithUtf8JsonWriter
 - uid: LaunchDarkly.JsonStream.JWriter.Null
   name: Null()
   href: api/LaunchDarkly.JsonStream.JWriter.html#LaunchDarkly_JsonStream_JWriter_Null
@@ -1519,18 +1507,6 @@ references:
   commentId: T:LaunchDarkly.JsonStream.ReaderAdapters
   fullName: LaunchDarkly.JsonStream.ReaderAdapters
   nameWithType: ReaderAdapters
-- uid: LaunchDarkly.JsonStream.ReaderAdapters.FromJsonElement(System.Text.Json.JsonElement)
-  name: FromJsonElement(JsonElement)
-  href: api/LaunchDarkly.JsonStream.ReaderAdapters.html#LaunchDarkly_JsonStream_ReaderAdapters_FromJsonElement_System_Text_Json_JsonElement_
-  commentId: M:LaunchDarkly.JsonStream.ReaderAdapters.FromJsonElement(System.Text.Json.JsonElement)
-  fullName: LaunchDarkly.JsonStream.ReaderAdapters.FromJsonElement(System.Text.Json.JsonElement)
-  nameWithType: ReaderAdapters.FromJsonElement(JsonElement)
-- uid: LaunchDarkly.JsonStream.ReaderAdapters.FromJsonElement*
-  name: FromJsonElement
-  href: api/LaunchDarkly.JsonStream.ReaderAdapters.html#LaunchDarkly_JsonStream_ReaderAdapters_FromJsonElement_
-  commentId: Overload:LaunchDarkly.JsonStream.ReaderAdapters.FromJsonElement
-  fullName: LaunchDarkly.JsonStream.ReaderAdapters.FromJsonElement
-  nameWithType: ReaderAdapters.FromJsonElement
 - uid: LaunchDarkly.JsonStream.ReaderAdapters.FromSimpleTypes(System.Object,System.Boolean)
   name: FromSimpleTypes(Object, Boolean)
   href: api/LaunchDarkly.JsonStream.ReaderAdapters.html#LaunchDarkly_JsonStream_ReaderAdapters_FromSimpleTypes_System_Object_System_Boolean_
@@ -1729,3 +1705,9 @@ references:
   commentId: F:LaunchDarkly.JsonStream.ValueType.String
   fullName: LaunchDarkly.JsonStream.ValueType.String
   nameWithType: ValueType.String
+- uid: LaunchDarkly.JsonStream.ValueType.value__
+  name: value__
+  href: api/LaunchDarkly.JsonStream.ValueType.html#LaunchDarkly_JsonStream_ValueType_value__
+  commentId: F:LaunchDarkly.JsonStream.ValueType.value__
+  fullName: LaunchDarkly.JsonStream.ValueType.value__
+  nameWithType: ValueType.value__

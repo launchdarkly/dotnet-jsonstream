@@ -77,6 +77,19 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a></h4>
+      <section><p>Returned by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Any">Any()</a> to represent a JSON value of an arbitrary type.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a></h4>
+      <section><p>Used in conjunction with <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to iterate through a JSON array.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a></h4>
+      <section><p>A decorator that manages the state of a JSON array that is in the process of being
+written.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></h4>
+      <section><p>A high-level API for reading JSON data sequentially.</p>
+</section>
       <h4><a class="xref" href="LaunchDarkly.JsonStream.JsonReadException.html">JsonReadException</a></h4>
       <section><p>Base class for all exceptions thrown by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a>.</p>
 </section>
@@ -91,6 +104,17 @@ serialize or deserialize its instances.</p>
       <h4><a class="xref" href="LaunchDarkly.JsonStream.JWriter.html">JWriter</a></h4>
       <section><p>A high-level API for writing JSON data sequentially.</p>
 </section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a></h4>
+      <section><p>Used in conjunction with <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to iterate through a JSON object.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ObjectWriter.html">ObjectWriter</a></h4>
+      <section><p>A decorator that manages the state of a JSON object that is in the process of being
+written.</p>
+</section>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></h4>
+      <section><p>Used by <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> to return an object property name in situations where it
+may not be desirable to allocate a <code>string</code> instance.</p>
+</section>
       <h4><a class="xref" href="LaunchDarkly.JsonStream.ReaderAdapters.html">ReaderAdapters</a></h4>
       <section><p>Built-in implementations of <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.html">IReaderAdapter</a>.</p>
 </section>
@@ -104,31 +128,8 @@ serialize or deserialize its instances.</p>
       <section><p>Thrown by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> when the input data contains a value of an unexpected
 type, even though it is well-formed JSON.</p>
 </section>
-    <h3 id="structs">Structs
-  </h3>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a></h4>
-      <section><p>Returned by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Any">Any()</a> to represent a JSON value of an arbitrary type.</p>
-</section>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.ArrayReader.html">ArrayReader</a></h4>
-      <section><p>Used in conjunction with <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to iterate through a JSON array.</p>
-</section>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a></h4>
-      <section><p>A decorator that manages the state of a JSON array that is in the process of being
-written.</p>
-</section>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a></h4>
-      <section><p>A high-level API for reading JSON data sequentially.</p>
-</section>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a></h4>
-      <section><p>Used in conjunction with <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a> to iterate through a JSON object.</p>
-</section>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.ObjectWriter.html">ObjectWriter</a></h4>
-      <section><p>A decorator that manages the state of a JSON object that is in the process of being
-written.</p>
-</section>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.PropertyNameToken.html">PropertyNameToken</a></h4>
-      <section><p>Used by <a class="xref" href="LaunchDarkly.JsonStream.ObjectReader.html">ObjectReader</a> to return an object property name in situations where it
-may not be desirable to allocate a <code>string</code> instance.</p>
+      <h4><a class="xref" href="LaunchDarkly.JsonStream.ValueType.html">ValueType</a></h4>
+      <section><p>Defines the allowable value types for <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a>.</p>
 </section>
     <h3 id="interfaces">Interfaces
   </h3>
@@ -142,11 +143,6 @@ read by <a class="xref" href="LaunchDarkly.JsonStream.JReader.html">JReader</a>.
       <h4><a class="xref" href="LaunchDarkly.JsonStream.IValueWriter.html">IValueWriter</a></h4>
       <section><p>Common interface for classes that allow writing a JSON value (<a class="xref" href="LaunchDarkly.JsonStream.JWriter.html">JWriter</a>
 and <a class="xref" href="LaunchDarkly.JsonStream.ArrayWriter.html">ArrayWriter</a>).</p>
-</section>
-    <h3 id="enums">Enums
-  </h3>
-      <h4><a class="xref" href="LaunchDarkly.JsonStream.ValueType.html">ValueType</a></h4>
-      <section><p>Defines the allowable value types for <a class="xref" href="LaunchDarkly.JsonStream.AnyValue.html">AnyValue</a>.</p>
 </section>
 </article>
           </div>

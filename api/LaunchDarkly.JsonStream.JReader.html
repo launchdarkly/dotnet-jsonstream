@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Struct JReader
+    <title>Class JReader
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Struct JReader
+    <meta name="title" content="Class JReader
    ">
     <meta name="generator" content="docfx 2.57.2.0">
     
@@ -71,37 +71,21 @@
             <article class="content wrap" id="_content" data-uid="LaunchDarkly.JsonStream.JReader">
   
   
-  <h1 id="LaunchDarkly_JsonStream_JReader" data-uid="LaunchDarkly.JsonStream.JReader" class="text-break">Struct JReader
+  <h1 id="LaunchDarkly_JsonStream_JReader" data-uid="LaunchDarkly.JsonStream.JReader" class="text-break">Class JReader
   </h1>
   <div class="markdown level0 summary"><p>A high-level API for reading JSON data sequentially.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <span class="xref">System.ValueType.Equals(System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.ValueType.GetHashCode()</span>
-    </div>
-    <div>
-      <span class="xref">System.ValueType.ToString()</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetType()</span>
-    </div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">JReader</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="LaunchDarkly.JsonStream.html">LaunchDarkly.JsonStream</a></h6>
   <h6><strong>Assembly</strong>: LaunchDarkly.JsonStream.dll</h6>
   <h5 id="LaunchDarkly_JsonStream_JReader_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct JReader</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class JReader : ValueType</code></pre>
   </div>
   <h5 id="LaunchDarkly_JsonStream_JReader_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>
@@ -115,7 +99,15 @@ therefore be written against this API without needing to know the target platfor
 <p>
 The general usage pattern is as follows:
 </p>
-<ul><li></li><li></li><li></li><li></li></ul>
+<ul><li></li><li>In general, the caller should know what data type is expected. Since it is common for
+properties to be nullable, the methods for reading scalar types have variants for allowing
+a null instead of the specified type. If the type is completely unknown, use
+<a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Any">Any()</a>.</li><li>For reading array or object structures, the <a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Array">Array()</a> and <a class="xref" href="LaunchDarkly.JsonStream.JReader.html#LaunchDarkly_JsonStream_JReader_Object">Object()</a>
+methods return a struct that keeps track of additional reader state while that structure is
+being parsed.</li><li>If any method encounters an error (due to either malformed JSON, or well-formed JSON that
+did not match the caller&apos;s data type expectations), an exception derived from
+<a class="xref" href="LaunchDarkly.JsonStream.JsonReadException.html">JsonReadException</a> is thrown. The caller should not attempt to use the
+<code>JReader</code> any further after that point.</li></ul>
 <p>
 <code>JReader</code> is defined as a <code>ref struct</code>, which places certain limitations on how it
 can be used in .NET code. This is done for two reasons. First, this is necessary in order for
@@ -386,7 +378,7 @@ each array element, you will still use the <code>JReader</code>&apos;s methods.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool? BoolOrNull()</code></pre>
+    <pre><code class="lang-csharp hljs">public Nullable&lt;bool&gt; BoolOrNull()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -427,7 +419,7 @@ each array element, you will still use the <code>JReader</code>&apos;s methods.
   </table>
   <a id="LaunchDarkly_JsonStream_JReader_Double_" data-uid="LaunchDarkly.JsonStream.JReader.Double*"></a>
   <h4 id="LaunchDarkly_JsonStream_JReader_Double" data-uid="LaunchDarkly.JsonStream.JReader.Double">Double()</h4>
-  <div class="markdown level1 summary"><p>Attempts to read a numeric value as a <span class="xref">langword_csharp_double</span>.</p>
+  <div class="markdown level1 summary"><p>Attempts to read a numeric value as a <span class="xref">double</span>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -478,7 +470,7 @@ each array element, you will still use the <code>JReader</code>&apos;s methods.
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double? DoubleOrNull()</code></pre>
+    <pre><code class="lang-csharp hljs">public Nullable&lt;double&gt; DoubleOrNull()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -658,7 +650,7 @@ implementation of <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.h
   </table>
   <a id="LaunchDarkly_JsonStream_JReader_Int_" data-uid="LaunchDarkly.JsonStream.JReader.Int*"></a>
   <h4 id="LaunchDarkly_JsonStream_JReader_Int" data-uid="LaunchDarkly.JsonStream.JReader.Int">Int()</h4>
-  <div class="markdown level1 summary"><p>Attempts to read a numeric value as an <span class="xref">langword_csharp_int</span>.</p>
+  <div class="markdown level1 summary"><p>Attempts to read a numeric value as an <span class="xref">int</span>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -709,7 +701,7 @@ implementation of <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.h
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int? IntOrNull()</code></pre>
+    <pre><code class="lang-csharp hljs">public Nullable&lt;int&gt; IntOrNull()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -801,7 +793,7 @@ implementation of <a class="xref" href="LaunchDarkly.JsonStream.IReaderAdapter.h
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public long? LongOrNull()</code></pre>
+    <pre><code class="lang-csharp hljs">public Nullable&lt;long&gt; LongOrNull()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
