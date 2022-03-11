@@ -171,12 +171,17 @@ jobs:
 
   benchmark-windows:
     parameters:
+      build-target-frameworks:
+        type: string
+        default: ""
       test-target-framework:
         type: string
     executor:
       name: win/default
       shell: powershell.exe
     environment:
+      BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      TESTFRAMEWORKS: <<parameters.test-target-framework>>
       BUILDBENCHMARKS: true
     steps:
       - checkout
