@@ -116,6 +116,9 @@ jobs:
 
   test-windows:
     parameters:
+      build-target-frameworks:
+        type: string
+        default: ""
       test-target-framework:
         type: string
       uses-native-implementation:
@@ -124,6 +127,8 @@ jobs:
       name: win/default
       shell: powershell.exe
     environment:
+      BUILDFRAMEWORKS: <<parameters.build-target-frameworks>>
+      TESTFRAMEWORKS: <<parameters.test-target-framework>>
       SHOULD_USE_SYSTEM_TEXT_JSON: <<parameters.uses-native-implementation>>
     steps:
       - checkout
