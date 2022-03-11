@@ -3,7 +3,7 @@
     <!--
       The reason there's a mechanism here for overriding the target frameworks with
       an environment variable is that we want to be able to run CI tests using older
-      SDKs which do not consider "net5.0" to be a valid target framework that can be
+      SDKs which do not consider "net6.0" to be a valid target framework that can be
       referenced in a project file.
     -->
     <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.0;netcoreapp2.1;netcoreapp3.1;net5.0;net6.0;net452;net461</TestFrameworks>

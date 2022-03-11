@@ -5,7 +5,7 @@
     <!--
       The reason there's a mechanism here for overriding the target frameworks with
       an environment variable is that we want to be able to run CI tests using older
-      SDKs which do not consider "net5.0" to be a valid target framework that can be
+      SDKs which do not consider "net6.0" to be a valid target framework that can be
       referenced in a project file.
 
       Also, the .NET Framework version here is 4.6.1 even though LaunchDarkly.JsonStream
