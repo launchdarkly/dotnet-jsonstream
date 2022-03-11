@@ -12,7 +12,7 @@
       is compatible with 4.5.2+, because the BenchmarkDotNet library isn't compatible
       with .NET Framework 4.5.x.
     -->
-    <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.1;netcoreapp3.1;net5.0;net461</TestFrameworks>
+    <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.1;netcoreapp3.1;net5.0;net6.0;net461</TestFrameworks>
     <TargetFrameworks>$(TESTFRAMEWORKS)</TargetFrameworks>
     <StartupObject>LaunchDarkly.JsonStream.Benchmarks.RunBenchmarks</StartupObject>
   </PropertyGroup>
