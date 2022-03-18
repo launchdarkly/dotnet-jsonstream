@@ -8,7 +8,7 @@ jobs:
   - docker:
       image: 
     template:
-      name: dotnet-linux
+      name: dotnet6-linux
 
 documentation:
   gitHubPages: true
