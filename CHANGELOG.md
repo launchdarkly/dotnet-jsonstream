@@ -2,6 +2,12 @@
 
 All notable changes to the project will be documented in this file. For full release notes for the projects that depend on this project, see their respective changelogs. This file describes changes only to the common code. This project adheres to [Semantic Versioning](http://semver.org).
 
+## [1.1.0] - 2022-04-05
+### Added:
+- Added .NET 6.0 as a specific target framework. This should make no practical difference since the .NET 5.0 build was already usable in .NET 6.0, but since 6.0 is a long-term-support version and 5.0 is not, we are adding 6.0 explicitly in all of our libraries.
+
+Note that this library will likely become obsolete in a future SDK release, because its only purpose was to support streaming JSON conversion on platforms that do not support `System.Text.Json`, and the only such platforms remaining (.NET Framework 4.5.2, and the pre-.NET-6.0 Xamarin frameworks) will eventually be unsupported.
+
 ## [1.0.3] - 2021-10-18
 ### Fixed:
 - When using the adapter that allows SDK types to be deserialized with the `System.Text.Json` API, temporary `JsonDocument` instances are now disposed of immediately rather than leaving them to be garbage-collected. (Thanks, [JeffAshton](https://github.com/launchdarkly/dotnet-jsonstream/pull/8)!)
