@@ -23,10 +23,19 @@
     <PackageReference Include="YamlDotNet.Signed" Version="5.2.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp2.0'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp2.0'
+                    and '$(TargetFramework)' != 'net452'
+                    and '$(TargetFramework)' != 'net461'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.console" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452'
+                     or '$(TargetFramework)' == 'net461'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
   </ItemGroup>
 
