@@ -6,17 +6,18 @@
 
 ## Overview
 
-The `LaunchDarkly.JsonStream` library implements a streaming approach to JSON encoding and decoding designed for efficiency at high volume, assuming a text encoding of UTF8. Unlike reflection-based frameworks, it has no knowledge of structs or other complex types; you must explicitly tell it what values and properties to write or read. It was implemented for the [LaunchDarkly .NET SDK](https://github.com/launchdarkly/dotnet-server-sdk) and [LaunchDarkly Xamarin SDK](http://github.com/launchdarkly/xamarin-client-sdk), but may be useful in other applications.
+The `LaunchDarkly.JsonStream` library implements a streaming approach to JSON encoding and decoding designed for efficiency at high volume, assuming a text encoding of UTF8. Unlike reflection-based frameworks, it has no knowledge of structs or other complex types; you must explicitly tell it what values and properties to write or read. It was implemented for the [LaunchDarkly server-side .NET SDK](https://github.com/launchdarkly/dotnet-server-sdk) and [LaunchDarkly client-side .NET SDK](http://github.com/launchdarkly/dotnet-client-sdk), but may be useful in other applications.
 
 ## Supported .NET versions and platform differences
 
 This version of the SDK is built for the following targets:
 
-* .NET Core 3.1+
-* .NET Core 2.1+
-* .NET 5.0+
-* .NET Framework 4.5.2+
-* .NET Framework 4.6.1+
+* .NET 6.0
+* .NET 5.0
+* .NET Core 3.1
+* .NET Core 2.1
+* .NET Framework 4.5.2
+* .NET Framework 4.6.1 (also works on .NET Framework 4.7)
 * .NET Standard 2.0 (used on other platforms such as Xamarin)
 
 ## `System.Text.Json` support

@@ -5,12 +5,10 @@ publications:
     description: NuGet
 
 jobs:
-  - docker: {}
+  - docker:
+      image: 
     template:
-      name: dotnet-linux
-    env:
-      LD_RELEASE_TEST_TARGET_FRAMEWORK: net5.0
-      LD_RELEASE_DOCS_TARGET_FRAMEWORK: netstandard2.0
+      name: dotnet6-linux
 
 documentation:
   gitHubPages: true

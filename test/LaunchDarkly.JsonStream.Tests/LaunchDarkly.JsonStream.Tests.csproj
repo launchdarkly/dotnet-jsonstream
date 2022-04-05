@@ -3,10 +3,10 @@
     <!--
       The reason there's a mechanism here for overriding the target frameworks with
       an environment variable is that we want to be able to run CI tests using older
-      SDKs which do not consider "net5.0" to be a valid target framework that can be
+      SDKs which do not consider "net6.0" to be a valid target framework that can be
       referenced in a project file.
     -->
-    <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.0;netcoreapp2.1;netcoreapp3.1;net5.0;net452;net461</TestFrameworks>
+    <TestFrameworks Condition="'$(TESTFRAMEWORKS)' == ''">netcoreapp2.0;netcoreapp2.1;netcoreapp3.1;net5.0;net6.0;net452;net461</TestFrameworks>
     <TargetFrameworks>$(TESTFRAMEWORKS)</TargetFrameworks>
     <RootNamespace>LaunchDarkly.JsonStream</RootNamespace>
     <LangVersion>7.3</LangVersion>
@@ -23,7 +23,17 @@
     <PackageReference Include="YamlDotNet.Signed" Version="5.2.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp2.0'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'netcoreapp2.0'
+                    and '$(TargetFramework)' != 'net452'
+                    and '$(TargetFramework)' != 'net461'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452'
+                     or '$(TargetFramework)' == 'net461'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />

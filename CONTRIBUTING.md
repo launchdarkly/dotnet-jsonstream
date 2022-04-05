@@ -14,7 +14,7 @@ We encourage pull requests and other contributions from the community. Before su
  
 ### Prerequisites
 
-This project has multiple target frameworks as described in [`README.md`](./README.md). The .NET Framework target can be built only in a Windows environment; the others can be built either with or without a Windows environment. Download and install the latest .NET SDK tools first.
+This project has multiple target frameworks as described in [`README.md`](./README.md). Not all .NET SDK versions are capable of building all target frameworks, so it is preferable to use the latest .NET SDK.
 
 The project has no external package dependencies.
  
@@ -32,10 +32,10 @@ To build all targets of the project without running any tests:
 dotnet build src/LaunchDarkly.JsonStream
 ```
 
-Or, to build only one target (in this case .NET 5.0):
+Or, to build only one target (in this case .NET 6.0):
 
 ```
-dotnet build src/LaunchDarkly.JsonStream -f net5.0
+dotnet build src/LaunchDarkly.JsonStream -f net6.0
 ```
  
 ### Testing
@@ -46,10 +46,10 @@ To run all unit tests, for all targets (this includes .NET Framework, so you can
 dotnet test test/LaunchDarkly.JsonStream.Tests
 ```
 
-Or, to run tests only for one target (in this case .NET 5.0):
+Or, to run tests only for one target (in this case .NET 6.0):
 
 ```
-dotnet test test/LaunchDarkly.JsonStream.Tests -f net5.0
+dotnet test test/LaunchDarkly.JsonStream.Tests -f net6.0
 ```
 
 Note that the unit tests can only be run in Debug configuration. There is an `InternalsVisibleTo` directive that allows the test code to access internal members of the library, and assembly strong-naming in the Release configuration interferes with this.
