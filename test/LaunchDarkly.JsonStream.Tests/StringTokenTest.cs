@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Globalization;
+using Xunit;
 using LaunchDarkly.JsonStream.Implementation;
 
 namespace LaunchDarkly.JsonStream
@@ -69,10 +70,22 @@ namespace LaunchDarkly.JsonStream
         [InlineData(-1234567890.5)]
         public void ParseDouble(double n)
         {
-            var s = n.ToString();
+            var s = n.ToString(CultureInfo.InvariantCulture);
             Assert.Equal(n, StringToken.FromString(s).ParseDouble());
             Assert.Equal(n, StringToken.FromChars(("x" + s + "z").ToCharArray(),
                 1, s.Length).ParseDouble());
+        }
+
+        [Theory]
+        [InlineData("fr-FR")]
+        [InlineData("de")]
+        [InlineData("en-US")]
+        public void ParseDoubleCultureInvariant(string cultureName)
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureName);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureName);
+            Assert.Equal(0.5, StringToken.FromString("0.5").ParseDouble());
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
 
         void ShouldEqual(string expected, StringToken actual)
