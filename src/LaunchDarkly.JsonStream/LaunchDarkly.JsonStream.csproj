@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <!--
       The reason there's a mechanism here for overriding the target frameworks with
       an environment variable is that we want to be able to run CI tests using older
