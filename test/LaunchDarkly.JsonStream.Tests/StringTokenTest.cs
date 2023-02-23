@@ -70,7 +70,7 @@ namespace LaunchDarkly.JsonStream
         [InlineData(-1234567890.5)]
         public void ParseDouble(double n)
         {
-            var s = n.ToString();
+            var s = n.ToString(CultureInfo.InvariantCulture);
             Assert.Equal(n, StringToken.FromString(s).ParseDouble());
             Assert.Equal(n, StringToken.FromChars(("x" + s + "z").ToCharArray(),
                 1, s.Length).ParseDouble());
@@ -85,6 +85,7 @@ namespace LaunchDarkly.JsonStream
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureName);
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureName);
             Assert.Equal(0.5, StringToken.FromString("0.5").ParseDouble());
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
 
         void ShouldEqual(string expected, StringToken actual)
