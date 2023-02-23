@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace LaunchDarkly.JsonStream.Implementation
 {
@@ -214,12 +215,12 @@ namespace LaunchDarkly.JsonStream.Implementation
         {
             if (_str != null)
             {
-                return double.Parse(_str);
+                return double.Parse(_str, CultureInfo.InvariantCulture);
             }
 #if NET5_0 || NETCOREAPP3_1
-            return double.Parse(AsSpan());
+            return double.Parse(AsSpan(), NumberStyles.Any, CultureInfo.InvariantCulture.NumberFormat);
 #else
-            return double.Parse(ToString());
+            return double.Parse(ToString(), CultureInfo.InvariantCulture);
 #endif
         }
     }
