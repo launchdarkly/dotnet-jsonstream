@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 #if USE_SYSTEM_TEXT_JSON
@@ -117,7 +118,7 @@ namespace LaunchDarkly.JsonStream
                 switch (typeHint)
                 {
                     case ValueType.String:
-                        return AnyValue.String(value.ToString());
+                        return AnyValue.String(value.ToString(CultureInfo.InvariantCulture));
                 }
                 return AnyValue.Number(value);
             }
