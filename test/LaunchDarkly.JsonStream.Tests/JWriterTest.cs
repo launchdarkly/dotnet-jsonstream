@@ -48,10 +48,13 @@ namespace LaunchDarkly.JsonStream
             Assert.Equal(expected, streamReader.ReadToEnd());
         }
 
-        [Fact]
-        public void WritingJsonUsesInvariantCulture()
+        [Theory]
+        [InlineData("fr-FR")]
+        [InlineData("de")]
+        [InlineData("en-US")]
+        public void WritingJsonUsesInvariantCulture(string cultureString)
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureString);
             var writer = JWriter.New();
             var aw = writer.Array();
             aw.Double(0.5);
