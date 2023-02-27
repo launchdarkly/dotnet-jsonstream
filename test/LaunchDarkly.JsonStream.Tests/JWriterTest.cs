@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,20 @@ namespace LaunchDarkly.JsonStream
             var stream = writer.GetUtf8Stream();
             var streamReader = new StreamReader(stream, Encoding.UTF8);
             Assert.Equal(expected, streamReader.ReadToEnd());
+        }
+
+        [Theory]
+        [InlineData("fr-FR")]
+        [InlineData("de")]
+        [InlineData("en-US")]
+        public void WritingJsonUsesInvariantCulture(string cultureString)
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(cultureString);
+            var writer = JWriter.New();
+            var aw = writer.Array();
+            aw.Double(0.5);
+            aw.End();
+            Assert.Equal("[0.5]", writer.GetString());
         }
 
 #if NETCOREAPP3_1 || NET5_0
