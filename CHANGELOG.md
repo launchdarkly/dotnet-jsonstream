@@ -2,6 +2,10 @@
 
 All notable changes to the project will be documented in this file. For full release notes for the projects that depend on this project, see their respective changelogs. This file describes changes only to the common code. This project adheres to [Semantic Versioning](http://semver.org).
 
+## [1.1.2] - 2023-02-27
+### Fixed:
+- Fixed an issue where the system culture would be used when serializing numeric values to JSON.
+
 ## [1.1.1] - 2023-02-23
 ### Fixed:
 - Fixed an issue where the system culture would be used when processing numeric values from JSON. Now it will correctly use the invariant culture for handling JSON numbers.
