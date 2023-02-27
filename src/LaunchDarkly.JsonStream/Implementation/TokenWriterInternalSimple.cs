@@ -6,6 +6,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Globalization;
 
 namespace LaunchDarkly.JsonStream.Implementation
 {
@@ -93,12 +94,12 @@ namespace LaunchDarkly.JsonStream.Implementation
             // Unfortunately double.ToString() will allocate an array, but there's no
             // method available in .NET Framework 4.5.x that encodes a floating-point number
             // into an existing character array.
-            var valueStr = value.ToString();
+            var valueStr = value.ToString(CultureInfo.InvariantCulture);
             if (valueStr.Length <= _tempBytes.Length)
             {
                 for (var i = 0; i < valueStr.Length; i++)
                 {
-                    _tempBytes[i] = (byte)valueStr[i]; // these are guaranteed to be ASCI chars
+                    _tempBytes[i] = (byte)valueStr[i]; // these are guaranteed to be ASCII chars
                 }
                 _buf.Write(_tempBytes, 0, valueStr.Length);
             }
