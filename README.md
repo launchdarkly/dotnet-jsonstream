@@ -1,7 +1,7 @@
 # LaunchDarkly Streaming JSON for .NET
 
 [![NuGet](https://img.shields.io/nuget/v/LaunchDarkly.JsonStream.svg?style=flat-square)](https://www.nuget.org/packages/LaunchDarkly.JsonStream/)
-[![CircleCI](https://circleci.com/gh/launchdarkly/dotnet-jsonstream.svg?style=shield)](https://circleci.com/gh/launchdarkly/dotnet-jsonstream)
+[![Build and run](https://github.com/launchdarkly/dotnet-jsonstream/actions/workflows/ci.yml/badge.svg)](https://github.com/launchdarkly/dotnet-jsonstream/actions/workflows/ci.yml)
 [![Documentation](https://img.shields.io/static/v1?label=GitHub+Pages&message=API+reference&color=00add8)](https://launchdarkly.github.io/dotnet-jsonstream)
 
 ## Overview
