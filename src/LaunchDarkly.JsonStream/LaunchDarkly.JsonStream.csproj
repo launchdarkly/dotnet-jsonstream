@@ -31,7 +31,7 @@
   -->
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'
                      or '$(TargetFramework)' == 'net461'">
-    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.6" />
     <!-- it's a built-in package in netcoreapp3.1 and net5.0 -->
   </ItemGroup>
 
